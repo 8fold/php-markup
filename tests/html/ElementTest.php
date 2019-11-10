@@ -1,14 +1,14 @@
 <?php
 
-namespace Eightfold\Html\Tests;
+namespace Eightfold\Markup\Tests\Html;
 
-use Eightfold\Html\Tests\BaseTest;
+use PHPUnit\Framework\TestCase;
 
-use Eightfold\Html\Html;
+use Eightfold\Markup\Html;
 
 use Eightfold\HtmlComponent\Component;
 
-class ElementTest extends BaseTest
+class ElementTest extends TestCase
 {
     public function testObjectParams()
     {
@@ -21,14 +21,14 @@ class ElementTest extends BaseTest
             Html::param()
                 ->attr('name awesome', 'value today!')
         )->unfold();
-        $this->assertEquality($expected, $result);
+        $this->assertEquals($expected, $result);
     }
 
     public function testHrBase()
     {
         $expected = '<hr>';
         $result = Html::hr()->unfold();
-        $this->assertEquality($expected, $result);
+        $this->assertEquals($expected, $result);
     }
 
     public function testOlListItemSublists()
@@ -49,7 +49,7 @@ class ElementTest extends BaseTest
                 )
             )
         )->unfold();
-        $this->assertEquality($expected, $result);
+        $this->assertEquals($expected, $result);
     }
 
     public function testHeadLinks()
@@ -60,7 +60,7 @@ class ElementTest extends BaseTest
             , Html::link()->attr('rel stylesheet', 'href #')
             , Html::link()->attr('href #', 'rel stylesheet')
         )->unfold();
-        $this->assertEquality($expected, $result);
+        $this->assertEquals($expected, $result);
     }
 
     public function testCanHaveMicrodata()
@@ -69,14 +69,14 @@ class ElementTest extends BaseTest
         $result = Html::a("Hello")
             ->attr("href http://example.com", "itemprop sameAs")
             ->unfold();
-        $this->assertEquality($expected, $result);
+        $this->assertEquals($expected, $result);
     }
 
     public function testCanHaveRDFA()
     {
         $expected = '<div vocab="http://schema.org/"></div>';
         $result = Html::div()->attr("vocab http://schema.org/")->unfold();
-        $this->assertEquality($expected, $result);
+        $this->assertEquals($expected, $result);
     }
 
     public function testHeadStyle()
@@ -87,14 +87,14 @@ class ElementTest extends BaseTest
             , Html::style('.class { background: #000000; }')
                 ->attr('media print', 'type text/css')
         )->unfold();
-        $this->assertEquality($expected, $result);
+        $this->assertEquals($expected, $result);
     }
 
     public function testInvalidAttributeIsExcludedFromAttributeList()
     {
         $expected = '<textarea></textarea>';
         $result = Html::textarea()->attr('value something')->unfold();
-        $this->assertEquality($expected, $result);
+        $this->assertEquals($expected, $result);
     }
 
     public function testAnchorWithInitialAttributesAndAddedAttributesAtCompile()
@@ -103,6 +103,6 @@ class ElementTest extends BaseTest
         $result = Html::a('Hello')
             ->attr('class some-class', 'href http://example.com')
             ->unfold();
-        $this->assertEquality($expected, $result);
+        $this->assertEquals($expected, $result);
     }
 }

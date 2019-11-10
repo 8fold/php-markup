@@ -1,33 +1,33 @@
 <?php
 
-namespace Eightfold\Html\Tests;
+namespace Eightfold\Markup\Tests\Html;
 
-use Eightfold\Html\Tests\BaseTest;
+use PHPUnit\Framework\TestCase;
 
-use Eightfold\Html\Html;
+use Eightfold\Markup\Html;
 
-class BodyTest extends BaseTest
+class BodyTest extends TestCase
 {
     public function testBodyAriaRoleCannotBeDocument()
     {
         $expected = '<body></body>';
         $result = Html::body()
             ->attr('role document');
-        $this->assertEquality($expected, $result);
+        $this->assertEquals($expected, $result->unfold());
     }
 
     public function testBodyAriaRoleCanBeApplication()
     {
         $expected = '<body role="application"></body>';
         $result = Html::body()->attr('role application')->unfold();
-        $this->assertEquality($expected, $result);
+        $this->assertEquals($expected, $result);
     }
 
     public function testBodyAriaRoleCannotBeArticle()
     {
         $expected = '<body></body>';
         $result = Html::body()->attr('role article')->unfold();
-        $this->assertEquality($expected, $result);
+        $this->assertEquals($expected, $result);
     }
 
     public function testBodyAriaCanHaveAriaAttribute()
@@ -36,7 +36,7 @@ class BodyTest extends BaseTest
         $result = Html::body()
             ->attr('aria-atomic true')
             ->unfold();
-        $this->assertEquality($expected, $result);
+        $this->assertEquals($expected, $result);
     }
 
     public function testBodyAriaCannotHaveAriaAttribute()
@@ -45,6 +45,6 @@ class BodyTest extends BaseTest
         $result = Html::body()
             ->attr('aria-pressed true', "role application")
             ->unfold();
-        $this->assertEquality($expected, $result);
+        $this->assertEquals($expected, $result);
     }
 }

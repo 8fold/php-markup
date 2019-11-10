@@ -1,10 +1,10 @@
 <?php
 
-namespace Eightfold\UIKit\Tests;
+namespace Eightfold\Markup\Tests\UIKit;
 
 use PHPUnit\Framework\TestCase;
 
-use Eightfold\UIKit\UIKit;
+use Eightfold\Markup\UIKit;
 
 class CompoundTest extends TestCase
 {

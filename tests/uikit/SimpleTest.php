@@ -1,11 +1,11 @@
 <?php
 
-namespace Eightfold\UIKit\Tests;
+namespace Eightfold\Markup\Tests\UIKit;
 
 use PHPUnit\Framework\TestCase;
 
-use Eightfold\UIKit\UIKit;
-use Eightfold\UIKit\FormControls\InputText;
+use Eightfold\Markup\UIKit;
+use Eightfold\Markup\FormControls\InputText;
 
 class SimpleTest extends TestCase
 {
@@ -13,7 +13,7 @@ class SimpleTest extends TestCase
     {
         $expected = "<p>Hello!</p>";
         $result = UIKit::p("Hello!");
-        $this->assertEquals($expected, $result);
+        $this->assertEquals($expected, $result->unfold());
     }
 
     public function testLinkBase()

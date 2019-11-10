@@ -1,25 +1,14 @@
 <?php
 
-namespace Eightfold\UIKit\Elements\Compound;
+namespace Eightfold\Markup\UIKit\Elements\Compound;
 
-use Eightfold\Html\Html;
-// use Eightfold\UIKit\Elements\HtmlElementBridge;
+use Eightfold\Markup\Html\Elements\HtmlElement;
 
-// use Eightfold\Html\Elements\HtmlElement;
-
-// use Illuminate\Support\Facades\Session;
-
-use Eightfold\UIKit\UIKit;
-
-use Eightfold\UIKit\Traits\Classable;
-
-// use Eightfold\LaravelUIKit\Traits\EightfoldProperties;
+use Eightfold\Markup\Html;
+use Eightfold\Markup\UIKit;
 
 class DoubleWrap
 {
-    use Classable;
-    // use EightfoldProperties;
-
     private $content = [];
 
     private $outerElement = "div";
@@ -30,9 +19,9 @@ class DoubleWrap
 
     private $innerAttr = [];
 
-    public function __construct($args)
+    public function __construct(...$content)
     {
-        $this->content = $args;
+        $this->content = $content;
     }
 
     public function outer(string $outer, string ...$outerAttr): DoubleWrap
@@ -51,10 +40,9 @@ class DoubleWrap
 
     public function unfold(): string
     {
-        return Html::div(Html::div($this->content));
         return UIKit::{$this->outerElement}(
             UIKit::{$this->innerElement}(
-                $this->content
+                ...$this->content
             )->attr(...$this->innerAttr)
         )->attr(...$this->outerAttr)->unfold();
     }

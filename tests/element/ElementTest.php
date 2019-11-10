@@ -1,29 +1,31 @@
 <?php
 
-namespace Eightfold\Shoop\Tests;
+namespace Eightfold\Markup\Tests\Element;
 
 use PHPUnit\Framework\TestCase;
 
-use Eightfold\Shoop\ESElement;
+use Eightfold\Shoop\ESArray;
+
+use Eightfold\Markup\Element;
 
 class ElementTest extends TestCase
 {
     public function testHtmlComponent()
     {
         $expected = '<html></html>';
-        $result = ESElement::fold("html")->unfold('id my-component');
+        $result = Element::fold("html")->unfold('id my-component');
         $this->assertEquals($expected, $result);
 
         $expected = '<html id="my-component"></html>';
-        $result = ESElement::fold("html")->attr("id my-component")->unfold();
+        $result = Element::fold("html")->attr("id my-component")->unfold();
         $this->assertEquals($expected, $result);
     }
 
     public function testParagraphSpanComponent()
     {
         $expected = '<p><span>Hello, World!</span></p>';
-        $result = ESElement::fold("p",
-            ESElement::fold("span", "Hello, World!")
+        $result = Element::fold("p",
+            Element::fold("span", "Hello, World!")
         )->unfold();
         $this->assertEquals($expected, $result);
     }
@@ -31,7 +33,7 @@ class ElementTest extends TestCase
     public function testButtonWebComponentExtension()
     {
         $expected = '<button is="my-button">Save</button>';
-        $result = ESElement::fold("my_button", "Save")
+        $result = Element::fold("my_button", "Save")
             ->extends('button')->unfold();
         $this->assertEquals($expected, $result);
     }
@@ -39,18 +41,18 @@ class ElementTest extends TestCase
     public function testPage()
     {
         $expected = '<html><head><title>Hello, World!</title><style></style></head><body><img src="http://example.com" alt="A picture of the world"><p is="my-component">Hello, World!</p><my-link href="http://example.com/domination">World Domination</my-link><p>Done!</p></body></html>';
-        $result = ESElement::fold('html',
-                          ESElement::fold('head',
-                                ESElement::fold('title', 'Hello, World!')
-                              , ESElement::fold('style')
+        $result = Element::fold('html',
+                          Element::fold('head',
+                                Element::fold('title', 'Hello, World!')
+                              , Element::fold('style')
                             )
-                        , ESElement::fold('body',
-                              ESElement::fold('img')
+                        , Element::fold('body',
+                              Element::fold('img')
                                 ->omitEndTag()
                                 ->attr('src http://example.com', 'alt A picture of the world')
-                            , ESElement::fold('my_component', 'Hello, World!')
+                            , Element::fold('my_component', 'Hello, World!')
                                 ->extends('p')
-                            , ESElement::fold('my_link', [], 'World Domination')
+                            , Element::fold('my_link', [], 'World Domination')
                                 ->attr('href http://example.com/domination')
                             , '<p>Done!</p>'
                           )

@@ -1,28 +1,24 @@
 <?php
 
-namespace Eightfold\UIKit\Elements\Simple;
+namespace Eightfold\Markup\UIKit\Elements\Simple;
 
-use Eightfold\Html\Html;
-use Eightfold\Html\Elements\HtmlElement;
+use Eightfold\Markup\Html\Elements\HtmlElement;
 
-use Eightfold\UIKit\Traits\Classable;
+use Eightfold\Markup\Html;
 
 class Image extends HtmlElement
 {
-    use Classable;
-
     private $src = "";
 
     private $alt = "";
 
     private $schemaProp = "";
 
-    private $classProperties = "";
-
-    public function __construct(...$args)
+    public function __construct(string $altText, string $path)
     {
-        $this->alt = $args[0];
-        $this->src = $args[1];
+        // TODO: Rename to src and alt for consistency
+        $this->alt = $altText;
+        $this->src = $path;
     }
 
     public function schemaProp(string $property): Image
@@ -31,23 +27,13 @@ class Image extends HtmlElement
         return $this;
     }
 
-    public function class(string ...$properties): Image
-    {
-        $this->classProperties = implode(" ", $properties);
-        return $this;
-    }
-
-    public function compile(string ...$attributes): string
+    public function unfold(): string
     {
         $attr = array_merge(
             $this->getAttr(),
             ["src ". $this->src],
-            ["alt ". $this->alt],
-            (strlen($this->classProperties) > 0)
-                ? ["class ". $this->classProperties]
-                : [],
-            $attributes
+            ["alt ". $this->alt]
         );
-        return Html::img()->compile(...$attr);
+        return Html::img()->attr(...$attr)->unfold();
     }
 }

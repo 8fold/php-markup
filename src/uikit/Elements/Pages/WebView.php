@@ -1,15 +1,12 @@
 <?php
 
-namespace Eightfold\UIKit\Elements\Pages;
+namespace Eightfold\Markup\UIKit\Elements\Pages;
 
 use Eightfold\UIKit\Elements\HtmlElementBridge;
 
 use Eightfold\Shoop\Shoop;
-use Eightfold\UIKit\UIKit;
+use Eightfold\Markup\UIKit;
 use Eightfold\HtmlComponent\Interfaces\Compile;
-
-// use Eightfold\UIKit\Elements\Simple\Link;
-// use Eightfold\UIKit\Compound\NavigationPrimary;
 
 class WebView
 {
@@ -27,7 +24,7 @@ class WebView
 
     public function __construct(string $pageTitle, ...$bodyContent)
     {
-        $this->pageTitle = UIKit::title(UIKit::text($pageTitle));
+        $this->pageTitle = UIKit::title($pageTitle);
         $this->bodyContent = $bodyContent;
     }
 
@@ -35,7 +32,7 @@ class WebView
     {
         $result = UIKit::html(
             UIKit::head(...array_merge([$this->pageTitle], $this->metaTags)),
-            UIKit::body(...array_merge($this->bodyContent, $this->scripts))
+            UIKit::body(...array_merge($this->bodyContent, $this->scripts))->attr(...$this->bodyAttributes)
         )->unfold();
 
         return $result;

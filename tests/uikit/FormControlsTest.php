@@ -1,19 +1,19 @@
 <?php
 
-namespace Eightfold\UIKit\Tests;
+namespace Eightfold\Markup\Tests\UIKit;
 
 use PHPUnit\Framework\TestCase;
 
 use Carbon\Carbon;
 
-use Eightfold\UIKit\UIKit;
-use Eightfold\UIKit\FormControls\InputText;
+use Eightfold\Markup\UIKit;
+use Eightfold\Markup\UIKit\FormControls\InputText;
 
 class FormControlsTest extends TestCase
 {
     public function testFileInputBase()
     {
-        $expected = '<div is="ef-form-control"><label for="some_file">Label</label><input id="some_file" type="file" name="some_file" required></div>';
+        $expected = '<div><label for="some_file">Label</label><input id="some_file" type="file" name="some_file" required></div>';
         $result = UIKit::fileInput('Label', 'some_file')->unfold();
         $this->assertEquals($expected, $result);
     }

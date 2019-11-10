@@ -1,13 +1,12 @@
 <?php
 
-namespace Eightfold\UIKit\Tests;
+namespace Eightfold\Markup\Tests\UIKit;
 
 use PHPUnit\Framework\TestCase;
 
-use Eightfold\HtmlComponent\Component;
-use Eightfold\Html\Html;
-use Eightfold\UIKit\UIKit;
-use Eightfold\UIKit\FormControls\InputText;
+use Eightfold\Markup\Html;
+use Eightfold\Markup\UIKit;
+use Eightfold\Markup\UIKit\FormControls\InputText;
 
 class PageTest extends TestCase
 {

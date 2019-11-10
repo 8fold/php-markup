@@ -1,20 +1,20 @@
 <?php
 
-namespace Eightfold\Html\Tests;
+namespace Eightfold\Markup\Tests\Html;
 
-use Eightfold\Html\Tests\BaseTest;
+use PHPUnit\Framework\TestCase;
 
-use Eightfold\Html\Html;
+use Eightfold\Markup\Html;
 
 use Eightfold\HtmlComponent\Component;
 
-class HtmlTest extends BaseTest
+class HtmlTest extends TestCase
 {
     public function testHtmlBase()
     {
         $expected = '<!doctype html><html lang="en"></html>';
         $result = Html::html()->unfold();
-        $this->assertEquality($expected, $result);
+        $this->assertEquals($expected, $result);
     }
 
     public function testHtmlRemovesDeprecatedAttributes()
@@ -23,7 +23,7 @@ class HtmlTest extends BaseTest
         $result = Html::html()
             ->attr('manifest something.cache')
             ->unfold();
-        $this->assertEquality($expected, $result);
+        $this->assertEquals($expected, $result);
     }
 
     public function testHtmlCanHaveId()
@@ -34,7 +34,7 @@ class HtmlTest extends BaseTest
                 Html::title('Hello, World!')
             )
         )->attr('id hello')->unfold();
-        $this->assertEquality($expected, $result);
+        $this->assertEquals($expected, $result);
     }
 
     public function testMetaCanHaveAttributes()
@@ -46,14 +46,14 @@ class HtmlTest extends BaseTest
                 Html::meta()->attr('charset utf-8')
             )
         )->unfold();
-        $this->assertEquality($expected, $result);
+        $this->assertEquals($expected, $result);
     }
 
     public function testMetaBase()
     {
         $expected = '<meta charset="utf-8">';
         $result = Html::meta()->attr('charset utf-8')->unfold();
-        $this->assertEquality($expected, $result);
+        $this->assertEquals($expected, $result);
     }
 
     /**
@@ -66,7 +66,7 @@ class HtmlTest extends BaseTest
         $expected = '<!doctype html><html lang="en"><head><title>Hello, World!</title></head><body><p>Hello!</p></body></html>';
         $result = '<!doctype html><html lang="en"><head><title>Hello, World!</title></head><body><p>Hello!</p></body></html>';
 
-        $this->assertEquality($expected, $result);
+        $this->assertEquals($expected, $result);
     }
 
     public function testIsCanHavAttributes()
@@ -75,7 +75,7 @@ class HtmlTest extends BaseTest
         $result = Html::p('Hello')
             ->attr('class hello', "is my-component")
             ->unfold();
-        $this->assertEquality($expected, $result);
+        $this->assertEquals($expected, $result);
     }
 
     public function testFormIsCanHavAttributes()
@@ -84,6 +84,6 @@ class HtmlTest extends BaseTest
         $result = Html::form()
             ->attr('class hello', 'method post', 'action /somewhere', "is my-component")
             ->unfold();
-        $this->assertEquality($expected, $result);
+        $this->assertEquals($expected, $result);
     }
 }

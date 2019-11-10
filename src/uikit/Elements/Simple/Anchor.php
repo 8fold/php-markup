@@ -1,14 +1,11 @@
 <?php
 
-namespace Eightfold\UIKit\Elements\Simple;
+namespace Eightfold\Markup\UIKit\Elements\Simple;
 
-use Eightfold\Html\Elements\HtmlElement;
+use Eightfold\Markup\Html\Elements\HtmlElement;
+use Eightfold\Markup\Html;
 
-use Eightfold\HtmlComponent\Component;
-use Eightfold\Html\Html;
-use Eightfold\UIKit\UIKit;
-
-class Anchor
+class Anchor extends HtmlElement
 {
     private $text = '';
     private $target = '';
@@ -24,7 +21,8 @@ class Anchor
 
     public function unfold(): string
     {
-        return Html::a($this->text)->attr('href '. $this->target)->unfold();
+        $attr = array_merge(["href {$this->target}"], $this->getAttr());
+        return Html::a($this->text)->attr(...$attr)->unfold();
     }
 }
 

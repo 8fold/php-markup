@@ -1,14 +1,14 @@
 <?php
 
-namespace Eightfold\Html\Tests;
+namespace Eightfold\Markup\Tests\Html;
 
-use Eightfold\Html\Tests\BaseTest;
+use PHPUnit\Framework\TestCase;
 
-use Eightfold\Html\Html;
+use Eightfold\Markup\Html;
 
 use Eightfold\HtmlComponent\Component;
 
-class MainTest extends BaseTest
+class MainTest extends TestCase
 {
     public function testSelectorAttributeOrderBase()
     {
