@@ -7,10 +7,8 @@ use Eightfold\Markup\Html\Elements\HtmlElement;
 use Eightfold\Markup\Html;
 use Eightfold\Markup\UIKit;
 
-class DoubleWrap
+class DoubleWrap extends HtmlElement
 {
-    private $content = [];
-
     private $outerElement = "div";
 
     private $outerAttr = [];

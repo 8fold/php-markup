@@ -2,9 +2,13 @@
 
 namespace Eightfold\Markup\UIKit\Elements\Compound;
 
+use Eightfold\Markup\Html\Elements\HtmlElement;
+
 use League\CommonMark\CommonMarkConverter;
 
-class Markdown
+use Eightfold\Shoop\Shoop;
+
+class Markdown extends HtmlElement
 {
     private $markdown = '';
 
@@ -13,7 +17,7 @@ class Markdown
         $this->markdown = $markdown;
     }
 
-    public function compile(): string
+    public function unfold(): string
     {
         $converter = new CommonMarkConverter([
             'html_input' => 'strip',

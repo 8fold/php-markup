@@ -16,7 +16,7 @@ class PageTest extends TestCase
         $result = UIKit::webView(
             "UIKit",
             UIKit::p("Hello, World!")
-        )->headMeta(
+        )->meta(
               UIKit::meta()->attr("charset utf-8")
             , UIKit::meta()->attr("name viewport", "content width=device-width, initial-scale=1")
         )->unfold();

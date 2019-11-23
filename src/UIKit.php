@@ -47,7 +47,7 @@ class UIKit extends Html
     }
 
     // TODO: Should be able to accept unfoldable
-    static public function anchor($text, $href)
+    static public function anchor(string $text, string $href)
     {
         $class = self::class("anchor", self::CLASSES)->unfold();
         return new $class($text, $href);
@@ -57,6 +57,12 @@ class UIKit extends Html
     {
         $class = self::class("image", self::CLASSES)->unfold();
         return new $class($altText, $path);
+    }
+
+    static public function markdown(string $markdown)
+    {
+        $class = self::class("markdown", self::CLASSES)->unfold();
+        return new $class($markdown);
     }
 
     static public function stripeElements($formId, $apiKey, $inputLabel, $buttonLabel)
@@ -80,7 +86,7 @@ class UIKit extends Html
                 return new $class(...$elements);
                 break;
 
-            case ('glyph' || 'markdown' || 'head' || 'avatar'):
+            case ('glyph' || 'head' || 'avatar'):
                 return new $class($args[0]);
                 break;
 

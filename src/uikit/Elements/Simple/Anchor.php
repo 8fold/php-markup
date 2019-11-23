@@ -8,20 +8,17 @@ use Eightfold\Markup\Html;
 class Anchor extends HtmlElement
 {
     private $text = '';
-    private $target = '';
+    private $href = '';
 
-    private $_current = false;
-    private $_glyph = '';
-
-    public function __construct(string $text, string $target)
+    public function __construct(string $text, string $href)
     {
         $this->text = $text;
-        $this->target = $target;
+        $this->href = $href;
     }
 
     public function unfold(): string
     {
-        $attr = array_merge(["href {$this->target}"], $this->getAttr());
+        $attr = array_merge(["href {$this->href}"], $this->getAttr());
         return Html::a($this->text)->attr(...$attr)->unfold();
     }
 }

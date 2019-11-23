@@ -2,57 +2,43 @@
 
 namespace Eightfold\Markup\UIKit\Elements\Pages;
 
-use Eightfold\UIKit\Elements\HtmlElementBridge;
+use Eightfold\Markup\Html\Elements\HtmlElement;
+
+// use Eightfold\UIKit\Elements\HtmlElementBridge;
 
 use Eightfold\Shoop\Shoop;
 use Eightfold\Markup\UIKit;
 use Eightfold\HtmlComponent\Interfaces\Compile;
 
-class WebView
+class WebView extends HtmlElement
 {
     protected $pageTitle = 'Page title';
 
-    protected $bodyContent = [];
+    protected $meta = [];
 
     private $bodyAttributes = [];
 
-    protected $head = [];
-
-    protected $metaTags = [];
-
     protected $scripts = [];
 
-    public function __construct(string $pageTitle, ...$bodyContent)
+    public function __construct(string $pageTitle, ...$content)
     {
         $this->pageTitle = UIKit::title($pageTitle);
-        $this->bodyContent = $bodyContent;
+        $this->content = $content;
     }
 
     public function unfold(): string
     {
+        $head = Shoop::array($this->pageTitle)->plus(...$this->meta);
         $result = UIKit::html(
-            UIKit::head(...array_merge([$this->pageTitle], $this->metaTags)),
-            UIKit::body(...array_merge($this->bodyContent, $this->scripts))->attr(...$this->bodyAttributes)
-        )->unfold();
-
-        return $result;
+            UIKit::head(...$head->unfold()),
+            UIKit::body(...$this->content)->attr(...$this->bodyAttributes)
+        );
+        return $result->unfold();
     }
 
-    /**
-     * TODO: Rename
-     *
-     * @param  [type] $metaTags [description]
-     * @return [type]           [description]
-     */
-    public function headMeta(...$metaTags)
+    public function meta(...$meta)
     {
-        $this->metaTags = $metaTags;
-        return $this;
-    }
-
-    public function bodyScripts(...$scripts)
-    {
-        $this->scripts = $scripts;
+        $this->meta = $meta;
         return $this;
     }
 
