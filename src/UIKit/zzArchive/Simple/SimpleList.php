@@ -63,6 +63,8 @@ class SimpleList extends HtmlElement
 
     private function listItems(array $content)
     {
+        // tho this would be me typing a comment I gues the cammera isn't shaking too much
+        // maybe there a little bit of image stabilization going on or something.
         $count = 0;
         $listItems = [];
         foreach ($content as $index => $item) {
