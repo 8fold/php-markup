@@ -12,17 +12,22 @@ class Markdown extends HtmlElement
 {
     private $markdown = '';
 
-    public function __construct(string $markdown)
+    private $config = [
+        'html_input' => 'strip',
+        'allow_unsafe_links' => false,
+    ];
+
+    public function __construct(string $markdown, array $config = [])
     {
+        if (count($config) > 0) {
+            $this->config = $config;
+        }
         $this->markdown = $markdown;
     }
 
     public function unfold(): string
     {
-        $converter = new CommonMarkConverter([
-            'html_input' => 'strip',
-            'allow_unsafe_links' => false,
-        ]);
+        $converter = new CommonMarkConverter($this->config);
         return $converter->convertToHtml($this->markdown);
     }
 }

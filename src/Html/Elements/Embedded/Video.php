@@ -47,11 +47,12 @@ class Video extends Embed
     {
         $return = array_merge(
             parent::optionalAriaAttributes(),
+            Content::src(),
             Content::crossorigin(),
             Content::poster(),
             Content::preload(),
             Content::autoplay(),
-            Content::mediagroup(),
+            // Content::mediagroup(), TODO: Implement or update??
             Content::loop(),
             Content::muted(),
             Content::controls()

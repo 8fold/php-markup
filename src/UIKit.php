@@ -59,10 +59,10 @@ class UIKit extends Html
         return new $class($altText, $path);
     }
 
-    static public function markdown(string $markdown)
+    static public function markdown(string $markdown, array $config = [])
     {
         $class = self::class("markdown", self::CLASSES)->unfold();
-        return new $class($markdown);
+        return new $class($markdown, $config);
     }
 
     static public function stripeElements($formId, $apiKey, $inputLabel, $buttonLabel)
