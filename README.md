@@ -106,6 +106,10 @@ Anyone can submit PRs to add funcationality as we are only adding things we need
 
 Each PR will be reviewed, including those submitted by core developers (no direct push).
 
+## Versioning
+
+We follow [semantic versioning](https://semver.org/). We are operating under a [zero-major](https://semver.org/#spec-item-4) at this time. `x.y.z`: `x` = major, `y` = minor, `z` = patch. In this case `x` remains at 0 to communicate that APIs may come and go without warning. With that said, changes to `y` are typically reserved for breaking changes and changes to `z` represent added features and APIs or bug fixes.
+
 ## History
 
 This library started as three (or more) separate libraries, each at varying degrees of stability.
