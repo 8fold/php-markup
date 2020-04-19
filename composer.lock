@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/8fold/php-shoop.git",
-                "reference": "471d7676da73e2c83c5b232e72550ec846c4b500"
+                "reference": "a22c438beaeb8248bd74dd846d41f02187fa5238"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/8fold/php-shoop/zipball/471d7676da73e2c83c5b232e72550ec846c4b500",
-                "reference": "471d7676da73e2c83c5b232e72550ec846c4b500",
+                "url": "https://api.github.com/repos/8fold/php-shoop/zipball/a22c438beaeb8248bd74dd846d41f02187fa5238",
+                "reference": "a22c438beaeb8248bd74dd846d41f02187fa5238",
                 "shasum": ""
             },
             "require": {
@@ -45,7 +45,7 @@
                 }
             ],
             "description": "A wrapper to create a more ubiquitous API for interacting with PHP Primitives.",
-            "time": "2020-04-19T17:58:34+00:00"
+            "time": "2020-04-19T19:05:21+00:00"
         },
         {
             "name": "league/commonmark",

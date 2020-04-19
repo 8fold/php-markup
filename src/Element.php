@@ -112,4 +112,9 @@ class Element
         $this->omitEndTag = $omit;
         return $this;
     }
+
+    public function __toString()
+    {
+        return $this->unfold();
+    }
 }

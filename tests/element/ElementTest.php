@@ -13,6 +13,10 @@ class ElementTest extends TestCase
     public function testHtmlComponent()
     {
         $expected = '<html></html>';
+
+        $result = Element::fold("html");
+        $this->assertEquals($expected, $result);
+
         $result = Element::fold("html")->unfold('id my-component');
         $this->assertEquals($expected, $result);
 
