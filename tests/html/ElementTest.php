@@ -105,4 +105,12 @@ class ElementTest extends TestCase
             ->unfold();
         $this->assertEquals($expected, $result);
     }
+
+    public function testAbbrCanHaveTitle()
+    {
+        // $actual = Html::a("hello")->unfold();
+        $expected = '<abbr title="Hello">hi</abbr>';
+        $actual = Html::abbr("hi")->attr("title Hello");
+        $this->assertEquals($expected, $actual->unfold());
+    }
 }
