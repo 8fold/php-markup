@@ -24,9 +24,9 @@ class Abbr extends Span
 
     static public function optionalAttributes(): array
     {
-        return [
+        return array_merge(
             parent::optionalAttributes(),
             Content::cite() // Link to the source of the quotation or more information about the edit
-        ];
+        );
     }
 }

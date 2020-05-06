@@ -32,6 +32,7 @@ trait AttributeHandler
             $attributes = array_filter($attributes, function($k) use ($optionalAttributes) {
                     return in_array($k, $optionalAttributes);
                 }, ARRAY_FILTER_USE_KEY);
+
         }
 
         // Strip deprecated attributes
