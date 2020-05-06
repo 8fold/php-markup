@@ -93,7 +93,7 @@ class Element
     {
         foreach ($attributes as $attribute) {
             if (strlen($attribute) > 0) {
-                list($key, $value) = Shoop::string($attribute)->split(" ")->unfold();
+                list($key, $value) = Shoop::string($attribute)->divide(" ")->unfold();
                 $this->attributes[$key] = $value;
             }
         }
