@@ -28,7 +28,7 @@ class WebView extends HtmlElement
 
     public function unfold(): string
     {
-        $head = Shoop::array($this->pageTitle)->plus(...$this->meta);
+        $head = Shoop::array([$this->pageTitle])->plus(...$this->meta);
         $result = UIKit::html(
             UIKit::head(...$head->unfold()),
             UIKit::body(...$this->content)->attr(...$this->bodyAttributes)

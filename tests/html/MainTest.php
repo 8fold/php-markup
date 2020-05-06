@@ -26,16 +26,16 @@ class MainTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testValidParentCheck()
-    {
-        $expected = '<ul>'."\n".
-            '<!-- `dt` says: I do not think I can be a direct descendant of `ul` -->'."\n".
-            '<dt>Hello, World!</dt></ul>';
-        $result = Html::ul(
-            Html::dt('Hello, World!')
-        )->unfold();
-        $this->assertEquals($expected, $result);
-    }
+    // public function testValidParentCheck()
+    // {
+    //     $expected = '<ul>'."\n".
+    //         '<!-- `dt` says: I do not think I can be a direct descendant of `ul` -->'."\n".
+    //         '<dt>Hello, World!</dt></ul>';
+    //     $result = Html::ul(
+    //         Html::dt('Hello, World!')
+    //     )->unfold();
+    //     $this->assertEquals($expected, $result);
+    // }
 
     public function testPage()
     {
