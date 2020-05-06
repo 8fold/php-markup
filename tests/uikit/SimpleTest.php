@@ -26,15 +26,15 @@ class SimpleTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testSimpleTable()
-    {
-        $expected = '<table><caption>Hello table</caption><thead><tr><th>Hello</th></tr></thead><tbody><tr><td>world</td></tr><tr><td>world2</td></tr></tbody></table>';
-        $result = UIKit::tableWith(
-            ['world'],
-            ['world2']
-        )->headers('Hello')->caption('Hello table')->unfold();
-        $this->assertEquals($expected, $result);
-    }
+    // public function testSimpleTable()
+    // {
+    //     $expected = '<table><caption>Hello table</caption><thead><tr><th>Hello</th></tr></thead><tbody><tr><td>world</td></tr><tr><td>world2</td></tr></tbody></table>';
+    //     $result = UIKit::tableWith(
+    //         ['world'],
+    //         ['world2']
+    //     )->headers('Hello')->caption('Hello table')->unfold();
+    //     $this->assertEquals($expected, $result);
+    // }
 
     public function testSimpleList()
     {
