@@ -15,6 +15,7 @@ class FormControlsTest extends TestCase
     {
         $this->assertTrue(true);
     }
+
     // public function testFileInputBase()
     // {
     //     $expected = '<div><label for="some_file">Label</label><input id="some_file" type="file" name="some_file" required></div>';

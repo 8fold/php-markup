@@ -98,7 +98,7 @@ class UIKit extends Html
                 return new $class($args[0]);
                 break;
 
-            case ('alert' || 'button'):
+            case ('alert'):
                 return new $class($args[0], $args[1]);
                 break;
 
@@ -108,8 +108,7 @@ class UIKit extends Html
                 return new $class($main, ...$args);
                 break;
 
-            case ('button'
-                || 'select'
+            case ('select'
                 || 'textarea'
                 || 'markdown_textarea'
                 || 'textInput'
@@ -149,7 +148,7 @@ class UIKit extends Html
         'anchor'    => UIKit\Elements\Simple\Anchor::class,
         'glyph'     => UIKit\Elements\Simple\Glyph::class,
         'image'     => UIKit\Elements\Simple\Image::class,
-        'button'    => UIKit\Elements\FormControls\Button::class,
+        // 'button'    => UIKit\Elements\FormControls\Button::class,
 
         'stripeElements' => UIKit\Elements\FormControls\StripeElements::class,
         'hiddenInput'    => UIKit\Elements\FormControls\InputHidden::class,
