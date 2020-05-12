@@ -44,6 +44,13 @@ class SimpleTest extends TestCase
             'good-bye'
         )->unfold();
         $this->assertEquals($expected, $result);
+
+        $expected = '<ul class="test"><li>hello</li><li>good-bye</li></ul>';
+        $result = UIKit::listWith(
+            'hello',
+            'good-bye'
+        )->attr("class test");
+        $this->assertEquals($expected, $result->unfold());
     }
 
     public function testSimpleOrderedList()
