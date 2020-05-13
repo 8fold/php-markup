@@ -102,7 +102,7 @@ class UIKit extends Html
                 return new $class($args[0], $args[1]);
                 break;
 
-            case 'form' || 'header':
+            case 'header':
                 $main = $args[0];
                 unset($args[0]);
                 return new $class($main, ...$args);
@@ -142,7 +142,7 @@ class UIKit extends Html
 
     private const CLASSES = [
         'webView'   => UIKit\Elements\Pages\WebView::class,
-        'form'      => UIKit\Elements\Forms\Form::class,
+        // 'form'      => UIKit\Elements\Forms\Form::class,
         'listWith'  => UIKit\Elements\Simple\SimpleList::class,
         'tableWith' => UIKit\Elements\Simple\SimpleTable::class,
         'anchor'    => UIKit\Elements\Simple\Anchor::class,
