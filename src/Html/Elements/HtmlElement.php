@@ -6,9 +6,9 @@ use Eightfold\Shoop\Shoop;
 
 use Eightfold\Markup\Element;
 
-use Eightfold\Markup\Html;
+// use Eightfold\Markup\Html;
 
-use Eightfold\Markup\Html\Elements\Root\Html as RootHtml;
+use Eightfold\Markup\Html\Elements\Root\Html;
 
 use Eightfold\Markup\Html\Data\Elements;
 use Eightfold\Markup\Html\Data\Attributes\Ordered;
@@ -27,7 +27,7 @@ abstract class HtmlElement extends Element
     protected function compiledElement(): string
     {
         $elem = parent::compiledElement();
-        if (get_class($this) === RootHtml::class) {
+        if (get_class($this) === Html::class) {
             $this->prefix = "<!doctype html>";
             $this->attr("lang en");
 
