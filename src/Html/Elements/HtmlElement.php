@@ -6,8 +6,6 @@ use Eightfold\Shoop\Shoop;
 
 use Eightfold\Markup\Element;
 
-use Eightfold\Markup\Html\Elements\AttributeHandler;
-
 use Eightfold\Markup\Html;
 
 use Eightfold\Markup\Html\Elements\Root\Html as RootHtml;
@@ -20,8 +18,6 @@ use Eightfold\Markup\Html\Data\Attributes\EventOn;
 
 abstract class HtmlElement extends Element
 {
-    use AttributeHandler;
-
     private $isKnownElement = true;
 
     private $prefix = "";
