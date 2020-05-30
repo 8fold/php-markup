@@ -38,12 +38,12 @@ abstract class HtmlElement extends Element
     protected function compiledAttributes(): string
     {
         // TODO: Test beyond ordered
-        $ordered = [];
-        $events = [];
-        $aria = [];
-        $data = [];
-        $other = [];
-        $boolean = [];
+        $ordered   = [];
+        $events    = [];
+        $aria      = [];
+        $data      = [];
+        $other     = [];
+        $boolean   = [];
         $leftovers = [];
         Shoop::array($this->attributes)->each(function($attribute) use
             (&$ordered, &$events, &$aria, &$data, &$other, &$boolean, &$leftovers) {

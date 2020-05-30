@@ -1,7 +1,7 @@
 {
     "name": "8fold/php-markup",
     "description": "8fold Markup seeks to make writing semi-structured data easier while allowing for more dynamism.",
-    "version": "0.0.1",
+    "version": "0.1.0",
     "type": "library",
     "license": "MIT",
     "authors": [
