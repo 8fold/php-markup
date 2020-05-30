@@ -1,7 +1,6 @@
 {
     "name": "8fold/php-markup",
     "description": "8fold Markup seeks to make writing semi-structured data easier while allowing for more dynamism.",
-    "version": "0.1.0",
     "type": "library",
     "license": "MIT",
     "authors": [
@@ -12,14 +11,13 @@
     ],
     "require": {
         "php": ">=7.0",
-        "8fold/php-shoop": "dev-master",
-        "nesbot/carbon": "^2.25.0",
-        "league/commonmark": "^1.0.0"
+        "8fold/php-shoop": "0.3.*",
+        "nesbot/carbon": "2.35.*",
+        "league/commonmark": "1.4.*"
     },
     "require-dev": {
-        "mockery/mockery": "^0.9.4",
-        "phpunit/phpunit": "7.5.6",
-        "phpunit/php-code-coverage": "^6.0.7"
+        "phpunit/phpunit": "9.1.*",
+        "phpunit/php-code-coverage": "8.0.*"
     },
     "autoload": {
         "psr-4": {
@@ -34,6 +32,5 @@
     "config": {
         "preferred-install": "dist"
     },
-	"minimum-stability": "dev",
 	"prefer-stable": true
 }
