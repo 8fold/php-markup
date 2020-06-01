@@ -86,4 +86,11 @@ class HtmlTest extends TestCase
             ->unfold();
         $this->assertEquals($expected, $result);
     }
+
+    public function testCanHaveAriaHidden()
+    {
+        $expected = '<div aria-hidden="true"></div>';
+        $actual = Html::div()->attr("aria-hidden true");
+        $this->assertSame($expected, $actual->unfold());
+    }
 }
