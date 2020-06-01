@@ -30,7 +30,7 @@ class Element
     public function __construct($element, ...$content)
     {
         $this->element = Type::sanitizeType($element, ESString::class)
-            ->replace("_", "-");
+            ->replace(["_" => "-"]);
         $this->content = Type::sanitizeType($content, ESArray::class);
     }
 

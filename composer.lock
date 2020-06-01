@@ -8,23 +8,22 @@
     "packages": [
         {
             "name": "8fold/php-shoop",
-            "version": "0.3.4",
+            "version": "0.3.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/8fold/php-shoop.git",
-                "reference": "10e19a830c1f90dd5bf4a2f78134e0dc8ff6f075"
+                "reference": "8aab0c9de22b1461ada309a7933f9ddabfe35ecb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/8fold/php-shoop/zipball/10e19a830c1f90dd5bf4a2f78134e0dc8ff6f075",
-                "reference": "10e19a830c1f90dd5bf4a2f78134e0dc8ff6f075",
+                "url": "https://api.github.com/repos/8fold/php-shoop/zipball/8aab0c9de22b1461ada309a7933f9ddabfe35ecb",
+                "reference": "8aab0c9de22b1461ada309a7933f9ddabfe35ecb",
                 "shasum": ""
             },
             "require": {
                 "php": "7.*"
             },
             "require-dev": {
-                "mockery/mockery": "1.4.*",
                 "phpunit/php-code-coverage": "8.0.*",
                 "phpunit/phpunit": "9.1.*"
             },
@@ -55,7 +54,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-05-30T16:25:45+00:00"
+            "time": "2020-06-01T21:34:59+00:00"
         },
         {
             "name": "league/commonmark",
@@ -314,22 +313,99 @@
             "time": "2020-05-12T16:47:27+00:00"
         },
         {
-            "name": "symfony/translation",
-            "version": "v5.0.8",
+            "name": "symfony/polyfill-php80",
+            "version": "v1.17.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/symfony/translation.git",
-                "reference": "c3879db7a68fe3e12b41263b05879412c87b27fd"
+                "url": "https://github.com/symfony/polyfill-php80.git",
+                "reference": "5e30b2799bc1ad68f7feb62b60a73743589438dd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/translation/zipball/c3879db7a68fe3e12b41263b05879412c87b27fd",
-                "reference": "c3879db7a68fe3e12b41263b05879412c87b27fd",
+                "url": "https://api.github.com/repos/symfony/polyfill-php80/zipball/5e30b2799bc1ad68f7feb62b60a73743589438dd",
+                "reference": "5e30b2799bc1ad68f7feb62b60a73743589438dd",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.2.5",
+                "php": ">=7.0.8"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.17-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Polyfill\\Php80\\": ""
+                },
+                "files": [
+                    "bootstrap.php"
+                ],
+                "classmap": [
+                    "Resources/stubs"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ion Bazan",
+                    "email": "ion.bazan@gmail.com"
+                },
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony polyfill backporting some PHP 8.0+ features to lower PHP versions",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "compatibility",
+                "polyfill",
+                "portable",
+                "shim"
+            ],
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2020-05-12T16:47:27+00:00"
+        },
+        {
+            "name": "symfony/translation",
+            "version": "v5.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/translation.git",
+                "reference": "d387f07d4c15f9c09439cf3f13ddbe0b2c5e8be2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/translation/zipball/d387f07d4c15f9c09439cf3f13ddbe0b2c5e8be2",
+                "reference": "d387f07d4c15f9c09439cf3f13ddbe0b2c5e8be2",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2.5",
                 "symfony/polyfill-mbstring": "~1.0",
+                "symfony/polyfill-php80": "^1.15",
                 "symfony/translation-contracts": "^2"
             },
             "conflict": {
@@ -361,7 +437,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "5.0-dev"
+                    "dev-master": "5.1-dev"
                 }
             },
             "autoload": {
@@ -402,7 +478,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-04-12T16:45:47+00:00"
+            "time": "2020-05-30T20:35:19+00:00"
         },
         {
             "name": "symfony/translation-contracts",
@@ -1936,28 +2012,28 @@
         },
         {
             "name": "sebastian/type",
-            "version": "2.0.0",
+            "version": "2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/type.git",
-                "reference": "9e8f42f740afdea51f5f4e8cec2035580e797ee1"
+                "reference": "bad49207c6f854e7a25cef0ea948ac8ebe3ef9d8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/type/zipball/9e8f42f740afdea51f5f4e8cec2035580e797ee1",
-                "reference": "9e8f42f740afdea51f5f4e8cec2035580e797ee1",
+                "url": "https://api.github.com/repos/sebastianbergmann/type/zipball/bad49207c6f854e7a25cef0ea948ac8ebe3ef9d8",
+                "reference": "bad49207c6f854e7a25cef0ea948ac8ebe3ef9d8",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.3"
             },
             "require-dev": {
-                "phpunit/phpunit": "^9.0"
+                "phpunit/phpunit": "^9.2"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.0-dev"
+                    "dev-master": "2.1-dev"
                 }
             },
             "autoload": {
@@ -1978,7 +2054,13 @@
             ],
             "description": "Collection of value objects that represent the types of the PHP type system",
             "homepage": "https://github.com/sebastianbergmann/type",
-            "time": "2020-02-07T06:13:43+00:00"
+            "funding": [
+                {
+                    "url": "https://github.com/sebastianbergmann",
+                    "type": "github"
+                }
+            ],
+            "time": "2020-06-01T12:21:09+00:00"
         },
         {
             "name": "sebastian/version",
