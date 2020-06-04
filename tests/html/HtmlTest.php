@@ -93,4 +93,11 @@ class HtmlTest extends TestCase
         $actual = Html::div()->attr("aria-hidden true");
         $this->assertSame($expected, $actual->unfold());
     }
+
+    public function testCanHaveAriaExpanded()
+    {
+        $expected = '<button aria-expanded="false"></button>';
+        $actual = Html::button()->attr("aria-expanded false");
+        $this->assertEquals($expected, $actual->unfold());
+    }
 }

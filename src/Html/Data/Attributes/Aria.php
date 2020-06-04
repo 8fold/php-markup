@@ -100,6 +100,17 @@ abstract class Aria
     {
         return ['aria-dropeffect'];
     }
+
+    static public function expanded(): array
+    {
+        return ['aria-expanded'];
+    }
+
+    static public function pressed(): array
+    {
+        return ['aria-pressed'];
+    }
+
     static public function flowto(): array
     {
         return ['aria-flowto'];
