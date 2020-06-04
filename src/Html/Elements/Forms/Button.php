@@ -7,6 +7,7 @@ use Eightfold\Markup\Html\Elements\HtmlElementInterface;
 
 use Eightfold\Markup\Html\Data\Elements;
 use Eightfold\Markup\Html\Data\AriaRoles;
+use Eightfold\Markup\Html\Data\Attributes\Aria;
 
 use Eightfold\Markup\Html\Data\Attributes\Content;
 
@@ -81,6 +82,15 @@ class Button extends HtmlElement implements HtmlElementInterface
             AriaRoles::menuitemcheckbox(),
             AriaRoles::menuitemradio(),
             AriaRoles::radio()
+        );
+    }
+
+    static public function optionalAriaAttributes(): array
+    {
+        return array_merge(
+            parent::optionalAriaAttributes(),
+            Aria::expanded(),
+            Aria::pressed()
         );
     }
 }
