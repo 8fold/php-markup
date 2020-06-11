@@ -15,14 +15,14 @@ class ElementTest extends TestCase
         $expected = '<html></html>';
 
         $result = Element::fold("html");
-        $this->assertEquals($expected, $result);
-
-        $result = Element::fold("html")->unfold('id my-component');
-        $this->assertEquals($expected, $result);
+        $this->assertSame($expected, $result->unfold());
 
         $expected = '<html id="my-component"></html>';
+        $result = Element::fold("html")->unfold("id my-component");
+        $this->assertSame($expected, $result);
+
         $result = Element::fold("html")->attr("id my-component")->unfold();
-        $this->assertEquals($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     public function testParagraphSpanComponent()
@@ -31,7 +31,7 @@ class ElementTest extends TestCase
         $result = Element::fold("p",
             Element::fold("span", "Hello, World!")
         )->unfold();
-        $this->assertEquals($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     public function testButtonWebComponentExtension()
@@ -39,7 +39,7 @@ class ElementTest extends TestCase
         $expected = '<button is="my-button">Save</button>';
         $result = Element::fold("my_button", "Save")
             ->extends('button')->unfold();
-        $this->assertEquals($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     public function testPage()
@@ -61,6 +61,21 @@ class ElementTest extends TestCase
                             , '<p>Done!</p>'
                           )
                     )->unfold();
-        $this->assertEquals($expected, $result);
+        $this->assertSame($expected, $result);
+    }
+
+    public function testAttributes()
+    {
+        $expected = '<container id="hello">';
+        $actual = Element::fold("container")->attr("id hello")->omitEndTag();
+        $this->assertSame($expected, $actual->unfold());
+
+        $expected = '<container id="goodbye">';
+        $actual = $actual->attr("id goodbye");
+        $this->assertSame($expected, $actual->unfold());
+
+        $expected = '<container id="hi">';
+        $actual = $actual->unfold("id hi");
+        $this->assertSame($expected, $actual);
     }
 }

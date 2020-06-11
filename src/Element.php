@@ -18,9 +18,9 @@ class Element
 
     protected $extends;
 
-    protected $omitEndTag = false;
+    protected $attributes;
 
-    protected $attributes = [];
+    protected $omitEndTag = false;
 
     static public function fold($element, ...$content)
     {
@@ -32,47 +32,41 @@ class Element
         $this->element = Type::sanitizeType($element, ESString::class)
             ->replace(["_" => "-"]);
         $this->content = Type::sanitizeType($content, ESArray::class);
+        $this->attributes = Shoop::dictionary([]);
     }
 
-    public function unfold()
+    public function unfold(string ...$attributes)
     {
-        return Shoop::string($this->compiledElement())->start("<")->plus(
-            $this->compiledAttributes()
-        )->end(">")->plus(
-            $this->content->each(function($value) {
-                if (is_string($value) || is_int($value)) {
-                    return (string) $value;
-
-                } elseif (is_a($value, Element::class) || is_subclass_of($value, Element::class)) {
-                    return $value->unfold();
-
-                }
-            })->join("")
-        )->plus(
-            ($this->omitEndTag) ? "" : Shoop::string($this->compiledElement())->start("</")->end(">")
-        )->unfold();
+        $this->attr(...$attributes);
+        $elem = $this->compiledElement();
+        $attr = $this->compiledAttributes();
+        $cont = $this->compiledContent();
+        return Shoop::string($elem)->start("<")->plus($attr)->end(">")
+            ->plus($cont)->plus(
+                ($this->omitEndTag)
+                    ? ""
+                    : Shoop::string($elem)->start("</")->end(">")
+            )->unfold();
     }
 
     public function attr(string ...$attributes): Element
     {
-        if ($this->attributes === null) {
-            $this->attributes = Shoop::array($attributes)->unfold();
-
-        } else {
-            $current = $this->attributes;
-            $new = $attributes;
-            $merged = array_merge($current, $new);
-            $unique = array_unique($merged);
-            $this->attributes = Shoop::array($unique)->unfold();
-
-        }
+        Shoop::array($attributes)->each(function($string) {
+                list($attribute, $value) = Shoop::string($string)
+                    ->divide(" ", false, 2);
+                $this->attributes = $this->attributes->plus($value, $attribute);
+            });
         return $this;
     }
 
     public function extends($extends): Element
     {
         $extends = Type::sanitizeType($extends, ESString::class);
-        $this->extends = $extends;
+        $elem = $this->element;
+
+        $this->element = $extends;
+        $this->attr("is {$elem}");
+
         return $this;
     }
 
@@ -94,16 +88,27 @@ class Element
 
     protected function compiledAttributes(): string
     {
-        $compiled = Shoop::array($this->attributes)->each(function($attribute) {
-            list($member, $value) = explode(" ", $attribute, 2);
-            return ($member === $value && strlen($member) > 0)
-                ? $member : "{$member}=\"{$value}\"";
-        });
+        return $this->attributes->each(function($value, $attribute) {
+                return ($attribute === $value && strlen($attribute) > 0)
+                    ? $attribute : "{$attribute}=\"{$value}\"";
 
-        if ($compiled->int()->isGreaterThanUnfolded(0)) {
-            return $compiled->join(" ")->start(" ");
-        }
-        return "";
+            })->isEmpty(function($result, $array) {
+                return ($result) ? "" : $array->join(" ")->start(" ");
+
+            });
+    }
+
+    protected function compiledContent()
+    {
+        return $this->content->each(function($value) {
+                if (is_string($value) || is_int($value)) {
+                    return (string) $value;
+
+                } elseif (is_a($value, Element::class) || is_subclass_of($value, Element::class)) {
+                    return $value->unfold();
+
+                }
+            })->join("");
     }
 
     public function __toString()
