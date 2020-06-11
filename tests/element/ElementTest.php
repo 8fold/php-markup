@@ -13,14 +13,10 @@ class ElementTest extends TestCase
     public function testHtmlComponent()
     {
         $expected = '<html></html>';
-
         $result = Element::fold("html");
         $this->assertSame($expected, $result->unfold());
 
         $expected = '<html id="my-component"></html>';
-        $result = Element::fold("html")->unfold("id my-component");
-        $this->assertSame($expected, $result);
-
         $result = Element::fold("html")->attr("id my-component")->unfold();
         $this->assertSame($expected, $result);
     }
@@ -73,9 +69,5 @@ class ElementTest extends TestCase
         $expected = '<container id="goodbye">';
         $actual = $actual->attr("id goodbye");
         $this->assertSame($expected, $actual->unfold());
-
-        $expected = '<container id="hi">';
-        $actual = $actual->unfold("id hi");
-        $this->assertSame($expected, $actual);
     }
 }

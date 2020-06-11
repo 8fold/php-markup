@@ -2,11 +2,6 @@
 
 namespace Eightfold\Markup\Html\Data\Attributes;
 
-/**
- * @version 1.0.0
- *
- * Aria attributes
- */
 abstract class Aria
 {
     static public function globals()

@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b43a3436854ea2fb1e8cab96183c91b3",
+    "content-hash": "bf6654cbe414684673cf626e5bbdb6a8",
     "packages": [
         {
             "name": "8fold/php-shoop",
-            "version": "0.3.14",
+            "version": "0.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/8fold/php-shoop.git",
-                "reference": "732ce1c46886ae4b86dd12cbdd99feb881293e2c"
+                "reference": "9c96c01c8854e80f63eb03cdcfc9d57cd1eac080"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/8fold/php-shoop/zipball/732ce1c46886ae4b86dd12cbdd99feb881293e2c",
-                "reference": "732ce1c46886ae4b86dd12cbdd99feb881293e2c",
+                "url": "https://api.github.com/repos/8fold/php-shoop/zipball/9c96c01c8854e80f63eb03cdcfc9d57cd1eac080",
+                "reference": "9c96c01c8854e80f63eb03cdcfc9d57cd1eac080",
                 "shasum": ""
             },
             "require": {
@@ -54,7 +54,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-06-06T19:41:37+00:00"
+            "time": "2020-06-11T14:11:41+00:00"
         },
         {
             "name": "league/commonmark",

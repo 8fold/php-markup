@@ -1,36 +1,36 @@
 {
-    "name": "8fold/php-markup",
-    "description": "8fold Markup seeks to make writing semi-structured data easier while allowing for more dynamism.",
-    "type": "library",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Josh Bruce",
-            "email": "josh@8fold.pro"
-        }
-    ],
-    "require": {
-        "php": ">=7.0",
-        "8fold/php-shoop": "0.3.*",
-        "nesbot/carbon": "2.35.*",
-        "league/commonmark": "1.4.*"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "9.1.*",
-        "phpunit/php-code-coverage": "8.0.*"
-    },
-    "autoload": {
-        "psr-4": {
-            "Eightfold\\Markup\\": "./src/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Eightfold\\Markup\\Tests\\": "./tests/"
-        }
-    },
-    "config": {
-        "preferred-install": "dist"
-    },
+  "name": "8fold/php-markup",
+  "description": "8fold Markup seeks to make writing semi-structured data easier while allowing for more dynamism.",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Josh Bruce",
+      "email": "josh@8fold.pro"
+    }
+  ],
+  "require": {
+    "php": ">=7.0",
+    "8fold/php-shoop": "0.4.*",
+    "nesbot/carbon": "2.35.*",
+    "league/commonmark": "1.4.*"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "9.1.*",
+    "phpunit/php-code-coverage": "8.0.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Eightfold\\Markup\\": "./src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Eightfold\\Markup\\Tests\\": "./tests/"
+    }
+  },
+  "config": {
+    "preferred-install": "dist"
+  },
 	"prefer-stable": true
 }

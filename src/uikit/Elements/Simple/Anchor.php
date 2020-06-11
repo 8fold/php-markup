@@ -2,6 +2,8 @@
 
 namespace Eightfold\Markup\UIKit\Elements\Simple;
 
+use Eightfold\Shoop\Shoop;
+
 use Eightfold\Markup\Html\Elements\HtmlElement;
 use Eightfold\Markup\Html;
 
@@ -18,8 +20,8 @@ class Anchor extends HtmlElement
 
     public function unfold(): string
     {
-        $attr = array_merge(["href {$this->href}"], $this->getAttr());
-        return Html::a($this->text)->attr(...$attr)->unfold();
+        $attributes = $this->attributes()->plus("href {$this->href}");
+        return Html::a($this->text)->attr(...$attributes)->unfold();
     }
 }
 

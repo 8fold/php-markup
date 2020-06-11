@@ -16,7 +16,7 @@ class Element
 
     protected $content;
 
-    protected $extends;
+    // protected $extends;
 
     protected $attributes;
 
@@ -35,28 +35,40 @@ class Element
         $this->attributes = Shoop::dictionary([]);
     }
 
-    public function unfold(string ...$attributes)
+    public function unfold()
     {
-        $this->attr(...$attributes);
-        $elem = $this->compiledElement();
-        $attr = $this->compiledAttributes();
-        $cont = $this->compiledContent();
-        return Shoop::string($elem)->start("<")->plus($attr)->end(">")
-            ->plus($cont)->plus(
+        return Shoop::string($this->element)
+            ->start("<")->plus($this->compiledAttributes())->end(">")
+            ->plus($this->compiledContent())->plus(
                 ($this->omitEndTag)
                     ? ""
-                    : Shoop::string($elem)->start("</")->end(">")
+                    : Shoop::string($this->element)->start("</")->end(">")
             )->unfold();
     }
 
     public function attr(string ...$attributes): Element
     {
+        if ($this->attributes === null) {
+            $this->attributes = Shoop::dictionary([]);
+        }
+
         Shoop::array($attributes)->each(function($string) {
-                list($attribute, $value) = Shoop::string($string)
+                list($attr, $value) = Shoop::string($string)
                     ->divide(" ", false, 2);
-                $this->attributes = $this->attributes->plus($value, $attribute);
+                $this->attributes = $this->attributes->plus($value, $attr);
             });
+
         return $this;
+    }
+
+    protected function attributes(): ESArray
+    {
+        if ($this->attributes === null) {
+            return Shoop::array([]);
+        }
+        return $this->attributes->each(function($value, $attr) {
+            return "{$attr} {$value}";
+        });
     }
 
     public function extends($extends): Element
@@ -78,12 +90,7 @@ class Element
 
     protected function compiledElement()
     {
-        $elem = $this->element;
-        if (strlen($this->extends) > 0) {
-            $elem = $this->extends;
-            $this->attributes[] = "is {$this->element}";
-        }
-        return $elem;
+        return $this->element;
     }
 
     protected function compiledAttributes(): string
