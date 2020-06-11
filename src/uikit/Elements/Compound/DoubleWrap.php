@@ -36,12 +36,12 @@ class DoubleWrap extends HtmlElement
         return $this;
     }
 
-    public function unfold(): string
+    public function unfold(string ...$attributes): string
     {
         return UIKit::{$this->outerElement}(
             UIKit::{$this->innerElement}(
                 ...$this->content
             )->attr(...$this->innerAttr)
-        )->attr(...$this->outerAttr)->unfold();
+        )->attr(...$this->outerAttr)->unfold(...$attributes);
     }
 }

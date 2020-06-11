@@ -26,14 +26,14 @@ class WebView extends HtmlElement
         $this->content = $content;
     }
 
-    public function unfold(): string
+    public function unfold(string ...$attributes): string
     {
         $head = Shoop::array([$this->pageTitle])->plus(...$this->meta);
         $result = UIKit::html(
             UIKit::head(...$head->unfold()),
             UIKit::body(...$this->content)->attr(...$this->bodyAttributes)
         );
-        return $result->unfold();
+        return $result->unfold(...$attributes);
     }
 
     public function meta(...$meta)

@@ -3,6 +3,8 @@
 namespace Eightfold\Markup\Html\Elements;
 
 use Eightfold\Shoop\Shoop;
+use Eightfold\Shoop\ESDictionary;
+use Eightfold\Shoop\ESArray;
 
 use Eightfold\Markup\Element;
 
@@ -37,75 +39,79 @@ abstract class HtmlElement extends Element
 
     protected function compiledAttributes(): string
     {
-        // TODO: Test beyond ordered
-        $ordered   = [];
-        $events    = [];
-        $aria      = [];
-        $data      = [];
-        $other     = [];
-        $boolean   = [];
-        $leftovers = [];
-        Shoop::array($this->attributes)->each(function($attribute) use
+        $ordered   = Shoop::dictionary([]);
+        $events    = Shoop::dictionary([]);
+        $aria      = Shoop::dictionary([]);
+        $data      = Shoop::dictionary([]);
+        $other     = Shoop::dictionary([]);
+        $boolean   = Shoop::dictionary([]);
+        $leftovers = Shoop::dictionary([]);
+
+        $this->attributes->each(function($value, $member) use
             (&$ordered, &$events, &$aria, &$data, &$other, &$boolean, &$leftovers) {
-            list($member, $value) = explode(" ", $attribute, 2);
+
+            $inAriaRoles = in_array($value, static::allAriaRoles()->unfold());
+            $inOrdered   = in_array($member, Ordered::order());
+            $inEvents    = in_array($member, static::optionalEventAttributes());
+            $inAria      = in_array($member, static::optionalAriaAttributes());
+            $inData      = Shoop::string($member)->startsWithUnfolded("data-");
+            $inOther     = in_array($member, array_merge(static::requiredAttributes(), static::optionalAttributes()));
+            $inBoolean   = in_array($member, Content::booleans());
 
             if ($member === "role") {
-                if (in_array($value, static::allAriaRoles()) && $value !== static::defaultAriaRole()) {
-                    $ordered[$member] = $value;
+                if ($inAriaRoles and $value !== static::defaultAriaRole()) {
+                    $ordered = $ordered->plus($value, $member);
                 }
 
-            } elseif (in_array($member, Ordered::order()) && in_array($member, array_merge(static::requiredAttributes(), static::optionalAttributes()))) {
-                $ordered[$member] = $value;
+            } elseif ($inOrdered and
+                in_array($member, array_merge(static::requiredAttributes(), static::optionalAttributes()))
+            ) {
+                $ordered = $ordered->plus($value, $member);
 
-            } elseif (in_array($member, static::optionalEventAttributes())) {
-                $events[$member] = $value;
+            } elseif ($inOptioneEventAttributes) {
+                $events = $events->plus($value, $member);
 
-            } elseif (in_array($member, static::optionalAriaAttributes())) {
-                $aria[$member] = $value;
+            } elseif ($inAria) {
+                $aria = $aria->plus($value, $member);
 
-            } elseif (Shoop::string($member)->startsWithUnfolded("data-")) {
-                $data[$member] = $value;
+            } elseif ($inData) {
+                $data = $data->plus($value, $member);
 
-            } elseif (in_array($member, array_merge(static::requiredAttributes(), static::optionalAttributes()))) {
-                $other[$member] = $value;
+            } elseif ($inOther) {
+                $other = $other->plus($value, $member);
 
-            } elseif (in_array($member, Content::booleans())) {
-                $boolean[$member] = $value;
+            } elseif ($inBoolean) {
+                $boolean = $boolean->plus($value, $member);
 
-            } else {
-                $leftovers[$member] = $value;
+            // } else {
+            //     if ($this->isKnownElement) {
+            //         $errorComment = "<!-- The {$member} attribute is not valid for the {$this->element} element -->";
+            //     }
+
+            //     $leftovers = $leftovers->plus($value, $member);
 
             }
         });
 
-        $order = [];
-        Shoop::array(Ordered::order())->each(function($value) use (&$ordered, &$order) {
-            if (array_key_exists($value, $ordered)) {
-                $order[$value] = $ordered[$value];
-            }
-        });
-
-        ksort($events, SORT_NATURAL | SORT_FLAG_CASE);
-        ksort($aria, SORT_NATURAL | SORT_FLAG_CASE);
-        ksort($data, SORT_NATURAL | SORT_FLAG_CASE);
-        ksort($other, SORT_NATURAL | SORT_FLAG_CASE);
-        ksort($boolean, SORT_NATURAL | SORT_FLAG_CASE);
-
-        $compiled = Shoop::dictionary(array_merge($order, $events, $aria, $data, $other, $boolean))
-            ->each(function($value, $member) {
-                if ($member === $value) {
-                    return $member;
-
-                } else {
-                    return "{$member}=\"{$value}\"";
-
+        $order = Shoop::dictionary([]);
+        Shoop::array(Ordered::order())->each(
+            function($member) use (&$ordered, &$order) {
+                if ($ordered->hasMemberUnfolded($member)) {
+                    $order = $order->plus($ordered->{$member}, $member);
                 }
             });
 
-        if ($compiled->int()->isGreaterThanUnfolded(0)) {
-            return $compiled->join(" ")->start(" ");
-        }
-        return "";
+        $this->attributes = Shoop::dictionary([])
+            ->plus(...$order->interleave())
+            ->plus(...$events->sortMembers()->interleave())
+            ->plus(...$aria->sortMembers()->interleave())
+            ->plus(...$data->sortMembers()->interleave())
+            ->plus(...$other->sortMembers()->interleave())
+            ->plus(...$boolean->sortMembers()->interleave())
+            // ->plus(...$leftovers->sortMembers()->interleave())
+            ->noEmpties();
+
+        return parent::compiledAttributes();
     }
 
     private function isKnownElement()
@@ -118,10 +124,11 @@ abstract class HtmlElement extends Element
 
     private function allAriaRoles()
     {
-        return array_merge([static::defaultAriaRole()], static::optionalAriaRoles());
+        return Shoop::array([static::defaultAriaRole()])
+            ->plus(...static::optionalAriaRoles());
     }
 
-    public function unfold()
+    public function unfold(): string
     {
         $this->compiledElement();
         $this->isKnownElement = $this->isKnownElement();
@@ -131,9 +138,12 @@ abstract class HtmlElement extends Element
         return $this->prefix . parent::unfold();
     }
 
-    protected function getAttr(): array
+    /**
+     * @deprecated
+     */
+    protected function getAttr(): ESArray
     {
-        return $this->attributes;
+        return $this->attributes();
     }
 
     /** HTML specification-related */

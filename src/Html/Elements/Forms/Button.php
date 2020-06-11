@@ -11,13 +11,6 @@ use Eightfold\Markup\Html\Data\Attributes\Aria;
 
 use Eightfold\Markup\Html\Data\Attributes\Content;
 
-/**
- * @version 1.0.0
- *
- * Button
- *
- *
- */
 class Button extends HtmlElement implements HtmlElementInterface
 {
     static public function elementName(): string

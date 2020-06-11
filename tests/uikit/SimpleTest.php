@@ -24,6 +24,13 @@ class SimpleTest extends TestCase
             'http://example.com'
         )->unfold();
         $this->assertEquals($expected, $result);
+
+        $expected = '<a id="hello" href="http://example.com">Hello, World!</a>';
+        $result = UIKit::anchor(
+            'Hello, World!',
+            'http://example.com'
+        )->attr("id hello")->unfold();
+        $this->assertEquals($expected, $result);
     }
 
     // public function testSimpleTable()

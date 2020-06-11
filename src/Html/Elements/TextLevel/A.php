@@ -10,13 +10,6 @@ use Eightfold\Markup\Html\Data\AriaRoles;
 
 use Eightfold\Markup\Html\Data\Attributes\Content;
 
-/**
- * @version 1.0.0
- *
- * A
- *
- *
- */
 class A extends HtmlElement implements HtmlElementInterface
 {
     static public function elementName(): string
@@ -66,13 +59,13 @@ class A extends HtmlElement implements HtmlElementInterface
     static public function optionalAriaRoles(): array
     {
         return [
-            Elements::button(),
-            Elements::checkbox(),
-            Elements::menuitem(),
-            Elements::menuitemcheckbox(),
-            Elements::menuitemradio(),
-            Elements::tab(),
-            Elements::treeitem()
+            AriaRoles::button(),
+            AriaRoles::checkbox(),
+            AriaRoles::menuitem(),
+            AriaRoles::menuitemcheckbox(),
+            AriaRoles::menuitemradio(),
+            AriaRoles::tab(),
+            AriaRoles::treeitem()
         ];
     }
 }

@@ -38,8 +38,7 @@ class SimpleList extends HtmlElement
 
         }
 
-        $attributes = $this->getAttr();
-        return Html::$container(...$listItems)->attr(...$attributes)->unfold();
+        return Html::$container(...$listItems)->attr(...$this->attributes())->unfold();
     }
 
     public function ordered(): SimpleList
