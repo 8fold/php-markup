@@ -14,4 +14,11 @@ class CompoundTest extends TestCase
         $result = UIKit::doubleWrap()->unfold();
         $this->assertEquals($expected, $result);
     }
+
+    public function testMarkdown()
+    {
+        $expected = "<p>Hello, World!</p>\n";
+        $actual = UIKit::markdown("Hello, World!");
+        $this->assertSame($expected, $actual->unfold());
+    }
 }
