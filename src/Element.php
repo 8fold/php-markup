@@ -16,8 +16,6 @@ class Element
 
     protected $content;
 
-    // protected $extends;
-
     protected $attributes;
 
     protected $omitEndTag = false;

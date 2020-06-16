@@ -116,9 +116,6 @@ abstract class HtmlElement extends Element
 
     private function isKnownElement()
     {
-        if (strlen($this->extends) > 0) {
-            return (in_array($this->extends, Elements::all()));
-        }
         return (in_array($this->element, Elements::all()));
     }
 
