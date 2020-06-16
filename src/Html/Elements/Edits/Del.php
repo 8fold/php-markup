@@ -10,13 +10,6 @@ use Eightfold\Markup\Html\Data\Attributes\AriaRoles;
 use Eightfold\Markup\Html\Data\Attributes\Content;
 use Eightfold\Markup\Html\Data\Attributes\EventOn;
 
-/**
- * @version 1.0.0
- *
- * Ins(ertion)
- *
- *
- */
 class Del extends HtmlElement implements HtmlElementInterface
 {
     static public function elementName(): string
