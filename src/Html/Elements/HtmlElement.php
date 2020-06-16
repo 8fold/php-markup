@@ -68,7 +68,7 @@ abstract class HtmlElement extends Element
             ) {
                 $ordered = $ordered->plus($value, $member);
 
-            } elseif ($inOptioneEventAttributes) {
+            } elseif ($inEvents) {
                 $events = $events->plus($value, $member);
 
             } elseif ($inAria) {
