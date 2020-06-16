@@ -141,24 +141,24 @@ class UIKit extends Html
     }
 
     private const CLASSES = [
-        'webView'   => UIKit\Elements\Pages\WebView::class,
+        'webView'   => Eightfold\Markup\UIKit\Elements\Pages\WebView::class,
         // 'form'      => UIKit\Elements\Forms\Form::class,
-        'listWith'  => UIKit\Elements\Simple\SimpleList::class,
-        'tableWith' => UIKit\Elements\Simple\SimpleTable::class,
-        'anchor'    => UIKit\Elements\Simple\Anchor::class,
-        'glyph'     => UIKit\Elements\Simple\Glyph::class,
-        'image'     => UIKit\Elements\Simple\Image::class,
+        'listWith'  => Eightfold\Markup\UIKit\Elements\Simple\SimpleList::class,
+        'tableWith' => Eightfold\Markup\UIKit\Elements\Simple\SimpleTable::class,
+        'anchor'    => Eightfold\Markup\UIKit\Elements\Simple\Anchor::class,
+        'glyph'     => Eightfold\Markup\UIKit\Elements\Simple\Glyph::class,
+        'image'     => Eightfold\Markup\UIKit\Elements\Simple\Image::class,
         // 'button'    => UIKit\Elements\FormControls\Button::class,
 
-        'stripeElements' => UIKit\Elements\FormControls\StripeElements::class,
-        'hiddenInput'    => UIKit\Elements\FormControls\InputHidden::class,
-        'fileInput'      => UIKit\Elements\FormControls\InputFile::class,
-        'textInput'      => UIKit\Elements\FormControls\InputText::class,
+        'stripeElements' => Eightfold\Markup\UIKit\Elements\FormControls\StripeElements::class,
+        'hiddenInput'    => Eightfold\Markup\UIKit\Elements\FormControls\InputHidden::class,
+        'fileInput'      => Eightfold\Markup\UIKit\Elements\FormControls\InputFile::class,
+        'textInput'      => Eightfold\Markup\UIKit\Elements\FormControls\InputText::class,
         // , 'user_card'    => UIKit\Elements\Simple\UserCard::class
 
         // , 'alert'            => UIKit\Elements\Compound\Alert::class
-        'doubleWrap' => UIKit\Elements\Compound\DoubleWrap::class,
-        'markdown'   => UIKit\Elements\Compound\Markdown::class
+        'doubleWrap' => Eightfold\Markup\UIKit\Elements\Compound\DoubleWrap::class,
+        'markdown'   => Eightfold\Markup\UIKit\Elements\Compound\Markdown::class
         // , 'primary_nav'      => UIKit\Elements\Compound\NavigationPrimary::class
         // , 'secondary_nav'    => UIKit\Elements\Compound\NavigationSecondary::class
         // , 'side_nav'         => UIKit\Elements\Compound\NavigationSide::class
