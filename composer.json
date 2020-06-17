@@ -11,7 +11,7 @@
   ],
   "require": {
     "php": ">=7.0",
-    "8fold/php-shoop": "0.4.*",
+    "8fold/php-shoop-extras": "0.1.*",
     "nesbot/carbon": "2.35.*",
     "league/commonmark": "1.4.*"
   },
