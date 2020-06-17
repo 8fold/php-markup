@@ -17,7 +17,7 @@ class CompoundTest extends TestCase
 
     public function testMarkdown()
     {
-        $expected = "<p>Hello, World!</p>\n";
+        $expected = "<p>Hello, World!</p>";
         $actual = UIKit::markdown("Hello, World!");
         $this->assertSame($expected, $actual->unfold());
     }

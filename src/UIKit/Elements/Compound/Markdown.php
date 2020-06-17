@@ -14,8 +14,6 @@ use Eightfold\ShoopExtras\Shoop;
 
 class Markdown extends HtmlElement
 {
-    // private $markdown = '';
-
     private $config = [
         'html_input' => 'strip',
         'allow_unsafe_links' => false,
@@ -33,15 +31,5 @@ class Markdown extends HtmlElement
     {
         return Shoop::markdown($this->markdown)
             ->html([], [], true, true, $this->config);
-        // // Obtain a pre-configured Environment with all the standard CommonMark parsers/renderers ready-to-go
-        // $environment = Environment::createCommonMarkEnvironment();
-
-        // // Add this extension
-        // $environment->addExtension(new TableExtension());
-
-        // // Instantiate the converter engine and start converting some Markdown!
-        // $converter = new Converter(new DocParser($environment), new HtmlRenderer($environment));
-
-        // return $converter->convertToHtml($this->markdown);
     }
 }
