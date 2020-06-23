@@ -1,11 +1,10 @@
 # Contributing
 
-Contributions are **welcome** and will be **credited**. We accept contributions via Pull Requests on [GitHub](https://github.com/8fold/php-markup).
+Contributions are **welcome** and will be **credited**. We accept contributions via Pull Requests on [GitHub](https://github.com/8fold/laravel-provider).
 
 ## Goals
 
-- Readability over speed over cleverness.
-- Fail gracefully not by blowing things up.
+- A simple, flexible Service Provider and routes for common use cases
 
 ### Overall
 
