@@ -9,7 +9,7 @@ use Eightfold\Markup\Html\Data\Elements;
 use Eightfold\Markup\Html\Data\AriaRoles;
 use Eightfold\Markup\Html\Data\Attributes\Content;
 
-class Div extends HtmlElement implements HtmlElementInterface
+class Details extends HtmlElement implements HtmlElementInterface
 {
     static public function elementName(): string
     {
