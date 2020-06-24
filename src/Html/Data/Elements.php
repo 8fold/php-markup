@@ -242,6 +242,7 @@ class Elements
             self::a(),
             self::audio(), // if the controls attribute is present
             self::button(),
+            self::details(),
             self::embed(),
             self::iframe(),
             self::img(), // if the usemap attribute is present
@@ -250,6 +251,7 @@ class Elements
             self::label(),
             self::object(), // if the usemap attribute is present
             self::select(),
+            self::summary(),
             self::textarea(),
             self::video() // if controls attribute is present
         );
@@ -568,6 +570,7 @@ class Elements
     {
         return ['del'];
     }
+
     static public function dfn(): array
     {
         return ['dfn'];
@@ -991,5 +994,16 @@ class Elements
     static public function th(): array
     {
         return ['th'];
+    }
+
+    /** Interactive content */
+    static public function details(): array
+    {
+        return ['details'];
+    }
+
+    static public function summary(): array
+    {
+        return ['summary'];
     }
 }
