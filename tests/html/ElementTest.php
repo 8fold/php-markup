@@ -113,4 +113,14 @@ class ElementTest extends TestCase
         $actual = Html::abbr("hi")->attr("title Hello");
         $this->assertEquals($expected, $actual->unfold());
     }
+
+    public function testDetailsAndSummary()
+    {
+        $expected = '<details><summary>Hello</summary><p>Here it is.</p></details>';
+        $actual = Html::details(
+            Html::summary("Hello"),
+            Html::p("Here it is.")
+        );
+        $this->assertEquals($expected, $actual->unfold());
+    }
 }
