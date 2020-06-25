@@ -29,10 +29,9 @@ class Image extends HtmlElement
 
     public function unfold(): string
     {
-        $attr = array_merge(
-            $this->getAttr(),
-            ["src ". $this->src],
-            ["alt ". $this->alt]
+        $attr = $this->getAttr()->plus(
+            "src ". $this->src,
+            "alt ". $this->alt
         );
         return Html::img()->attr(...$attr)->unfold();
     }

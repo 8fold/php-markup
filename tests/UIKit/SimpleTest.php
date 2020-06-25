@@ -92,4 +92,11 @@ class SimpleTest extends TestCase
         )->description(1, 3)->unfold();
         $this->assertEquals($expected, $result);
     }
+
+    public function testSimpleImage()
+    {
+        $expected = '<img src="https://path.to/image.jpg" alt="Alt text">';
+        $actual = UIKit::image("Alt text", "https://path.to/image.jpg");
+        $this->assertEquals($expected, $actual->unfold());
+    }
 }
