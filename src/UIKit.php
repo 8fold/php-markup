@@ -22,6 +22,24 @@ class UIKit extends Html
         return new $class(...$content);
     }
 
+    static public function pagination(
+        $currentPage,
+        $itemTotal,
+        $linkPrefix = "/feed/page",
+        $itemLimit = 10,
+        $pageLimit = 7
+    )
+    {
+        $class = self::class("pagination", self::CLASSES)->unfold();
+        return new $class(
+            $currentPage,
+            $itemTotal,
+            $linkPrefix,
+            $itemLimit,
+            $pageLimit
+        );
+    }
+
     static public function tableWith(...$rows)
     {
         $class = self::class("tableWith", self::CLASSES)->unfold();
@@ -158,7 +176,8 @@ class UIKit extends Html
 
         // , 'alert'            => UIKit\Elements\Compound\Alert::class
         'doubleWrap' => \Eightfold\Markup\UIKit\Elements\Compound\DoubleWrap::class,
-        'markdown'   => \Eightfold\Markup\UIKit\Elements\Compound\Markdown::class
+        'markdown'   => \Eightfold\Markup\UIKit\Elements\Compound\Markdown::class,
+        'pagination' => \Eightfold\Markup\UIKit\Elements\Compound\Pagination::class
         // , 'primary_nav'      => UIKit\Elements\Compound\NavigationPrimary::class
         // , 'secondary_nav'    => UIKit\Elements\Compound\NavigationSecondary::class
         // , 'side_nav'         => UIKit\Elements\Compound\NavigationSide::class
