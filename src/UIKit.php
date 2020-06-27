@@ -24,19 +24,19 @@ class UIKit extends Html
 
     static public function pagination(
         $currentPage,
-        $itemTotal,
+        $totalItems,
         $linkPrefix = "/feed/page",
-        $itemLimit = 10,
-        $pageLimit = 7
+        $totalItemsPerPage = 10,
+        $middleLimit = 5
     )
     {
         $class = self::class("pagination", self::CLASSES)->unfold();
         return new $class(
             $currentPage,
-            $itemTotal,
+            $totalItems,
             $linkPrefix,
-            $itemLimit,
-            $pageLimit
+            $totalItemsPerPage,
+            $middleLimit
         );
     }
 

@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "8fold/php-shoop",
-            "version": "0.4.7",
+            "version": "0.4.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/8fold/php-shoop.git",
-                "reference": "e7118916061240859154ec2b94797eb7cee736c0"
+                "reference": "24bc911cb29634e8a5e7e0c25ccf84814ae4b43f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/8fold/php-shoop/zipball/e7118916061240859154ec2b94797eb7cee736c0",
-                "reference": "e7118916061240859154ec2b94797eb7cee736c0",
+                "url": "https://api.github.com/repos/8fold/php-shoop/zipball/24bc911cb29634e8a5e7e0c25ccf84814ae4b43f",
+                "reference": "24bc911cb29634e8a5e7e0c25ccf84814ae4b43f",
                 "shasum": ""
             },
             "require": {
@@ -54,7 +54,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-06-26T17:11:14+00:00"
+            "time": "2020-06-27T01:42:22+00:00"
         },
         {
             "name": "8fold/php-shoop-extras",

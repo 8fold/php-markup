@@ -15,86 +15,194 @@ use Eightfold\Markup\UIKit;
 class Pagination extends HtmlElement
 {
     private $currentPage;
-    private $itemTotal;
+    private $totalItems;
     private $linkPrefix;
-    private $itemLimit;
-    private $pageLimit;
+    private $totalItemsPerPage;
+    private $middleLimit;
 
-    public function __construct($currentPage, $itemTotal, $linkPrefix = "/feed/page", $itemLimit = 10, $pageLimit = 7)
+    public function __construct(
+        $currentPage,
+        $totalItems,
+        $linkPrefix = "/feed/page",
+        $totalItemsPerPage = 10,
+        $middleLimit = 5
+    )
     {
+        $this->totalItems = Type::sanitizeType($totalItems, ESInt::class);
+        $this->totalItemsPerPage = Type::sanitizeType($totalItemsPerPage, ESInt::class);
+        $this->middleLimit = Type::sanitizeType($middleLimit, ESInt::class)
+            ->isOdd(function($result, $int) {
+                return ($result) ? $int : $int->plus(1);
+            });
+
         $this->currentPage = Type::sanitizeType($currentPage, ESInt::class);
-        $this->itemTotal = Type::sanitizeType($itemTotal, ESInt::class);
+
         $this->linkPrefix = Type::sanitizeType($linkPrefix, ESString::class);
-        $this->itemLimit = Type::sanitizeType($itemLimit, ESInt::class);
-        $this->pageLimit = Type::sanitizeType($pageLimit, ESInt::class);
     }
 
-    public function pageCount(): ESInt
+    public function totalItems(): ESInt
     {
-        return Shoop::int($this->itemTotal)->roundUp($this->itemLimit);
+        return $this->totalItems;
     }
 
-    public function hasHiddenPages(): ESBool
+    public function totalItemsPerPage(): ESInt
     {
-        return $this->pageCount()->isGreaterThan($this->pageLimit);
+        return $this->totalItemsPerPage;
+    }
+
+    public function middleLimit()
+    {
+        return $this->middleLimit;
+    }
+
+    public function currentPage(): ESInt
+    {
+        return $this->currentPage;
+    }
+
+    public function linkPrefix(): ESString
+    {
+        return $this->linkPrefix;
+    }
+
+    public function totalPages(): ESInt
+    {
+        return Shoop::int($this->totalItems())->roundUp($this->totalItemsPerPage);
+    }
+
+    public function totalLinksToDisplay()
+    {
+        $total = $this->totalItems()->roundDown($this->totalItemsPerPage());
+        if ($total->isGreaterThanUnfolded($this->middleLimit())) {
+            return $this->middleLimit()->plus(2);
+        }
+        return $this->totalItems()->roundDown($this->totalItemsPerPage());
+    }
+
+    public function totalMiddleSurrounding()
+    {
+        return $this->middleLimit()->roundDown(2);
+    }
+    public function firstPageNumber()
+    {
+        return Shoop::int(1);
+    }
+
+    public function lastPageNumber()
+    {
+        return $this->totalPages();
+    }
+
+    public function secondPageNumber()
+    {
+        if ($this->totalLinksToDisplay()->isLessThanOrEqualUnfolded(2)) {
+            // if the number of pages is less than or equal to 2 always return 0
+            return Shoop::int(0);
+
+        } elseif ($this->currentPage()->minus($this->totalMiddleSurrounding())->isLessThanOrEqualUnfolded(2)) {
+            // if the number of pages is less than middleLimit + 2 always return 2
+            // 1 2 3 4 5* 6 ... 10
+            return Shoop::int(2);
+
+        } elseif ($this->currentPage()->isGreaterThanUnfolded($this->totalPages()->minus($this->middleLimit())->plus(1))) {
+            // if the current page is greater than or equal to totalPages - middleLimit + 1 always return
+            // totalPages - middleLimit + 1
+            // 1 ... 5 6 7 8* 9 10
+            return $this->totalPages()->minus($this->middleLimit());
+
+        } else {
+            // 1 ... 4 5 6* 7 8 ... 10
+            return $this->currentPage()->minus($this->totalMiddleSurrounding());
+
+        }
+    }
+
+    public function penultimatePageNumber()
+    {
+        if ($this->totalLinksToDisplay()->isLessThanOrEqualUnfolded(2)) {
+            // if the number of pages is less than or equal to 2 always return 0
+            return Shoop::int(0);
+
+        } elseif ($this->totalPages()->isLessThanOrEqualUnfolded($this->firstPageNumber()->plus($this->totalMiddleSurrounding()))) {
+            return $this->totalPages()->minus(1);
+
+        } else {
+            return $this->secondPageNumber()->plus($this->middleLimit()->minus(1))
+                ->isGreaterThanOrEqual($this->totalPages(), function($result, $int) {
+                    if ($result) {
+                        return $this->totalPages()->minus(1);
+                    }
+                    return $this->secondPageNumber()->plus($this->middleLimit()->minus(1));
+                });
+        }
+    }
+
+    public function middleRange()
+    {
+        return $this->secondPageNumber()->range($this->penultimatePageNumber())->noEmpties();
     }
 
     public function unfold(): string
     {
-        if ($this->pageCount()->isUnfolded(1)) {
+        if ($this->totalPages()->isUnfolded(1)) {
             return "";
 
-        }
-
-        if ($this->hasHiddenPages()->unfold()) {
-            $start = 0;
-            $end = 0;
-            $links = Shoop::array([
-                $this->anchorFor($this->currentPage->plus(1)),
-                $this->anchorFor($this->currentPage->minus(1)),
-                $this->anchorFor(1)
-
-            ])->plus(...
-                $this->pageCount()->minus(2)->roundDown(2)
-                ->isOdd(function($result, $int) use (&$start, &$end) {
-                    $midCount = ($result) ? $int : $int->plus(1);
-                    $endCapCount = $midCount->roundDown(2);
-                    $start = $this->currentPage->minus($endCapCount);
-                    $end = $this->currentPage->plus($endCapCount);
-                    return Shoop::int($start)->range($end);
-
-                })->each(function($pageNumber) {
-                    return $this->anchorFor($pageNumber);
-
-                })
-            )->plus(
-                $this->anchorFor($this->pageCount())
-
+        } elseif ($this->totalPages()->isUnfolded(2)) {
+            return UIKit::nav(
+                UIKit::listWith(...
+                    Shoop::array([$this->anchorFor(1), $this->anchorFor(2)])
+                )
             );
-            $class = "has-hidden-pages";
-            if ($start->minus(1)->is(1)->unfold() and $end->plus(1)->isNot($this->pageCount())->unfold()) {
-                $class = "has-hidden-pages-next";
-
-            } elseif ($start->minus(1)->isNot(1)->unfold() and $end->plus(1)->is($this->pageCount())->unfold()) {
-                $class = "has-hidden-pages-previous";
-
-            }
-            return UIKit::nav(UIKit::listWith(...$links))
-                ->attr("class {$class}", "aria-label Pagination navigation", "role navigation");
-
-        } else {
-            $links = $this->pageCount()->range(1)->each(function($pageNumber) {
-                return $this->anchorFor($pageNumber);
-            });
 
         }
-        return UIKit::nav(UIKit::listWith(...$links))
-            ->attr("aria-label Pagination navigation", "role navigation");
+
+        $previous = $this->anchorFor(1);
+        if ($this->currentPage()->minus(1)->isGreaterThanUnfolded(1)) {
+            $previous = $this->anchorFor($this->currentPage()->minus(1));
+
+        } elseif ($this->currentPage()->isUnfolded(1)) {
+            $previous = "";
+
+        }
+
+        $next = $this->anchorFor($this->currentPage()->plus(1));
+        if ($this->currentPage()->plus(1)->isGreaterThanUnfolded($this->totalPages())) {
+            $next = $this->anchorFor($this->totalPages());
+
+        } elseif ($this->currentPage()->isUnfolded($this->totalPages())) {
+            $next = "";
+
+        }
+
+        $links = $this->secondPageNumber()->range($this->penultimatePageNumber())
+            ->each(function($pageNumber) {
+                return $this->anchorFor($pageNumber);
+            })->start($this->anchorFor(1))->end($this->anchorFor($this->totalPages()));
+
+        $hasPrevious = $this->currentPage()->isGreaterThanUnfolded(1);
+        $hasNext = $this->currentPage()->isLessThanUnfolded($this->totalPages());
+
+        $navClass = "class pagination"; // both
+        if (! $hasNext and $hasPrevious) {
+            $navClass = "class pagination-previous";
+
+        } elseif ($hasNext and ! $hasPrevious) {
+            $navClass = "class pagination-next";
+
+        }
+
+        return UIKit::nav(
+            UIKit::listWith(...
+                Shoop::array([$previous, $next])->plus(...$links)->noEmpties()
+            )
+        )->attr($navClass);
     }
 
-    private function anchorFor($pageNumber)
+    private function anchorFor($pageNumber, $isNext = false, $isPrevious = false)
     {
         $pageNumber = Type::sanitizeType($pageNumber, ESInt::class)->unfold();
+        $isNext = Type::sanitizeType($isNext, ESBool::class)->unfold();
+        $isPrevious = Type::sanitizeType($isPrevious, ESBool::class)->unfold();
         $link = UIKit::anchor(
             $pageNumber,
             $this->linkPrefix->plus("/{$pageNumber}")
@@ -105,6 +213,13 @@ class Pagination extends HtmlElement
                 "aria-current true",
                 "class current"
             );
+
+        } elseif ($isNext and ! $isPrevious) {
+            $link = $link->attr("class next");
+
+        } elseif (! $isNext and $isPrevious) {
+            $link = $link->attr("class previous");
+
         }
         return $link;
     }
