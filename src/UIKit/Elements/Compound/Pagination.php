@@ -152,7 +152,7 @@ class Pagination extends HtmlElement
                 UIKit::listWith(...
                     Shoop::array([$this->anchorFor(1), $this->anchorFor(2)])
                 )
-            );
+            )->attr("class pagination");
 
         }
 
@@ -182,12 +182,12 @@ class Pagination extends HtmlElement
         $hasPrevious = $this->currentPage()->isGreaterThanUnfolded(1);
         $hasNext = $this->currentPage()->isLessThanUnfolded($this->totalPages());
 
-        $navClass = "class pagination"; // both
+        $navClass = "class pagination next previous"; // both
         if (! $hasNext and $hasPrevious) {
-            $navClass = "class pagination-previous";
+            $navClass = "class pagination previous";
 
         } elseif ($hasNext and ! $hasPrevious) {
-            $navClass = "class pagination-next";
+            $navClass = "class pagination next";
 
         }
 
