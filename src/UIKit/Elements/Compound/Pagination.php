@@ -149,8 +149,10 @@ class Pagination extends HtmlElement
 
         } elseif ($this->totalPages()->isUnfolded(2)) {
             return UIKit::nav(
-                UIKit::listWith(...
-                    Shoop::array([$this->anchorFor(1), $this->anchorFor(2)])
+                UIKit::listWith(
+                    UIKit::listWith(...
+                        Shoop::array([$this->anchorFor(1), $this->anchorFor(2)])
+                    )->attr("class page-links")
                 )
             )->attr("class pagination");
 
