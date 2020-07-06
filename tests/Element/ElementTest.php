@@ -19,6 +19,10 @@ class ElementTest extends TestCase
         $expected = '<html id="my-component"></html>';
         $result = Element::fold("html")->attr("id my-component")->unfold();
         $this->assertSame($expected, $result);
+
+        $expected = '<html></html>';
+        $actual = Element::html();
+        $this->assertEquals($expected, $actual->unfold());
     }
 
     public function testParagraphSpanComponent()
