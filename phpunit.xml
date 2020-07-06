@@ -10,6 +10,9 @@
         <testsuite name="uikit">
           <directory>./tests/UIKit</directory>
         </testsuite>
+        <testsuite name="fee">
+          <directory>./tests/Feed/Rss</directory>
+        </testsuite>
     </testsuites>
     <php>
         <ini name="display_errors" value="On" />

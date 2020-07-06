@@ -88,12 +88,6 @@ class CompoundTest extends TestCase
     public function testMiddleRange()
     {
         $expected = [];
-        $actual = UIKit::pagination(1, 2)->middleRange();
-        $this->assertEquals($expected, $actual->unfold());
-
-        $expected = [2];
-        $actual = UIKit::pagination(1, 30)->middleRange();
-        $this->assertEquals($expected, $actual->unfold());
 
         $expected = [2, 3, 4, 5, 6];
         $actual = UIKit::pagination(1, 100)->middleRange();
@@ -122,43 +116,43 @@ class CompoundTest extends TestCase
         $actual = UIKit::pagination(1, 10);
         $this->assertEquals($expected, $actual->unfold());
 
-        $expected = '<nav><ul><li><a class="current" href="/feed/page/1" aria-label="Current page, page 1">1</a></li><li><a href="/feed/page/2" aria-label="Goto page 2">2</a></li></ul></nav>';
+        $expected = '<nav class="pagination"><ul><li><ul class="page-links"><li><a class="current" href="/feed/page/1" aria-label="Current page, page 1">1</a></li><li><a href="/feed/page/2" aria-label="Goto page 2">2</a></li></ul></li></ul></nav>';
         $actual = UIKit::pagination(1, 20);
         $this->assertEquals($expected, $actual->unfold());
 
-        $expected = '<nav><ul><li><a href="/feed/page/1" aria-label="Goto page 1">1</a></li><li><a class="current" href="/feed/page/2" aria-label="Current page, page 2">2</a></li></ul></nav>';
+        $expected = '<nav class="pagination"><ul><li><ul class="page-links"><li><a href="/feed/page/1" aria-label="Goto page 1">1</a></li><li><a class="current" href="/feed/page/2" aria-label="Current page, page 2">2</a></li></ul></li></ul></nav>';
         $actual = UIKit::pagination(2, 20);
         $this->assertEquals($expected, $actual->unfold());
 
-        $expected = '<nav class="pagination-next"><ul><li><a href="/feed/page/2" aria-label="Goto page 2">2</a></li><li><a class="current" href="/feed/page/1" aria-label="Current page, page 1">1</a></li><li><a href="/feed/page/2" aria-label="Goto page 2">2</a></li><li><a href="/feed/page/3" aria-label="Goto page 3">3</a></li></ul></nav>';
+        $expected = '<nav class="pagination next"><ul><li><a href="/feed/page/2" aria-label="Goto page 2">2</a></li><li><a class="current" href="/feed/page/1" aria-label="Current page, page 1">1</a></li><li><a href="/feed/page/2" aria-label="Goto page 2">2</a></li><li><a href="/feed/page/3" aria-label="Goto page 3">3</a></li></ul></nav>';
         $actual = UIKit::pagination(1, 30);
         $this->assertEquals($expected, $actual->unfold());
 
-        $expected = '<nav class="pagination"><ul><li><a href="/feed/page/1" aria-label="Goto page 1">1</a></li><li><a href="/feed/page/3" aria-label="Goto page 3">3</a></li><li><a href="/feed/page/1" aria-label="Goto page 1">1</a></li><li><a class="current" href="/feed/page/2" aria-label="Current page, page 2">2</a></li><li><a href="/feed/page/3" aria-label="Goto page 3">3</a></li></ul></nav>';
+        $expected = '<nav class="pagination next previous"><ul><li><a href="/feed/page/1" aria-label="Goto page 1">1</a></li><li><a href="/feed/page/3" aria-label="Goto page 3">3</a></li><li><a href="/feed/page/1" aria-label="Goto page 1">1</a></li><li><a class="current" href="/feed/page/2" aria-label="Current page, page 2">2</a></li><li><a href="/feed/page/3" aria-label="Goto page 3">3</a></li></ul></nav>';
         $actual = UIKit::pagination(2, 30);
         $this->assertEquals($expected, $actual->unfold());
 
-        $expected = '<nav class="pagination-previous"><ul><li><a href="/feed/page/2" aria-label="Goto page 2">2</a></li><li><a class="current" href="/feed/page/3" aria-label="Current page, page 3">3</a></li><li><a href="/feed/page/1" aria-label="Goto page 1">1</a></li><li><a href="/feed/page/2" aria-label="Goto page 2">2</a></li><li><a class="current" href="/feed/page/3" aria-label="Current page, page 3">3</a></li></ul></nav>';
+        $expected = '<nav class="pagination previous"><ul><li><a href="/feed/page/2" aria-label="Goto page 2">2</a></li><li><a class="current" href="/feed/page/3" aria-label="Current page, page 3">3</a></li><li><a href="/feed/page/1" aria-label="Goto page 1">1</a></li><li><a href="/feed/page/2" aria-label="Goto page 2">2</a></li><li><a class="current" href="/feed/page/3" aria-label="Current page, page 3">3</a></li></ul></nav>';
         $actual = UIKit::pagination(3, 30);
         $this->assertEquals($expected, $actual->unfold());
 
-        $expected = '<nav class="pagination-next"><ul><li><a href="/feed/page/2" aria-label="Goto page 2">2</a></li><li><a class="current" href="/feed/page/1" aria-label="Current page, page 1">1</a></li><li><a href="/feed/page/2" aria-label="Goto page 2">2</a></li><li><a href="/feed/page/3" aria-label="Goto page 3">3</a></li><li><a href="/feed/page/4" aria-label="Goto page 4">4</a></li><li><a href="/feed/page/5" aria-label="Goto page 5">5</a></li><li><a href="/feed/page/6" aria-label="Goto page 6">6</a></li><li><a href="/feed/page/10" aria-label="Goto page 10">10</a></li></ul></nav>';
+        $expected = '<nav class="pagination next"><ul><li><a href="/feed/page/2" aria-label="Goto page 2">2</a></li><li><a class="current" href="/feed/page/1" aria-label="Current page, page 1">1</a></li><li><a href="/feed/page/2" aria-label="Goto page 2">2</a></li><li><a href="/feed/page/3" aria-label="Goto page 3">3</a></li><li><a href="/feed/page/4" aria-label="Goto page 4">4</a></li><li><a href="/feed/page/5" aria-label="Goto page 5">5</a></li><li><a href="/feed/page/6" aria-label="Goto page 6">6</a></li><li><a href="/feed/page/10" aria-label="Goto page 10">10</a></li></ul></nav>';
         $actual = UIKit::pagination(1, 100);
         $this->assertEquals($expected, $actual->unfold());
 
-        $expected = '<nav class="pagination"><ul><li><a href="/feed/page/3" aria-label="Goto page 3">3</a></li><li><a href="/feed/page/5" aria-label="Goto page 5">5</a></li><li><a href="/feed/page/1" aria-label="Goto page 1">1</a></li><li><a href="/feed/page/2" aria-label="Goto page 2">2</a></li><li><a href="/feed/page/3" aria-label="Goto page 3">3</a></li><li><a class="current" href="/feed/page/4" aria-label="Current page, page 4">4</a></li><li><a href="/feed/page/5" aria-label="Goto page 5">5</a></li><li><a href="/feed/page/6" aria-label="Goto page 6">6</a></li><li><a href="/feed/page/10" aria-label="Goto page 10">10</a></li></ul></nav>';
+        $expected = '<nav class="pagination next previous"><ul><li><a href="/feed/page/3" aria-label="Goto page 3">3</a></li><li><a href="/feed/page/5" aria-label="Goto page 5">5</a></li><li><a href="/feed/page/1" aria-label="Goto page 1">1</a></li><li><a href="/feed/page/2" aria-label="Goto page 2">2</a></li><li><a href="/feed/page/3" aria-label="Goto page 3">3</a></li><li><a class="current" href="/feed/page/4" aria-label="Current page, page 4">4</a></li><li><a href="/feed/page/5" aria-label="Goto page 5">5</a></li><li><a href="/feed/page/6" aria-label="Goto page 6">6</a></li><li><a href="/feed/page/10" aria-label="Goto page 10">10</a></li></ul></nav>';
         $actual = UIKit::pagination(4, 100);
         $this->assertEquals($expected, $actual->unfold());
 
-        $expected = '<nav class="pagination"><ul><li><a href="/feed/page/4" aria-label="Goto page 4">4</a></li><li><a href="/feed/page/6" aria-label="Goto page 6">6</a></li><li><a href="/feed/page/1" aria-label="Goto page 1">1</a></li><li><a href="/feed/page/3" aria-label="Goto page 3">3</a></li><li><a href="/feed/page/4" aria-label="Goto page 4">4</a></li><li><a class="current" href="/feed/page/5" aria-label="Current page, page 5">5</a></li><li><a href="/feed/page/6" aria-label="Goto page 6">6</a></li><li><a href="/feed/page/7" aria-label="Goto page 7">7</a></li><li><a href="/feed/page/10" aria-label="Goto page 10">10</a></li></ul></nav>';
+        $expected = '<nav class="pagination next previous"><ul><li><a href="/feed/page/4" aria-label="Goto page 4">4</a></li><li><a href="/feed/page/6" aria-label="Goto page 6">6</a></li><li><a href="/feed/page/1" aria-label="Goto page 1">1</a></li><li><a href="/feed/page/3" aria-label="Goto page 3">3</a></li><li><a href="/feed/page/4" aria-label="Goto page 4">4</a></li><li><a class="current" href="/feed/page/5" aria-label="Current page, page 5">5</a></li><li><a href="/feed/page/6" aria-label="Goto page 6">6</a></li><li><a href="/feed/page/7" aria-label="Goto page 7">7</a></li><li><a href="/feed/page/10" aria-label="Goto page 10">10</a></li></ul></nav>';
         $actual = UIKit::pagination(5, 100);
         $this->assertEquals($expected, $actual->unfold());
 
-        $expected = '<nav class="pagination"><ul><li><a href="/feed/page/7" aria-label="Goto page 7">7</a></li><li><a href="/feed/page/9" aria-label="Goto page 9">9</a></li><li><a href="/feed/page/1" aria-label="Goto page 1">1</a></li><li><a href="/feed/page/5" aria-label="Goto page 5">5</a></li><li><a href="/feed/page/6" aria-label="Goto page 6">6</a></li><li><a href="/feed/page/7" aria-label="Goto page 7">7</a></li><li><a class="current" href="/feed/page/8" aria-label="Current page, page 8">8</a></li><li><a href="/feed/page/9" aria-label="Goto page 9">9</a></li><li><a href="/feed/page/10" aria-label="Goto page 10">10</a></li></ul></nav>';
+        $expected = '<nav class="pagination next previous"><ul><li><a href="/feed/page/7" aria-label="Goto page 7">7</a></li><li><a href="/feed/page/9" aria-label="Goto page 9">9</a></li><li><a href="/feed/page/1" aria-label="Goto page 1">1</a></li><li><a href="/feed/page/5" aria-label="Goto page 5">5</a></li><li><a href="/feed/page/6" aria-label="Goto page 6">6</a></li><li><a href="/feed/page/7" aria-label="Goto page 7">7</a></li><li><a class="current" href="/feed/page/8" aria-label="Current page, page 8">8</a></li><li><a href="/feed/page/9" aria-label="Goto page 9">9</a></li><li><a href="/feed/page/10" aria-label="Goto page 10">10</a></li></ul></nav>';
         $actual = UIKit::pagination(8, 100);
         $this->assertEquals($expected, $actual->unfold());
 
-        $expected = '<nav class="pagination-previous"><ul><li><a href="/feed/page/9" aria-label="Goto page 9">9</a></li><li><a class="current" href="/feed/page/10" aria-label="Current page, page 10">10</a></li><li><a href="/feed/page/1" aria-label="Goto page 1">1</a></li><li><a href="/feed/page/5" aria-label="Goto page 5">5</a></li><li><a href="/feed/page/6" aria-label="Goto page 6">6</a></li><li><a href="/feed/page/7" aria-label="Goto page 7">7</a></li><li><a href="/feed/page/8" aria-label="Goto page 8">8</a></li><li><a href="/feed/page/9" aria-label="Goto page 9">9</a></li><li><a class="current" href="/feed/page/10" aria-label="Current page, page 10">10</a></li></ul></nav>';
+        $expected = '<nav class="pagination previous"><ul><li><a href="/feed/page/9" aria-label="Goto page 9">9</a></li><li><a class="current" href="/feed/page/10" aria-label="Current page, page 10">10</a></li><li><a href="/feed/page/1" aria-label="Goto page 1">1</a></li><li><a href="/feed/page/5" aria-label="Goto page 5">5</a></li><li><a href="/feed/page/6" aria-label="Goto page 6">6</a></li><li><a href="/feed/page/7" aria-label="Goto page 7">7</a></li><li><a href="/feed/page/8" aria-label="Goto page 8">8</a></li><li><a href="/feed/page/9" aria-label="Goto page 9">9</a></li><li><a class="current" href="/feed/page/10" aria-label="Current page, page 10">10</a></li></ul></nav>';
         $actual = UIKit::pagination(10, 100);
         $this->assertEquals($expected, $actual->unfold());
     }

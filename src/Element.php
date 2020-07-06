@@ -25,6 +25,11 @@ class Element
         return new static($element, ...$content);
     }
 
+    static public function __callStatic($element, $args)
+    {
+        return static::fold($element, ...$args);
+    }
+
     public function __construct($element, ...$content)
     {
         $this->element = Type::sanitizeType($element, ESString::class)
@@ -94,11 +99,11 @@ class Element
     protected function compiledAttributes(): string
     {
         return $this->attributes->each(function($value, $attribute) {
-                return ($attribute === $value && strlen($attribute) > 0)
+                return ($attribute === $value and strlen($attribute) > 0)
                     ? $attribute : "{$attribute}=\"{$value}\"";
 
             })->isEmpty(function($result, $array) {
-                return ($result) ? "" : $array->join(" ")->start(" ");
+                return ($result->unfold()) ? "" : $array->join(" ")->start(" ");
 
             });
     }

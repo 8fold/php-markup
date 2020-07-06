@@ -32,7 +32,7 @@ class Pagination extends HtmlElement
         $this->totalItemsPerPage = Type::sanitizeType($totalItemsPerPage, ESInt::class);
         $this->middleLimit = Type::sanitizeType($middleLimit, ESInt::class)
             ->isOdd(function($result, $int) {
-                return ($result) ? $int : $int->plus(1);
+                return ($result->unfold()) ? $int : $int->plus(1);
             });
 
         $this->currentPage = Type::sanitizeType($currentPage, ESInt::class);
@@ -129,17 +129,19 @@ class Pagination extends HtmlElement
         } else {
             return $this->secondPageNumber()->plus($this->middleLimit()->minus(1))
                 ->isGreaterThanOrEqual($this->totalPages(), function($result, $int) {
-                    if ($result) {
+                    if ($result->unfold()) {
                         return $this->totalPages()->minus(1);
                     }
-                    return $this->secondPageNumber()->plus($this->middleLimit()->minus(1));
+                    return $this->secondPageNumber()->plus($this->middleLimit()
+                        ->minus(1));
                 });
         }
     }
 
     public function middleRange()
     {
-        return $this->secondPageNumber()->range($this->penultimatePageNumber())->noEmpties();
+        return $this->secondPageNumber()->range($this->penultimatePageNumber())
+            ->noEmpties()->reindex();
     }
 
     public function unfold(): string
