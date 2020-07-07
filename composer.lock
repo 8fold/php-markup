@@ -4,20 +4,71 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ae2ff5506b6da9611c42fb1afa277b8d",
+    "content-hash": "333b059596eb4752f58d7815640af54a",
     "packages": [
         {
-            "name": "8fold/php-shoop",
-            "version": "0.5.0",
+            "name": "8fold/commonmark-abbreviations",
+            "version": "0.1.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/8fold/php-shoop.git",
-                "reference": "ca611bfc549732c83311e5b7af0894c18af4fec5"
+                "url": "https://github.com/8fold/commonmark-abbreviations.git",
+                "reference": "1b7b106b6f0c9671027c1371e04615cba2051d0d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/8fold/php-shoop/zipball/ca611bfc549732c83311e5b7af0894c18af4fec5",
-                "reference": "ca611bfc549732c83311e5b7af0894c18af4fec5",
+                "url": "https://api.github.com/repos/8fold/commonmark-abbreviations/zipball/1b7b106b6f0c9671027c1371e04615cba2051d0d",
+                "reference": "1b7b106b6f0c9671027c1371e04615cba2051d0d",
+                "shasum": ""
+            },
+            "require": {
+                "8fold/php-shoop": "~0.5",
+                "league/commonmark": "~1.5",
+                "php": "^7.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~9.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Eightfold\\CommonMarkAbbreviations\\": "./src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Josh Bruce",
+                    "email": "josh@8fold.pro"
+                }
+            ],
+            "description": "An extension of PHP League's CommonMark library to enable abbreviation usage.",
+            "funding": [
+                {
+                    "url": "https://github.com/8fold",
+                    "type": "github"
+                },
+                {
+                    "url": "https://github.com/joshbruce",
+                    "type": "github"
+                }
+            ],
+            "time": "2020-07-07T03:42:40+00:00"
+        },
+        {
+            "name": "8fold/php-shoop",
+            "version": "0.5.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/8fold/php-shoop.git",
+                "reference": "b580b494d88d296a8f10d65c66c26ec0ac50cc80"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/8fold/php-shoop/zipball/b580b494d88d296a8f10d65c66c26ec0ac50cc80",
+                "reference": "b580b494d88d296a8f10d65c66c26ec0ac50cc80",
                 "shasum": ""
             },
             "require": {
@@ -53,24 +104,24 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-07-05T23:11:20+00:00"
+            "time": "2020-07-07T02:41:28+00:00"
         },
         {
             "name": "8fold/php-shoop-extras",
-            "version": "0.1.27",
+            "version": "0.1.32",
             "source": {
                 "type": "git",
                 "url": "https://github.com/8fold/php-shoop-extras.git",
-                "reference": "5a5c2ad09691cde74b2ee4cd1b0f5ce4a724848b"
+                "reference": "77c026c2895ced521f8f262ca42fa2be3a9bd6ae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/8fold/php-shoop-extras/zipball/5a5c2ad09691cde74b2ee4cd1b0f5ce4a724848b",
-                "reference": "5a5c2ad09691cde74b2ee4cd1b0f5ce4a724848b",
+                "url": "https://api.github.com/repos/8fold/php-shoop-extras/zipball/77c026c2895ced521f8f262ca42fa2be3a9bd6ae",
+                "reference": "77c026c2895ced521f8f262ca42fa2be3a9bd6ae",
                 "shasum": ""
             },
             "require": {
-                "8fold/php-shoop": "~0.4",
+                "8fold/php-shoop": "~0.5",
                 "league/commonmark": "~1.5",
                 "php": "~7",
                 "spatie/yaml-front-matter": "~2.0"
@@ -105,7 +156,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-07-04T02:08:25+00:00"
+            "time": "2020-07-07T02:57:50+00:00"
         },
         {
             "name": "league/commonmark",
@@ -342,16 +393,16 @@
         },
         {
             "name": "symfony/deprecation-contracts",
-            "version": "v2.1.2",
+            "version": "v2.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/deprecation-contracts.git",
-                "reference": "dd99cb3a0aff6cadd2a8d7d7ed72c2161e218337"
+                "reference": "5e20b83385a77593259c9f8beb2c43cd03b2ac14"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/deprecation-contracts/zipball/dd99cb3a0aff6cadd2a8d7d7ed72c2161e218337",
-                "reference": "dd99cb3a0aff6cadd2a8d7d7ed72c2161e218337",
+                "url": "https://api.github.com/repos/symfony/deprecation-contracts/zipball/5e20b83385a77593259c9f8beb2c43cd03b2ac14",
+                "reference": "5e20b83385a77593259c9f8beb2c43cd03b2ac14",
                 "shasum": ""
             },
             "require": {
@@ -361,6 +412,10 @@
             "extra": {
                 "branch-alias": {
                     "dev-master": "2.1-dev"
+                },
+                "thanks": {
+                    "name": "symfony/contracts",
+                    "url": "https://github.com/symfony/contracts"
                 }
             },
             "autoload": {
@@ -398,7 +453,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-05-27T08:34:37+00:00"
+            "time": "2020-06-06T08:49:21+00:00"
         },
         {
             "name": "symfony/polyfill-ctype",
@@ -727,16 +782,16 @@
         },
         {
             "name": "symfony/translation-contracts",
-            "version": "v2.1.2",
+            "version": "v2.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/translation-contracts.git",
-                "reference": "e5ca07c8f817f865f618aa072c2fe8e0e637340e"
+                "reference": "616a9773c853097607cf9dd6577d5b143ffdcd63"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/translation-contracts/zipball/e5ca07c8f817f865f618aa072c2fe8e0e637340e",
-                "reference": "e5ca07c8f817f865f618aa072c2fe8e0e637340e",
+                "url": "https://api.github.com/repos/symfony/translation-contracts/zipball/616a9773c853097607cf9dd6577d5b143ffdcd63",
+                "reference": "616a9773c853097607cf9dd6577d5b143ffdcd63",
                 "shasum": ""
             },
             "require": {
@@ -749,6 +804,10 @@
             "extra": {
                 "branch-alias": {
                     "dev-master": "2.1-dev"
+                },
+                "thanks": {
+                    "name": "symfony/contracts",
+                    "url": "https://github.com/symfony/contracts"
                 }
             },
             "autoload": {
@@ -794,7 +853,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-05-20T17:43:50+00:00"
+            "time": "2020-07-06T13:23:11+00:00"
         },
         {
             "name": "symfony/yaml",

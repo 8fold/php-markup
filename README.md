@@ -15,7 +15,7 @@ composer require 8fold/php-markup
 ```php
 $element = Element::fold("hello");
 
-print($lement->unfold());
+print $lement->unfold();
 
 // output: <hello></hello>
 ```
@@ -25,7 +25,7 @@ You can also go straight to outputting a string.
 ```php
 $element = Element::fold("hello");
 
-print($lement);
+print $element;
 
 // output: <hello></hello>
 ```
@@ -35,7 +35,7 @@ You can add attributes to the elements.
 ```php
 $element = Element::fold("hello")->attr("id my-element");
 
-print($lement);
+print $element;
 
 // output: <hello id="my-element"></hello>
 ```
@@ -47,9 +47,9 @@ If the HTML element is unknown, Markup will fall back to using Element.
 ```php
 $html = Html::p();
 
-print($html->unfold());
+print $html->unfold();
 
-print($html);
+print $html;
 ```
 
 There are two ways to create more compound elements (or components at this point). The first example uses `Html` while the second used `UIKit`.
@@ -58,18 +58,18 @@ If the `UIKit` component is unknown, it will fallback to `Html`.
 
 ```php
 $html = Html::ul(
-	Html::li("Hello, "),
-	Html::li("World!")
+  Html::li("Hello, "),
+  Html::li("World!")
 );
 
-print($html);
+print $html;
 
 // output:
 // <ul><li>Hello, </li><li>World!</li></ul>
 
-$uikit = UIKit::list(
-	"Hello, ",
-	"World!"
+$uikit = UIKit::listWith(
+  "Hello, ",
+  "World!"
 );
 
 print($uikit);
