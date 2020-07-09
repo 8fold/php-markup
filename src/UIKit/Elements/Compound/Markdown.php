@@ -72,6 +72,12 @@ class Markdown extends HtmlElement
         return $this;
     }
 
+    public function prepend(string $markdown)
+    {
+        $this->markdown = $markdown . $this->markdown;
+        return $this;
+    }
+
     public function unfold(): string
     {
         return Shoop::markdown($this->markdown, ...$this->extensions)
