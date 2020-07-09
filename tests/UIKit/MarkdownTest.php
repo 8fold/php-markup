@@ -67,4 +67,15 @@ class MarkdownTest extends TestCase
             ->extensions(AbbreviationExtension::class);
         $this->assertEquals($expected, $actual->unfold());
     }
+
+    public function testCanPrepend()
+    {
+        $doc = <<< EOD
+        Base
+        EOD;
+        $prepend = "# Heading\n\n";
+        $expected = '<h1>Heading</h1><p>Base</p>';
+        $actual = UIKit::markdown($doc)->prepend($prepend);
+        $this->assertSame($expected, $actual->unfold());
+    }
 }
