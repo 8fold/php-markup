@@ -43,9 +43,14 @@ class SocialMeta extends HtmlElement
         }
     }
 
-    public function twitter($card = "summary_large_image")
+    public function twitter($card = "summary_large_image", $site = "")
     {
         $this->meta = $this->meta->plus("twitter:card {$card}");
+        Shoop::string($site)->isNotEmpty(function($result, $site) {
+            if ($result->unfold()) {
+                $this->meta = $this->meta->plus("twitter: site {$site}");
+            }
+        });
         return $this;
     }
 
