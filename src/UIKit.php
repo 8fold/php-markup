@@ -89,6 +89,19 @@ class UIKit extends Html
         return new $class($formId, $apiKey, $inputLabel, $buttonLabel);
     }
 
+    static public function socialMeta(
+        string $type,
+        string $title,
+        string $url,
+        string $description,
+        string $image = "",
+        string $appId = ""
+    )
+    {
+        $class = self::class("socialMeta", self::CLASSES)->unfold();
+        return new $class($type, $title, $url, $description, $image, $appId);
+    }
+
     static public function __callStatic(string $element, array $elements)
     {
         $class = Html::class($element, self::CLASSES);
@@ -177,7 +190,8 @@ class UIKit extends Html
         // , 'alert'            => UIKit\Elements\Compound\Alert::class
         'doubleWrap' => \Eightfold\Markup\UIKit\Elements\Compound\DoubleWrap::class,
         'markdown'   => \Eightfold\Markup\UIKit\Elements\Compound\Markdown::class,
-        'pagination' => \Eightfold\Markup\UIKit\Elements\Compound\Pagination::class
+        'pagination' => \Eightfold\Markup\UIKit\Elements\Compound\Pagination::class,
+        'socialMeta' => \Eightfold\Markup\UIKit\Elements\Compound\SocialMeta::class
         // , 'primary_nav'      => UIKit\Elements\Compound\NavigationPrimary::class
         // , 'secondary_nav'    => UIKit\Elements\Compound\NavigationSecondary::class
         // , 'side_nav'         => UIKit\Elements\Compound\NavigationSide::class
