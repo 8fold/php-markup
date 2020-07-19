@@ -19,11 +19,11 @@ class SocialMeta extends HtmlElement
     private $meta;
 
     public function __construct(
-        string $type,
         string $title,
         string $url,
         string $description,
         string $image = "",
+        string $type = "website",
         string $appId = ""
     )
     {
@@ -43,7 +43,7 @@ class SocialMeta extends HtmlElement
         }
     }
 
-    public function twitter($card = "summary_large_image", $site = "")
+    public function twitter($site = "", $card = "summary_large_image")
     {
         $this->meta = $this->meta->plus("twitter:card {$card}");
         Shoop::string($site)->isNotEmpty(function($result, $site) {
