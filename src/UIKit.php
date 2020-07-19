@@ -90,16 +90,22 @@ class UIKit extends Html
     }
 
     static public function socialMeta(
-        string $type,
         string $title,
         string $url,
         string $description,
         string $image = "",
+        string $type = "website",
         string $appId = ""
     )
     {
         $class = self::class("socialMeta", self::CLASSES)->unfold();
-        return new $class($type, $title, $url, $description, $image, $appId);
+        return new $class($title, $url, $description, $image, $type, $appId);
+    }
+
+    static public function webHead()
+    {
+        $class = self::class("webHead", self::CLASSES)->unfold();
+        return new $class();
     }
 
     static public function __callStatic(string $element, array $elements)
@@ -191,7 +197,8 @@ class UIKit extends Html
         'doubleWrap' => \Eightfold\Markup\UIKit\Elements\Compound\DoubleWrap::class,
         'markdown'   => \Eightfold\Markup\UIKit\Elements\Compound\Markdown::class,
         'pagination' => \Eightfold\Markup\UIKit\Elements\Compound\Pagination::class,
-        'socialMeta' => \Eightfold\Markup\UIKit\Elements\Compound\SocialMeta::class
+        'socialMeta' => \Eightfold\Markup\UIKit\Elements\Compound\SocialMeta::class,
+        'webHead'  => \Eightfold\Markup\UIKit\Elements\Compound\WebHead::class
         // , 'primary_nav'      => UIKit\Elements\Compound\NavigationPrimary::class
         // , 'secondary_nav'    => UIKit\Elements\Compound\NavigationSecondary::class
         // , 'side_nav'         => UIKit\Elements\Compound\NavigationSide::class
