@@ -10,14 +10,13 @@ use Eightfold\Markup\Feed\Rss\Item;
 
 class Channel extends Element
 {
-    // private $xmlVersion = "1.0";
+    private $xmlVersion = "1.0";
     private $rssVersion = "2.0";
 
     private $title = "";
     private $link = "";
     private $description = "";
-    // private $content = [];
-    // private $otherChannelMeta = [];
+    private $otherChannelMeta = [];
 
     private $language = "";
 
@@ -69,15 +68,17 @@ class Channel extends Element
             Element::description($this->description)
         ]);
 
-        // Shoop::dictionary($this->otherChannelMeta)->each(
-        //     function($value, $element) use (&$content) {
-        //         $content = $content->plus(Element::fold($element, $value));
-        //     });
+        Shoop::dictionary($this->otherChannelMeta)->each(
+            function($value, $element) use (&$content) {
+                $content = $content->plus(Element::fold($element, $value));
+            });
+
+        $content = $content->plus(...$this->content);
 
         return Shoop::string(
             Element::rss(
                 Element::channel(
-                    ...Shoop::array($this->content)
+                    ...Shoop::array($content)
                         ->each(function($item) {
                             return $item->unfold();
                         })
