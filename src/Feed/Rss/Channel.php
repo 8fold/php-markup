@@ -79,7 +79,6 @@ class Channel extends Element
                 Element::channel(
                     ...Shoop::array($this->content)
                         ->each(function($item) {
-                            dd($item->unfold());
                             return $item->unfold();
                         })
                 )
