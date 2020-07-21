@@ -10,13 +10,14 @@ use Eightfold\Markup\Feed\Rss\Item;
 
 class Channel extends Element
 {
-    private $xmlVersion = "1.0";
+    // private $xmlVersion = "1.0";
     private $rssVersion = "2.0";
 
     private $title = "";
     private $link = "";
     private $description = "";
-    private $otherChannelMeta = [];
+    // private $content = [];
+    // private $otherChannelMeta = [];
 
     private $language = "";
 
@@ -68,67 +69,22 @@ class Channel extends Element
             Element::description($this->description)
         ]);
 
-        Shoop::dictionary($this->otherChannelMeta)->each(
-            function($value, $element) use (&$content) {
-                $content = $content->plus(Element::fold($element, $value));
-            });
+        // Shoop::dictionary($this->otherChannelMeta)->each(
+        //     function($value, $element) use (&$content) {
+        //         $content = $content->plus(Element::fold($element, $value));
+        //     });
 
         return Shoop::string(
             Element::rss(
-                Element::channel(...$content)
+                Element::channel(
+                    ...Shoop::array($this->content)
+                        ->each(function($item) {
+                            dd($item->unfold());
+                            return $item->unfold();
+                        })
+                )
             )->attr("version ". $this->rssVersion)->unfold()
         )->start('<?xml version="'. $this->xmlVersion .'"?>'."\n")->unfold();
-
-        // return Shoop::string(
-            // Element::fold("rss",
-                // Element::fold("channel",
-                    // Element::fold("title", static::rssTitle()),
-                    // Element::fold("link", static::rssLink()),
-                    // Element::fold("description", static::rssDescription()),
-                    // Element::fold("language", "en-us"),
-                    // Element::fold("copyright", static::copyright()->unfold()),
-        //             ...static::rssItemsStoreItems()->each(function($path) {
-        //                 $markdown = static::uriContentStore($path)->markdown();
-
-        //                 $title = $markdown->meta()->title;
-        //                 $link = Shoop::string(static::rssLink())
-        //                     ->plus($path)->unfold();
-
-        //                 $description = ($markdown->meta()->description === null)
-        //                     ? $markdown->html()
-        //                     : $markdown->meta()->description();
-        //                 if ($description->count()->isUnfolded(0)) {
-        //                     return "";
-        //                 }
-                        // $description = $description->replace(static::rssDescriptionReplacements())
-                        //     ->dropTags()->divide(" ")->isGreaterThan(50, function($result, $description) {
-                        //     return ($result)
-                        //         ? $description->first(50)->join(" ")->plus("...")
-                        //         : $description->join(" ");
-        //                 });
-
-        //                 $timestamp = ($markdown->meta()->created === null)
-        //                     ? ""
-        //                     : Carbon::createFromFormat("Ymd", $markdown->meta()->created, "America/Detroit")
-        //                         ->hour(12)
-        //                         ->minute(0)
-        //                         ->second(0)
-        //                         ->toRssString();
-        //                 $t = (strlen($timestamp) > 0)
-        //                     ? Element::fold("pubDate", $timestamp)
-        //                     : "";
-
-        //                 $item = Element::fold(
-        //                         "item",
-                                    // Element::fold("title", htmlspecialchars($title)),
-                                    // Element::fold("link", $link),
-        //                             Element::fold("guid", $link),
-                                    // Element::fold("description", htmlspecialchars($description)),
-        //                             $t
-        //                     );
-        //                 return $item;
-        //             })->noEmpties()
-        //         )
     }
 
     /**
