@@ -108,6 +108,16 @@ class UIKit extends Html
         return new $class();
     }
 
+    static public function accordion(
+        string $summaryId,
+        $summary,
+        ...$content
+    )
+    {
+        $class = self::class("accordion", self::CLASSES)->unfold();
+        return new $class($summaryId, $summary, ...$content);
+    }
+
     static public function __callStatic(string $element, array $elements)
     {
         $class = Html::class($element, self::CLASSES);
@@ -198,7 +208,8 @@ class UIKit extends Html
         'markdown'   => \Eightfold\Markup\UIKit\Elements\Compound\Markdown::class,
         'pagination' => \Eightfold\Markup\UIKit\Elements\Compound\Pagination::class,
         'socialMeta' => \Eightfold\Markup\UIKit\Elements\Compound\SocialMeta::class,
-        'webHead'  => \Eightfold\Markup\UIKit\Elements\Compound\WebHead::class
+        'webHead'    => \Eightfold\Markup\UIKit\Elements\Compound\WebHead::class,
+        'accordion'  => \Eightfold\Markup\UIKit\Elements\Compound\Accordion::class
         // , 'primary_nav'      => UIKit\Elements\Compound\NavigationPrimary::class
         // , 'secondary_nav'    => UIKit\Elements\Compound\NavigationSecondary::class
         // , 'side_nav'         => UIKit\Elements\Compound\NavigationSide::class
