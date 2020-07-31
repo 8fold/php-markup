@@ -124,7 +124,8 @@ class CompoundTest extends TestCase
         $actual = UIKit::pagination(2, 20);
         $this->assertEquals($expected, $actual->unfold());
 
-        $expected = '<nav class="pagination next"><ul><li><a href="/feed/page/2" aria-label="Goto page 2">2</a></li><li><a class="current" href="/feed/page/1" aria-label="Current page, page 1">1</a></li><li><a href="/feed/page/2" aria-label="Goto page 2">2</a></li><li><a href="/feed/page/3" aria-label="Goto page 3">3</a></li></ul></nav>';
+        // TODO: Really need to work on this - don't have a business need yet
+        $expected = '<nav class="pagination next"><ul><li><a class="current" href="/feed/page/1" aria-label="Current page, page 1">1</a></li><li><a href="/feed/page/2" aria-label="Goto page 2">2</a></li><li><a href="/feed/page/3" aria-label="Goto page 3">3</a></li></ul></nav>';
         $actual = UIKit::pagination(1, 30);
         $this->assertEquals($expected, $actual->unfold());
 
@@ -191,6 +192,22 @@ class CompoundTest extends TestCase
             "https://8fold.dev/open-source/markup/php",
             "Get the HTML out of your PHP with this HTML generator."
         )->socialTwitter("8foldPros");
+        $this->assertEquals($expected, $actual->unfold());
+    }
+
+    public function testAccordion()
+    {
+        $summaryId = "accordion";
+        $summary = "Summary";
+        $content = UIKit::p("The content.");
+        $expected = '<h2 is="accordion"><button id="'. $summaryId .'" aria-controls="'. $summaryId .'-panel" aria-expanded="true">'. $summary .'</button></h2><div is="accordion-panel" role="region" id="'. $summaryId .'-panel" tabindex="-1" aria-hidden="false" aria-labelledby="'. $summaryId .'">'. $content->unfold() .'</div>';
+
+         '<h2 is="accordion"><button id="" aria-controls="" aria-expanded="true"></button></h2><div is="accordion-panel" id="" aria-labelledby="'. $summaryId .'" tabindex="-1" role="region" aria-hidden="false">'. $content->unfold() .'</div>';
+        $actual = UIKit::accordion(
+            $summaryId,
+            $summary,
+            $content
+        );
         $this->assertEquals($expected, $actual->unfold());
     }
 }

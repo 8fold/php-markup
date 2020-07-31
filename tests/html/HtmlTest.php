@@ -100,4 +100,11 @@ class HtmlTest extends TestCase
         $actual = Html::button()->attr("aria-expanded false");
         $this->assertEquals($expected, $actual->unfold());
     }
+
+    public function testCanHaveAriaLabelledBy()
+    {
+        $expected = '<div aria-labelledby="hello"></div>';
+        $actual = Html::div()->attr("aria-labelledby hello");
+        $this->assertEquals($expected, $actual->unfold());
+    }
 }
