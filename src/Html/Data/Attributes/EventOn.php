@@ -136,6 +136,11 @@ abstract class EventOn
         return ['onoffline'];
     }
 
+    static public function online(): array
+    {
+        return ['ononline'];
+    }
+
     /**
      * onpagehide js_script Script is run when document window is hidden
      *

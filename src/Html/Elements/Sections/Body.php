@@ -2,6 +2,8 @@
 
 namespace Eightfold\Markup\Html\Elements\Sections;
 
+use Eightfold\Shoop\ESArray;
+
 use Eightfold\Markup\Html\Elements\HtmlElement;
 use Eightfold\Markup\Html\Elements\HtmlElementInterface;
 
@@ -39,9 +41,17 @@ class Body extends HtmlElement implements HtmlElementInterface
         return Elements::flow();
     }
 
-    static public function optionalEventAttributes(): array
+    static public function optionalEventAttributes(): ESArray
     {
-        return [];
+        return ESArray::fold([])
+            ->plus(...EventOn::globals())->plus(...EventOn::afterprint())
+            ->plus(...EventOn::beforeprint())->plus(...EventOn::beforeunload())
+            ->plus(...EventOn::hashchange())->plus(...EventOn::message())
+            ->plus(...EventOn::offline())->plus(...EventOn::online())
+            ->plus(...EventOn::pagehide())->plus(...EventOn::pageshow())
+            ->plus(...EventOn::popstate())->plus(...EventOn::storage())
+            ->plus(...EventOn::unload());
+
         return array_merge(
             EventOn::globals(),
             EventOn::afterprint(),

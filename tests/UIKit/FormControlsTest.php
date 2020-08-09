@@ -11,9 +11,11 @@ use Eightfold\Markup\UIKit\FormControls\InputText;
 
 class FormControlsTest extends TestCase
 {
-    public function testNothing()
+    public function testFlowsToHtml()
     {
-        $this->assertTrue(true);
+        $expected = '<input type="text" placeholder="hello">';
+        $actual = UIKit::input()->attr("type text", "placeholder hello");
+        $this->assertEquals($expected, $actual->unfold());
     }
 
     // public function testFileInputBase()

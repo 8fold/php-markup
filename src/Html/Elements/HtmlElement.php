@@ -3,8 +3,9 @@
 namespace Eightfold\Markup\Html\Elements;
 
 use Eightfold\Shoop\Shoop;
-use Eightfold\Shoop\ESDictionary;
 use Eightfold\Shoop\ESArray;
+use Eightfold\Shoop\ESDictionary;
+use Eightfold\Shoop\ESString;
 
 use Eightfold\Markup\Element;
 
@@ -37,7 +38,43 @@ abstract class HtmlElement extends Element
         return $elem;
     }
 
-    protected function compiledAttributes(): string
+//     public function attr(string ...$attributes): Element
+//     {
+// var_dump(__LINE__);
+// var_dump(__FILE__);
+// die("filter out invalid attributes");
+// // Block users from adding invalid attributes in the first place.
+// // Always use and empty array when folding
+// //
+// // To reinstantiate new instance - maybe:
+// //      protected function refreshed($this->main(), ...$this->content())->attr(...$this->attrList())->omitEndTag($this->omitEndTag);
+// var_dump($attributes);
+//         $dictionary = $this->attrArray(false);
+// var_dump(__LINE__);
+//         $attributes = Shoop::array($attributes);
+// var_dump(__LINE__);
+//         $attributes->each(function($item) use (&$dictionary) {
+//             die("here");
+//             list($attr, $value) = Shoop::string($item)->divide(" ", false, 2);
+//             $dictionary = $dictionary->plus($value, $attr);
+//             // die(var_dump($dictionary));
+//         });
+// var_dump($dictionary);
+// die("here");
+
+//         $attributes = $dictionary->each(function($value, $attr) {
+//             return "{$attr} {$value}";
+//         })->unfold();
+// die(var_dump($attributes));
+//         $content = $this->content(false);
+//         $bool    = $this->omitEndTag();
+
+//         return static::fold($this->main(),
+//             ...Shoop::array($content)->plus($attributes)->plus($bool)
+//         );
+//     }
+
+    public function attrString(ESDictionary $dict = null): ESString
     {
         $ordered   = Shoop::dictionary([]);
         $events    = Shoop::dictionary([]);
@@ -47,40 +84,60 @@ abstract class HtmlElement extends Element
         $boolean   = Shoop::dictionary([]);
         $leftovers = Shoop::dictionary([]);
 
-        $this->attributes->each(function($value, $member) use
+        $this->attrList(false)->each(function($value, $member) use
             (&$ordered, &$events, &$aria, &$data, &$other, &$boolean, &$leftovers) {
 
-            $inAriaRoles = in_array($value, static::allAriaRoles()->unfold());
-            $inOrdered   = in_array($member, Ordered::order());
-            $inEvents    = in_array($member, static::optionalEventAttributes());
-            $inAria      = in_array($member, static::optionalAriaAttributes());
+            $inAriaRoles = static::allAriaRoles()->hasUnfolded($member);
+            $inOrdered   = Ordered::order()->hasUnfolded($member);
+            $inEvents    = static::optionalEventAttributes()->hasUnfolded($member);
+            $inAria      = static::optionalAriaAttributes()->hasUnfolded($member);
             $inData      = Shoop::string($member)->startsWithUnfolded("data-");
-            $inOther     = in_array($member, array_merge(static::requiredAttributes(), static::optionalAttributes()));
-            $inBoolean   = in_array($member, Content::booleans());
+            $inOther     = Shoop::array(static::requiredAttributes())
+                ->plus(...static::optionalAttributes())->hasUnfolded($member);
+            $inBoolean   = Content::booleans()->hasUnfolded($member);
 
             if ($member === "role") {
+var_dump(__LINE__);
+var_dump(__FILE__);
+var_dump("role");
                 if ($inAriaRoles and $value !== static::defaultAriaRole()) {
                     $ordered = $ordered->plus($value, $member);
                 }
 
-            } elseif ($inOrdered and
-                in_array($member, array_merge(static::requiredAttributes(), static::optionalAttributes()))
-            ) {
+            } elseif ($inOrdered and $inOther) {
+var_dump(__LINE__);
+var_dump(__FILE__);
+var_dump("ordered");
                 $ordered = $ordered->plus($value, $member);
 
             } elseif ($inEvents) {
+var_dump(__LINE__);
+var_dump(__FILE__);
+var_dump("events");
                 $events = $events->plus($value, $member);
 
             } elseif ($inAria) {
+var_dump(__LINE__);
+var_dump(__FILE__);
+var_dump("aria");
                 $aria = $aria->plus($value, $member);
 
             } elseif ($inData) {
+var_dump(__LINE__);
+var_dump(__FILE__);
+var_dump("data");
                 $data = $data->plus($value, $member);
 
             } elseif ($inOther) {
+var_dump(__LINE__);
+var_dump(__FILE__);
+var_dump("other");
                 $other = $other->plus($value, $member);
 
             } elseif ($inBoolean) {
+var_dump(__LINE__);
+var_dump(__FILE__);
+var_dump("boolean");
                 $boolean = $boolean->plus($value, $member);
 
             // } else {
@@ -101,7 +158,7 @@ abstract class HtmlElement extends Element
                 }
             });
 
-        $this->attributes = Shoop::dictionary([])
+        $dict = Shoop::dictionary([])
             ->plus(...$order->interleave())
             ->plus(...$events->sortMembers()->interleave())
             ->plus(...$aria->sortMembers()->interleave())
@@ -111,7 +168,8 @@ abstract class HtmlElement extends Element
             // ->plus(...$leftovers->sortMembers()->interleave())
             ->noEmpties();
 
-        return parent::compiledAttributes();
+        // die(var_dump($attr));
+        return parent::attrString($dict);
     }
 
     private function isKnownElement()
@@ -125,22 +183,22 @@ abstract class HtmlElement extends Element
             ->plus(...static::optionalAriaRoles());
     }
 
-    public function unfold(): string
-    {
-        $this->compiledElement();
-        $this->isKnownElement = $this->isKnownElement();
-        if (static::shouldOmitEndTag()) {
-            $this->omitEndTag();
-        }
-        return $this->prefix . parent::unfold();
-    }
+    // public function unfold(): string
+    // {
+    //     $this->compiledElement();
+    //     $this->isKnownElement = $this->isKnownElement();
+    //     if (static::shouldOmitEndTag()) {
+    //         $this->omitEndTag();
+    //     }
+    //     return $this->prefix . parent::unfold();
+    // }
 
     /**
      * @deprecated
      */
     protected function getAttr(): ESArray
     {
-        return $this->attributes();
+        return $this->attrArray();
     }
 
     /** HTML specification-related */
@@ -152,10 +210,12 @@ abstract class HtmlElement extends Element
 
     static public function shouldOmitEndTag(): bool
     {
-        if (count(static::contentModel()) > 0) {
-            return false;
-        }
-        return true;
+        return (count(static::contentModel()) > 0) ? false : true;
+
+        // if (count(static::contentModel()) > 0) {
+        //     return false;
+        // }
+        // return true;
     }
 
     static public function requiredAttributes(): array
@@ -163,7 +223,7 @@ abstract class HtmlElement extends Element
         return [];
     }
 
-    static public function optionalAttributes(): array
+    static public function optionalAttributes(): ESArray
     {
         return Content::globals();
     }
@@ -173,9 +233,9 @@ abstract class HtmlElement extends Element
         return Content::deprecated();
     }
 
-    static public function optionalEventAttributes(): array
+    static public function optionalEventAttributes(): ESArray
     {
-        return EventOn::globals();
+        return Shoop::array(EventOn::globals());
     }
 
     static public function optionalAriaRoles(): array
@@ -193,9 +253,9 @@ abstract class HtmlElement extends Element
         return [];
     }
 
-    static public function optionalAriaAttributes(): array
+    static public function optionalAriaAttributes(): ESArray
     {
-        return Aria::globals();
+        return Shoop::array(Aria::globals());
     }
 
     static public function deprecatedAriaAttributes(): array

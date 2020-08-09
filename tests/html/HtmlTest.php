@@ -87,6 +87,13 @@ class HtmlTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
+    public function testCanHavePlaceholder()
+    {
+        $expected = '<input type="text" placeholder="hello">';
+        $actual = Html::input()->attr("type text", "placeholder hello");
+        $this->assertEquals($expected, $actual->unfold());
+    }
+
     public function testCanHaveAriaHidden()
     {
         $expected = '<div aria-hidden="true"></div>';

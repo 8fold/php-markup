@@ -2,6 +2,8 @@
 
 namespace Eightfold\Markup\Html\Data\Attributes;
 
+use Eightfold\Shoop\Shoop;
+
 /**
  * @version 1.0.0
  *
@@ -18,6 +20,17 @@ abstract class Content
      */
     static public function globals()
     {
+        return Shoop::array([])
+            ->plus(...self::is()) // This only applies to non-autonomous web-components
+            ->plus(...self::id())->plus(...self::class())
+            ->plus(...self::style())->plus(self::tabindex())
+            ->plus(...self::accesskey())->plus(...self::lang())
+            ->plus(...self::dir())->plus(...self::translate())
+            ->plus(...self::rel())->plus(...self::title())
+            ->plus(...self::contenteditable())->plus(...self::spellcheck())
+            ->plus(...self::hidden())->plus(...self::microdata())
+            ->plus(...self::rdfa());
+
         return array_merge(
             self::is(), // This only applies to non-autonomous web-components
             self::id(),
@@ -40,6 +53,11 @@ abstract class Content
 
     static public function microdata()
     {
+        return Shoop::array([])
+            ->plus(...self::itemscope())
+            ->plus(...self::itemtype())
+            ->plus(...self::itemprop());
+
         return array_merge(
             self::itemscope(),
             self::itemtype(),
@@ -66,6 +84,18 @@ abstract class Content
      */
     static public function booleans()
     {
+        return Shoop::array([])
+            ->plus(...self::async())->plus(...self::autofocus())
+            ->plus(...self::autoplay())->plus(...self::checked())
+            ->plus(...self::controls())->plus(...self::default())
+            ->plus(...self::defer())->plus(...self::disabled())
+            ->plus(...self::download())->plus(...self::formnovalidate())
+            ->plus(...self::hidden())->plus(...self::ismap())
+            ->plus(...self::loop())->plus(...self::multiple())
+            ->plus(...self::muted())->plus(...self::novalidate())
+            ->plus(...self::readonly())->plus(...self::required())
+            ->plus(...self::reversed())->plus(...self::selected())
+            ->plus(...self::typemustmatch());
         return array_merge(
             self::async(),
             self::autofocus(),
@@ -93,6 +123,9 @@ abstract class Content
 
     static public function deprecated()
     {
+        return Shoop::array([])
+            ->plus(...self::bgcolor())->plus(...self::border())
+            ->plus(...self::color())->plus(...self::manifest());
         return array_merge(
             self::bgcolor(),
             self::border(),
