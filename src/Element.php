@@ -138,10 +138,10 @@ class Element implements Foldable
         if ($dict === null) {
             $list = $this->attrList(false);
         }
+
         return $list->isEmpty(function($result, $dict) {
             if ($result->unfold()) { return Shoop::string(""); }
-            return $dict->each(function($item) {
-                list($attr, $value) = Shoop::string($item)->divide(" ", false, 2);
+            return $dict->each(function($value, $attr) {
                 if ($attr === "is") {
                     $value = Shoop::string($value)->replace(["_" => "-"]);
                 }

@@ -13,7 +13,7 @@ class BodyTest extends TestCase
     private function assertEqualsWithPerformance(
         $expected,
         $actual,
-        $maxMilliseconds = 3.7
+        $maxMilliseconds = 7.5
     )
     {
         // setUp() return, set private var, etc.
