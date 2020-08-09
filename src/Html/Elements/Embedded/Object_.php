@@ -2,6 +2,8 @@
 
 namespace Eightfold\Markup\Html\Elements\Embedded;
 
+use Eightfold\Shoop\ESArray;
+
 use Eightfold\Markup\Html\Elements\Embedded\Embed;
 
 use Eightfold\Markup\Html\Data\Elements;
@@ -53,18 +55,25 @@ class Object_ extends Embed
         return Content::src();
     }
 
-    static public function optionalAttributes(): array
+    static public function optionalAttributes(): ESArray
     {
-        $return = array_merge(
-            parent::optionalAriaAttributes(),
-            Content::data(),
-            Content::typemustmatch(),
-            Content::name(),
-            Content::usemap(),
-            Content::form()
-        );
-        unset($return['src']);
-        return $return;
+        $extras = array_merge(
+                    Content::data(),
+                    Content::typemustmatch(),
+                    Content::name(),
+                    Content::usemap(),
+                    Content::form()
+                );
+        return parent::optionalAriaAttributes()->plus(...$extras)->minus("src");
+        // $return = ESArray::fold(array_merge(
+        //             parent::optionalAriaAttributes(),
+        //             Content::data(),
+        //             Content::typemustmatch(),
+        //             Content::name(),
+        //             Content::usemap(),
+        //             Content::form()
+        //         ))->minus("src");
+        // return $return;
     }
 
     static public function defaultAriaRole(): string

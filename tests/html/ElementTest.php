@@ -56,9 +56,9 @@ class ElementTest extends TestCase
     {
         $expected = '<head><title>Hello, World!</title><link rel="stylesheet" href="#"><link rel="stylesheet" href="#"></head>';
         $result = Html::head(
-              Html::title('Hello, World!')
-            , Html::link()->attr('rel stylesheet', 'href #')
-            , Html::link()->attr('href #', 'rel stylesheet')
+              Html::title('Hello, World!'),
+              Html::link()->attr('rel stylesheet', 'href #'),
+              Html::link()->attr('href #', 'rel stylesheet')
         )->unfold();
         $this->assertEquals($expected, $result);
     }
@@ -93,8 +93,8 @@ class ElementTest extends TestCase
     public function testInvalidAttributeIsExcludedFromAttributeList()
     {
         $expected = '<textarea></textarea>';
-        $result = Html::textarea()->attr('value something')->unfold();
-        $this->assertEquals($expected, $result);
+        $result = Html::textarea()->attr('value something');
+        $this->assertEquals($expected, $result->unfold());
     }
 
     public function testAnchorWithInitialAttributesAndAddedAttributesAtCompile()

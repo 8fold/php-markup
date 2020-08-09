@@ -27,16 +27,19 @@ abstract class HtmlElement extends Element
 
     private $is = "";
 
-    protected function compiledElement(): string
-    {
-        $elem = parent::compiledElement();
-        if (get_class($this) === Html::class) {
-            $this->prefix = "<!doctype html>";
-            $this->attr("lang en");
+    /**
+     * @deprecated
+     */
+    // protected function compiledElement(): string
+    // {
+    //     $elem = parent::compiledElement();
+    //     if (get_class($this) === Html::class) {
+    //         $this->prefix = "<!doctype html>";
+    //         $this->attr("lang en");
 
-        }
-        return $elem;
-    }
+    //     }
+    //     return $elem;
+    // }
 
     // TODO: I don't know if there's a way to speed this up, but would like to.
     //      HTML effectively doubles the time of Element. Two possible areas
@@ -61,50 +64,59 @@ abstract class HtmlElement extends Element
         $otherList = Shoop::array(static::requiredAttributes())
             ->plus(...static::optionalAttributes());
         $booleans = Content::booleans();
+        // TODO: Shouldn't need to call flatten() I don't think
+        $validAttributes = Shoop::array([])
+            ->plus(...$optionalEventAttributes)
+            ->plus(...$optionalAriaAttributes)
+            ->plus(...$otherList)->flatten()->unfold();
+        $validAttributes = Shoop::array($validAttributes);
 
         $this->attrList(false)->each(function($value, $member) use (
                 &$ordered, &$events, &$aria, &$data, &$other, &$boolean, &$leftovers,
-                $allAriaRoles, $orderedList, $optionalEventAttributes, $optionalAriaAttributes, $otherList, $booleans
+                $allAriaRoles, $orderedList, $optionalEventAttributes, $optionalAriaAttributes, $otherList, $validAttributes, $booleans
             ) {
 
-            if ($member === "role") {
-                if ($allAriaRoles->hasUnfolded($value) and $value !== static::defaultAriaRole()) {
+            if ($validAttributes->hasUnfolded($member)) {
+                if ($member === "role") {
+                    if ($allAriaRoles->hasUnfolded($value) and $value !== static::defaultAriaRole()) {
+                        $ordered = $ordered->plus($value, $member);
+                    }
+
+                } elseif ($orderedList->hasUnfolded($member)) {
                     $ordered = $ordered->plus($value, $member);
+
+                } elseif ($optionalEventAttributes->hasUnfolded($member)) {
+                    $events = $events->plus($value, $member);
+
+                } elseif ($optionalAriaAttributes->hasUnfolded($member)) {
+                    $aria = $aria->plus($value, $member);
+
+                } elseif (Shoop::string($member)->startsWithUnfolded("data-")) {
+                    $data = $data->plus($value, $member);
+
+                } elseif ($otherList->hasUnfolded($member)) {
+                    $other = $other->plus($value, $member);
+
+                } elseif ($booleans->hasUnfolded($member)) {
+                    $boolean = $boolean->plus($value, $member);
+
+                // } else {
+                //     if ($this->isKnownElement) {
+                //         $errorComment = "<!-- The {$member} attribute is not valid for the {$this->element} element -->";
+                //     }
+
+                //     $leftovers = $leftovers->plus($value, $member);
+
                 }
-
-            } elseif ($orderedList->hasUnfolded($member)) {
-                $ordered = $ordered->plus($value, $member);
-
-            } elseif ($optionalEventAttributes->hasUnfolded($member)) {
-                $events = $events->plus($value, $member);
-
-            } elseif ($optionalAriaAttributes->hasUnfolded($member)) {
-                $aria = $aria->plus($value, $member);
-
-            } elseif (Shoop::string($member)->startsWithUnfolded("data-")) {
-                $data = $data->plus($value, $member);
-
-            } elseif ($otherList->hasUnfolded($member)) {
-                $other = $other->plus($value, $member);
-
-            } elseif ($booleans->hasUnfolded($member)) {
-                $boolean = $boolean->plus($value, $member);
-
-            // } else {
-            //     if ($this->isKnownElement) {
-            //         $errorComment = "<!-- The {$member} attribute is not valid for the {$this->element} element -->";
-            //     }
-
-            //     $leftovers = $leftovers->plus($value, $member);
-
             }
         });
 
         $order = Shoop::dictionary([]);
+
         Shoop::array(Ordered::order())->each(
             function($member) use (&$ordered, &$order) {
                 if ($ordered->hasMemberUnfolded($member)) {
-                    $order = $order->plus($ordered->{$member}, $member);
+                    $order = $order->plus($ordered[$member], $member);
                 }
             });
 
@@ -132,15 +144,26 @@ abstract class HtmlElement extends Element
             ->plus(...static::optionalAriaRoles());
     }
 
-    // public function unfold(): string
-    // {
-    //     $this->compiledElement();
-    //     $this->isKnownElement = $this->isKnownElement();
-    //     if (static::shouldOmitEndTag()) {
-    //         $this->omitEndTag();
-    //     }
-    //     return $this->prefix . parent::unfold();
-    // }
+    public function unfold()
+    {
+        $elem = parent::compiledElement();
+        if (get_class($this) === Html::class) {
+            $this->prefix = "<!doctype html>";
+            $this->attr("lang en");
+
+        }
+
+        $string = Shoop::string(parent::unfold());
+        if (get_class($this) === Html::class) {
+            $string = $string->start("<!doctype html>");
+            return $string->unfold();
+
+        } elseif (static::shouldOmitEndTag()) {
+            return $string->minus("</{$this->main()}>")->unfold();
+
+        }
+        return $string->unfold();
+    }
 
     /**
      * @deprecated
@@ -159,7 +182,8 @@ abstract class HtmlElement extends Element
 
     static public function shouldOmitEndTag(): bool
     {
-        return (count(static::contentModel()) > 0) ? false : true;
+        return Shoop::array(static::contentModel())->isEmpty;
+        // return (count(static::contentModel()) > 0) ? false : true;
 
         // if (count(static::contentModel()) > 0) {
         //     return false;
@@ -189,7 +213,7 @@ abstract class HtmlElement extends Element
 
     static public function optionalAriaRoles(): ESArray
     {
-        return Aria::globals();
+        return Shoop::array(Aria::globals());
     }
 
     static public function deprecatedAriaRoles(): array

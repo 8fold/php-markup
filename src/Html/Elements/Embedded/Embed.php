@@ -2,6 +2,8 @@
 
 namespace Eightfold\Markup\Html\Elements\Embedded;
 
+use Eightfold\Shoop\ESArray;
+
 use Eightfold\Markup\Html\Elements\HtmlElement;
 use Eightfold\Markup\Html\Elements\HtmlElementInterface;
 
@@ -40,16 +42,24 @@ class Embed extends HtmlElement implements HtmlElementInterface
         return Elements::embedded();
     }
 
-    static public function optionalAttributes(): array
+    static public function optionalAttributes(): ESArray
     {
-        return array_merge(
-            parent::optionalAriaAttributes(),
-            parent::optionalAttributes(),
-            Content::src(),
-            Content::type(),
-            Content::width(),
-            Content::height()
-        );
+        $extras = array_merge(
+                    Content::src(),
+                    Content::type(),
+                    Content::width(),
+                    Content::height()
+                );
+        return parent::optionalAriaAttributes()
+            ->plus(...parent::optionalAttributes())->plus(...$extras);
+        // return ESArray::fold(array_merge(
+        //             parent::optionalAriaAttributes(),
+        //             parent::optionalAttributes(),
+        //             Content::src(),
+        //             Content::type(),
+        //             Content::width(),
+        //             Content::height()
+        //         ));
     }
 
     static public function defaultAriaRole(): string
@@ -57,13 +67,13 @@ class Embed extends HtmlElement implements HtmlElementInterface
         return '';
     }
 
-    static public function optionalAriaRoles(): array
+    static public function optionalAriaRoles(): ESArray
     {
-        return array_merge(
-            AriaRoles::application(),
-            AriaRoles::document(),
-            AriaRoles::img(),
-            AriaRoles::presentation()
-        );
+        return ESArray::fold(array_merge(
+                    AriaRoles::application(),
+                    AriaRoles::document(),
+                    AriaRoles::img(),
+                    AriaRoles::presentation()
+                ));
     }
 }

@@ -2,6 +2,8 @@
 
 namespace Eightfold\Markup\Html\Elements\Embedded;
 
+use Eightfold\Shoop\ESArray;
+
 use Eightfold\Markup\Html\Elements\HtmlElement;
 use Eightfold\Markup\Html\Elements\HtmlElementInterface;
 
@@ -35,13 +37,18 @@ class Param extends HtmlElement implements HtmlElementInterface
         return Elements::object();
     }
 
-    static public function optionalAttributes(): array
+    static public function optionalAttributes(): ESArray
     {
-        return array_merge(
-            parent::optionalAriaAttributes(),
+        $extras = array_merge(
             Content::name(),
             Content::value()
         );
+        return parent::optionalAriaAttributes()->plus(...$extras);
+        // return ESArray::fold(array_merge(
+        //     parent::optionalAriaAttributes(),
+        //     Content::name(),
+        //     Content::value()
+        // ));
     }
 
     static public function defaultAriaRole(): string

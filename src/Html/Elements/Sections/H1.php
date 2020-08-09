@@ -2,6 +2,8 @@
 
 namespace Eightfold\Markup\Html\Elements\Sections;
 
+use Eightfold\Shoop\ESArray;
+
 use Eightfold\Markup\Html\Elements\HtmlElement;
 use Eightfold\Markup\Html\Elements\HtmlElementInterface;
 
@@ -48,11 +50,12 @@ class H1 extends HtmlElement implements HtmlElementInterface
         return 'heading';
     }
 
-    static public function optionalAriaRoles(): array
+    static public function optionalAriaRoles(): ESArray
     {
-        return array_merge(
-            AriaRoles::tab(),
-            AriaRoles::presentation()
-        );
+        return AriaRoles::tab()->plus(...AriaRoles::presentation());
+        // return array_merge(
+        //     AriaRoles::tab(),
+        //     AriaRoles::presentation()
+        // );
     }
 }

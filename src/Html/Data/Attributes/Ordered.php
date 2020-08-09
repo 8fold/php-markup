@@ -21,16 +21,16 @@ abstract class Ordered
             ->plus(...self::relationship())->plus(...self::microdata())
             ->plus(...self::descriptor())->plus(...self::configuration());
 
-        return array_merge(
-            self::identity(),
-            self::selector(),
-            self::dimension(),
-            self::language(),
-            self::relationship(),
-            self::microdata(),
-            self::descriptor(),
-            self::configuration()
-        );
+        // return array_merge(
+        //     self::identity(),
+        //     self::selector(),
+        //     self::dimension(),
+        //     self::language(),
+        //     self::relationship(),
+        //     self::microdata(),
+        //     self::descriptor(),
+        //     self::configuration()
+        // );
     }
 
     private static function identity()

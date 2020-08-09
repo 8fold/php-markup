@@ -65,11 +65,15 @@ class Element implements Foldable
         return $args->unfold();
     }
 
-    static public function __callStatic($element, $args)
-    {
-        $element = Shoop::string($element)->replace(["_" => "-"]);
-        return static::fold($element, ...$args);
-    }
+    /**
+     * @depreated - Would like it to not be, but calling cause stackoverflow
+     */
+    // static public function __callStatic($element, $args)
+    // {
+    //     die($element);
+    //     $element = Shoop::string($element)->replace(["_" => "-"])->unfold();
+    //     return new static($element, ...$args);
+    // }
 
     // TODO: PHP 8.0 bool|ESBool
     public function omitEndTag($omit = null)// TODO: PHP 8.0 : static|bool
@@ -155,6 +159,7 @@ class Element implements Foldable
         $unfold = Type::sanitizeType($unfold, ESBool::class)->unfold();
         return Shoop::array($this->args())->each(function($item) use ($unfold) {
             if (is_array($item)) { return ""; }
+
             if (is_string($item)) {
                 return $item;
 
@@ -178,20 +183,20 @@ class Element implements Foldable
                 : Shoop::string($this->main())->start("</")->end(">")
             )->unfold();
 
-        return Shoop::string($this->main())->start("<")->plus(
-                $this->attrList()
-            )->end(">")->plus(...$this->content())->plus(
-                ($this->omitEndTag())
-                    ? ""
-                    : Shoop::string($this->main())->start("</")->end(">")
-            )->unfold();
-        return Shoop::string($this->main())
-            ->plus($this->compiledAttributes())
-            ->plus($this->compiledContent())->plus(
-                ($this->omitEndTag())
-                    ? ""
-                    : Shoop::string($this->main())->start("</")->end(">")
-            )->unfold();
+        // return Shoop::string($this->main())->start("<")->plus(
+        //         $this->attrList()
+        //     )->end(">")->plus(...$this->content())->plus(
+        //         ($this->omitEndTag())
+        //             ? ""
+        //             : Shoop::string($this->main())->start("</")->end(">")
+        //     )->unfold();
+        // return Shoop::string($this->main())
+        //     ->plus($this->compiledAttributes())
+        //     ->plus($this->compiledContent())->plus(
+        //         ($this->omitEndTag())
+        //             ? ""
+        //             : Shoop::string($this->main())->start("</")->end(">")
+        //     )->unfold();
     }
 
     /**

@@ -2,6 +2,8 @@
 
 namespace Eightfold\Markup\Html\Elements\TextLevel;
 
+use Eightfold\Shoop\ESArray;
+
 use Eightfold\Markup\Html\Elements\TextLevel\Span;
 
 use Eightfold\Markup\Html\Data\Elements;
@@ -22,11 +24,12 @@ class Abbr extends Span
         return Elements::abbr()[0];
     }
 
-    static public function optionalAttributes(): array
+    static public function optionalAttributes(): ESArray
     {
-        return array_merge(
-            parent::optionalAttributes(),
-            Content::cite() // Link to the source of the quotation or more information about the edit
-        );
+        return parent::optionalAttributes()->plus(...Content::cite());
+        // return ESArray::fold(array_merge(
+        //             parent::optionalAttributes(),
+        //             Content::cite() // Link to the source of the quotation or more information about the edit
+        //         ));
     }
 }

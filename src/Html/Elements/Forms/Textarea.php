@@ -2,6 +2,8 @@
 
 namespace Eightfold\Markup\Html\Elements\Forms;
 
+use Eightfold\Shoop\ESArray;
+
 use Eightfold\Markup\Html\Elements\HtmlElement;
 use Eightfold\Markup\Html\Elements\HtmlElementInterface;
 
@@ -49,26 +51,44 @@ class Textarea extends HtmlElement implements HtmlElementInterface
         return Elements::text();
     }
 
-    static public function optionalAttributes(): array
+    static public function optionalAttributes(): ESArray
     {
-        return array_merge(
-            parent::optionalAttributes(),
-            Content::autofocus(),
-            Content::autocomplete(),
-            Content::cols(),
-            Content::dirname(),
-            Content::disabled(),
-            Content::form(),
-            Content::inputmode(),
-            Content::maxlength(),
-            Content::minlength(),
-            Content::name(),
-            Content::placeholder(),
-            Content::readonly(),
-            Content::required(),
-            Content::rows(),
-            Content::wrap()
-        );
+        $extras = array_merge(
+                    Content::autofocus(),
+                    Content::autocomplete(),
+                    Content::cols(),
+                    Content::dirname(),
+                    Content::disabled(),
+                    Content::form(),
+                    Content::inputmode(),
+                    Content::maxlength(),
+                    Content::minlength(),
+                    Content::name(),
+                    Content::placeholder(),
+                    Content::readonly(),
+                    Content::required(),
+                    Content::rows(),
+                    Content::wrap()
+                );
+        return parent::optionalAttributes()->plus(...$extras);
+        // return ESArray::fold(array_merge(
+        //             parent::optionalAttributes(),
+        //             Content::autofocus(),
+        //             Content::autocomplete(),
+        //             Content::cols(),
+        //             Content::dirname(),
+        //             Content::disabled(),
+        //             Content::form(),
+        //             Content::inputmode(),
+        //             Content::maxlength(),
+        //             Content::minlength(),
+        //             Content::name(),
+        //             Content::placeholder(),
+        //             Content::readonly(),
+        //             Content::required(),
+        //             Content::rows(),
+        //             Content::wrap()
+        //         ));
     }
 
     static public function defaultAriaRole(): string

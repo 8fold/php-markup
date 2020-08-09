@@ -2,6 +2,8 @@
 
 namespace Eightfold\Markup\Html\Elements\Embedded;
 
+use Eightfold\Shoop\ESArray;
+
 use Eightfold\Markup\Html\Elements\Embedded\Embed;
 
 use Eightfold\Markup\Html\Data\Elements;
@@ -34,19 +36,30 @@ class Img extends Embed
         return Content::src();
     }
 
-    static public function optionalAttributes(): array
+    static public function optionalAttributes(): ESArray
     {
-        $return = array_merge(
-            self::requiredAttributes(),
-            parent::optionalAttributes(),
-            parent::optionalAriaAttributes(),
+        $extras = array_merge(
             Content::alt(),
             Content::crossorigin(),
             Content::usemap(),
             Content::ismap()
         );
-        unset($return['type']);
-        return $return;
+        return ESArray::fold(self::requiredAttributes())
+            ->plus(...parent::optionalAttributes())
+            ->plus(...parent::optionalAriaAttributes())
+            ->plus(...$extras)
+            ->minus("type");
+        // $return = array_merge(
+        //     self::requiredAttributes(),
+        //     parent::optionalAttributes(),
+        //     parent::optionalAriaAttributes(),
+        //     Content::alt(),
+        //     Content::crossorigin(),
+        //     Content::usemap(),
+        //     Content::ismap()
+        // );
+        // unset($return['type']);
+        // return $return;
     }
 
     static public function defaultAriaRole(): string
@@ -54,11 +67,13 @@ class Img extends Embed
         return '';
     }
 
-    static public function optionalAriaRoles(): array
+    static public function optionalAriaRoles(): ESArray
     {
-        return array_merge(
-            AriaRoles::presentation(), // if `alt` attribute value is empty
-            AriaRoles::any()
-        );
+        return AriaRoles::any()
+            ->plus(...AriaRoles::presentation()); // if `alt` attribute value is empty
+        // return array_merge(
+
+        //     AriaRoles::any()
+        // );
     }
 }

@@ -2,6 +2,8 @@
 
 namespace Eightfold\Markup\Html\Elements\Grouping;
 
+use Eightfold\Shoop\ESArray;
+
 use Eightfold\Markup\Html\Elements\HtmlElement;
 use Eightfold\Markup\Html\Elements\HtmlElementInterface;
 
@@ -52,19 +54,19 @@ class Ul extends HtmlElement implements HtmlElementInterface
         return 'list';
     }
 
-    static public function optionalAriaRoles(): array
+    static public function optionalAriaRoles(): ESArray
     {
-        return array_merge(
-            AriaRoles::directory(),
-            AriaRoles::group(),
-            AriaRoles::listbox(),
-            AriaRoles::menu(),
-            AriaRoles::menubar(),
-            AriaRoles::presentation(),
-            AriaRoles::tablist(),
-            AriaRoles::toolbar(),
-            AriaRoles::tree()
-        );
+        return ESArray::fold(array_merge(
+                    AriaRoles::directory(),
+                    AriaRoles::group(),
+                    AriaRoles::listbox(),
+                    AriaRoles::menu(),
+                    AriaRoles::menubar(),
+                    AriaRoles::presentation(),
+                    AriaRoles::tablist(),
+                    AriaRoles::toolbar(),
+                    AriaRoles::tree()
+                ));
     }
 
     public static function configKeysToConvertToElements(): array

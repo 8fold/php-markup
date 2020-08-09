@@ -2,6 +2,8 @@
 
 namespace Eightfold\Markup\Html\Elements\Metadata;
 
+use Eightfold\Shoop\ESArray;
+
 use Eightfold\Markup\Html\Elements\HtmlElement;
 use Eightfold\Markup\Html\Elements\HtmlElementInterface;
 
@@ -42,12 +44,17 @@ class Style extends HtmlElement implements HtmlElementInterface
         return '';
     }
 
-    static public function optionalAttributes(): array
+    static public function optionalAttributes(): ESArray
     {
-        return array_merge(
-            parent::optionalAttributes(),
-            Content::media(),
-            Content::type()
-        );
+        $extras = array_merge(
+                    Content::media(),
+                    Content::type()
+                );
+        return parent::optionalAttributes()->plus(...$extras);
+        // return ESArray::fold(array_merge(
+        //             parent::optionalAttributes(),
+        //             Content::media(),
+        //             Content::type()
+        //         ));
     }
 }

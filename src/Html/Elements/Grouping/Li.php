@@ -2,6 +2,8 @@
 
 namespace Eightfold\Markup\Html\Elements\Grouping;
 
+use Eightfold\Shoop\ESArray;
+
 use Eightfold\Markup\Html\Elements\HtmlElement;
 use Eightfold\Markup\Html\Elements\HtmlElementInterface;
 
@@ -47,16 +49,16 @@ class Li extends HtmlElement implements HtmlElementInterface
         return 'listiem';
     }
 
-    static public function optionalAriaRoles(): array
+    static public function optionalAriaRoles(): ESArray
     {
-        return array_merge(
-            AriaRoles::menuitem(),
-            AriaRoles::menuitemcheckbox(),
-            AriaRoles::menuitemradio(),
-            AriaRoles::option(),
-            AriaRoles::tab(),
-            AriaRoles::treeitem(),
-            AriaRoles::presentation()
-        );
+        return ESArray::fold(array_merge(
+                    AriaRoles::menuitem(),
+                    AriaRoles::menuitemcheckbox(),
+                    AriaRoles::menuitemradio(),
+                    AriaRoles::option(),
+                    AriaRoles::tab(),
+                    AriaRoles::treeitem(),
+                    AriaRoles::presentation()
+                ));
     }
 }

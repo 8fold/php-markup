@@ -12,14 +12,14 @@ class HtmlTest extends TestCase
 {
     public function testHtmlBase()
     {
-        $expected = '<!doctype html><html lang="en"></html>';
+        $expected = '<!doctype html><html></html>';
         $result = Html::html()->unfold();
         $this->assertEquals($expected, $result);
     }
 
     public function testHtmlRemovesDeprecatedAttributes()
     {
-        $expected = '<!doctype html><html lang="en"></html>';
+        $expected = '<!doctype html><html></html>';
         $result = Html::html()
             ->attr('manifest something.cache')
             ->unfold();
@@ -28,7 +28,7 @@ class HtmlTest extends TestCase
 
     public function testHtmlCanHaveId()
     {
-        $expected = '<!doctype html><html id="hello" lang="en"><head><title>Hello, World!</title></head></html>';
+        $expected = '<!doctype html><html id="hello"><head><title>Hello, World!</title></head></html>';
         $result = Html::html(
             Html::head(
                 Html::title('Hello, World!')
@@ -39,7 +39,7 @@ class HtmlTest extends TestCase
 
     public function testMetaCanHaveAttributes()
     {
-        $expected = '<!doctype html><html lang="en"><head><title>Hello, World!</title><meta charset="utf-8"></head></html>';
+        $expected = '<!doctype html><html><head><title>Hello, World!</title><meta charset="utf-8"></head></html>';
         $result = Html::html(
             Html::head(
                 Html::title('Hello, World!'),

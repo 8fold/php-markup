@@ -2,6 +2,8 @@
 
 namespace Eightfold\Markup\Html\Elements\Forms;
 
+use Eightfold\Shoop\ESArray;
+
 use Eightfold\Markup\Html\Elements\HtmlElement;
 use Eightfold\Markup\Html\Elements\HtmlElementInterface;
 
@@ -42,19 +44,30 @@ class Form extends HtmlElement implements HtmlElementInterface
         return Elements::flow();
     }
 
-    static public function optionalAttributes(): array
+    static public function optionalAttributes(): ESArray
     {
-        return array_merge(
-            parent::optionalAttributes(),
-            Content::acceptCharset(),
-            Content::action(),
-            Content::autocomplete(),
-            Content::enctype(),
-            Content::method(),
-            Content::name(),
-            Content::novalidate(),
-            Content::target()
-        );
+        $extras = array_merge(
+                    Content::acceptCharset(),
+                    Content::action(),
+                    Content::autocomplete(),
+                    Content::enctype(),
+                    Content::method(),
+                    Content::name(),
+                    Content::novalidate(),
+                    Content::target()
+                );
+        return parent::optionalAttributes()->plus(...$extras);
+        // return ESArray::fold(array_merge(
+        //             parent::optionalAttributes(),
+        //             Content::acceptCharset(),
+        //             Content::action(),
+        //             Content::autocomplete(),
+        //             Content::enctype(),
+        //             Content::method(),
+        //             Content::name(),
+        //             Content::novalidate(),
+        //             Content::target()
+        //         ));
     }
 
     static public function defaultAriaRole(): string
@@ -62,8 +75,8 @@ class Form extends HtmlElement implements HtmlElementInterface
         return '';
     }
 
-    static public function optionalAriaRoles(): array
+    static public function optionalAriaRoles(): ESArray
     {
-        return AriaRoles::any();
+        return ESArray::fold(AriaRoles::any());
     }
 }

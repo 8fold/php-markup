@@ -2,6 +2,8 @@
 
 namespace Eightfold\Markup\Html\Elements\TextLevel;
 
+use Eightfold\Shoop\ESArray;
+
 use Eightfold\Markup\Html\Elements\HtmlElement;
 use Eightfold\Markup\Html\Elements\HtmlElementInterface;
 
@@ -38,17 +40,27 @@ class A extends HtmlElement implements HtmlElementInterface
         return Elements::text();
     }
 
-    static public function optionalAttributes(): array
+    static public function optionalAttributes(): ESArray
     {
-        return array_merge(
-            parent::optionalAttributes(),
-            Content::href(),
-            Content::target(),
-            Content::download(),
-            Content::rel(),
-            Content::hreflang(),
-            Content::type()
-        );
+        $extras = array_merge(
+                    Content::href(),
+                    Content::target(),
+                    Content::download(),
+                    Content::rel(),
+                    Content::hreflang(),
+                    Content::type()
+                );
+
+        return parent::optionalAttributes()->plus(...$extras);
+        // return ESArray::fold(array_merge(
+        //             parent::optionalAttributes(),
+        //             Content::href(),
+        //             Content::target(),
+        //             Content::download(),
+        //             Content::rel(),
+        //             Content::hreflang(),
+        //             Content::type()
+        //         ));
     }
 
     static public function defaultAriaRole(): string
@@ -56,16 +68,16 @@ class A extends HtmlElement implements HtmlElementInterface
         return 'link';
     }
 
-    static public function optionalAriaRoles(): array
+    static public function optionalAriaRoles(): ESArray
     {
-        return [
-            AriaRoles::button(),
-            AriaRoles::checkbox(),
-            AriaRoles::menuitem(),
-            AriaRoles::menuitemcheckbox(),
-            AriaRoles::menuitemradio(),
-            AriaRoles::tab(),
-            AriaRoles::treeitem()
-        ];
+        return ESArray::fold([
+                    AriaRoles::button(),
+                    AriaRoles::checkbox(),
+                    AriaRoles::menuitem(),
+                    AriaRoles::menuitemcheckbox(),
+                    AriaRoles::menuitemradio(),
+                    AriaRoles::tab(),
+                    AriaRoles::treeitem()
+                ]);
     }
 }

@@ -2,6 +2,8 @@
 
 namespace Eightfold\Markup\Html\Elements\Forms;
 
+use Eightfold\Shoop\ESArray;
+
 use Eightfold\Markup\Html\Elements\HtmlElement;
 use Eightfold\Markup\Html\Elements\HtmlElementInterface;
 
@@ -43,23 +45,38 @@ class Button extends HtmlElement implements HtmlElementInterface
         return Elements::phrasing();
     }
 
-    static public function optionalAttributes(): array
+    static public function optionalAttributes(): ESArray
     {
-        return array_merge(
-            parent::optionalAttributes(),
-            Content::autofocus(),
-            Content::disabled(),
-            Content::form(),
-            Content::formaction(),
-            Content::formenctype(),
-            Content::formmethod(),
-            Content::formnovalidate(),
-            Content::formtarget(),
-            Content::menu(),
-            Content::name(),
-            Content::type(),
-            Content::value()
-        );
+        $extras = array_merge(
+                    Content::autofocus(),
+                    Content::disabled(),
+                    Content::form(),
+                    Content::formaction(),
+                    Content::formenctype(),
+                    Content::formmethod(),
+                    Content::formnovalidate(),
+                    Content::formtarget(),
+                    Content::menu(),
+                    Content::name(),
+                    Content::type(),
+                    Content::value()
+                );
+        return parent::optionalAttributes()->plus(...$extras);
+        // return ESArray::fold(array_merge(
+        //             parent::optionalAttributes(),
+        //             Content::autofocus(),
+        //             Content::disabled(),
+        //             Content::form(),
+        //             Content::formaction(),
+        //             Content::formenctype(),
+        //             Content::formmethod(),
+        //             Content::formnovalidate(),
+        //             Content::formtarget(),
+        //             Content::menu(),
+        //             Content::name(),
+        //             Content::type(),
+        //             Content::value()
+        //         ));
     }
 
     static public function defaultAriaRole(): string
@@ -67,23 +84,28 @@ class Button extends HtmlElement implements HtmlElementInterface
         return 'button';
     }
 
-    static public function optionalAriaRoles(): array
+    static public function optionalAriaRoles(): ESArray
     {
-        return array_merge(
-            AriaRoles::link(),
-            AriaRoles::menuitem(),
-            AriaRoles::menuitemcheckbox(),
-            AriaRoles::menuitemradio(),
-            AriaRoles::radio()
-        );
+        return ESArray::fold(array_merge(
+                    AriaRoles::link(),
+                    AriaRoles::menuitem(),
+                    AriaRoles::menuitemcheckbox(),
+                    AriaRoles::menuitemradio(),
+                    AriaRoles::radio()
+                ));
     }
 
-    static public function optionalAriaAttributes(): array
+    static public function optionalAriaAttributes(): ESArray
     {
-        return array_merge(
-            parent::optionalAriaAttributes(),
-            Aria::expanded(),
-            Aria::pressed()
-        );
+        $extras = array_merge(
+                    Aria::expanded(),
+                    Aria::pressed()
+                );
+        return parent::optionalAriaAttributes()->plus(...$extras);
+        // return ESArray::fold(array_merge(
+        //             parent::optionalAriaAttributes(),
+        //             Aria::expanded(),
+        //             Aria::pressed()
+        //         ));
     }
 }

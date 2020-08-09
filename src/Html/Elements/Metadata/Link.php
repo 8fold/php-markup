@@ -2,6 +2,8 @@
 
 namespace Eightfold\Markup\Html\Elements\Metadata;
 
+use Eightfold\Shoop\ESArray;
+
 use Eightfold\Markup\Html\Elements\HtmlElement;
 use Eightfold\Markup\Html\Elements\HtmlElementInterface;
 
@@ -37,18 +39,28 @@ class Link extends HtmlElement implements HtmlElementInterface
         return Content::href();
     }
 
-    static public function optionalAttributes(): array
+    static public function optionalAttributes(): ESArray
     {
-        return array_merge(
-            parent::optionalAttributes(),
-            Content::href(),
-            Content::crossorigin(),
-            Content::rel(),
-            Content::media(),
-            Content::hreflang(),
-            Content::type(),
-            Content::sizes()
-        );
+        $extras = array_merge(
+                    Content::href(),
+                    Content::crossorigin(),
+                    Content::rel(),
+                    Content::media(),
+                    Content::hreflang(),
+                    Content::type(),
+                    Content::sizes()
+                );
+        return parent::optionalAttributes()->plus(...$extras);
+        // return ESArray::fold(array_merge(
+        //             parent::optionalAttributes(),
+        //             Content::href(),
+        //             Content::crossorigin(),
+        //             Content::rel(),
+        //             Content::media(),
+        //             Content::hreflang(),
+        //             Content::type(),
+        //             Content::sizes()
+        //         ));
     }
 
     static public function defaultAriaRole(): string

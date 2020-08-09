@@ -2,6 +2,8 @@
 
 namespace Eightfold\Markup\Html\Elements\Forms;
 
+use Eightfold\Shoop\ESArray;
+
 use Eightfold\Markup\Html\Elements\HtmlElement;
 use Eightfold\Markup\Html\Elements\HtmlElementInterface;
 
@@ -43,45 +45,45 @@ class Input extends HtmlElement implements HtmlElementInterface
         return Elements::phrasing();
     }
 
-    static public function optionalAttributes(): array
+    static public function optionalAttributes(): ESArray
     {
         // TODO: Also, the title attribute has special semantics on this element when
         //       used in conjunction with the pattern attribute.
-        return array_merge(
-            parent::optionalAttributes(),
-            Content::accept(),
-            Content::alt(),
-            Content::autocomplete(),
-            Content::checked(),
-            Content::dirname(),
-            Content::disabled(),
-            Content::form(),
-            Content::formaction(),
-            Content::formenctype(),
-            Content::formmethod(),
-            Content::formnovalidate(),
-            Content::formtarget(),
-            Content::height(),
-            Content::inputmode(),
-            Content::list(),
-            Content::max(),
-            Content::maxlength(),
-            Content::min(),
-            Content::minlength(),
-            Content::multiple(),
-            Content::name(),
-            Content::pattern(),
-            Content::placeholder(),
-            Content::readonly(),
-            Content::required(),
-            Content::size(),
-            Content::src(),
-            Content::step(),
-            Content::type(),
-            Content::value(),
-            Content::width(),
-            Content::accept()
-        );
+        $extras = array_merge(
+                    Content::accept(),
+                    Content::alt(),
+                    Content::autocomplete(),
+                    Content::checked(),
+                    Content::dirname(),
+                    Content::disabled(),
+                    Content::form(),
+                    Content::formaction(),
+                    Content::formenctype(),
+                    Content::formmethod(),
+                    Content::formnovalidate(),
+                    Content::formtarget(),
+                    Content::height(),
+                    Content::inputmode(),
+                    Content::list(),
+                    Content::max(),
+                    Content::maxlength(),
+                    Content::min(),
+                    Content::minlength(),
+                    Content::multiple(),
+                    Content::name(),
+                    Content::pattern(),
+                    Content::placeholder(),
+                    Content::readonly(),
+                    Content::required(),
+                    Content::size(),
+                    Content::src(),
+                    Content::step(),
+                    Content::type(),
+                    Content::value(),
+                    Content::width(),
+                    Content::accept()
+                );
+        return parent::optionalAttributes()->plus(...$extras);
     }
 
     static public function defaultAriaRole(): string

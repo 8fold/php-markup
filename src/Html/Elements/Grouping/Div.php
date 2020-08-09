@@ -2,6 +2,8 @@
 
 namespace Eightfold\Markup\Html\Elements\Grouping;
 
+use Eightfold\Shoop\ESArray;
+
 use Eightfold\Markup\Html\Elements\HtmlElement;
 use Eightfold\Markup\Html\Elements\HtmlElementInterface;
 
@@ -38,8 +40,8 @@ class Div extends HtmlElement implements HtmlElementInterface
         return '';
     }
 
-    static public function optionalAriaRoles(): array
+    static public function optionalAriaRoles(): ESArray
     {
-        return AriaRoles::any();
+        return ESArray::fold(AriaRoles::any());
     }
 }

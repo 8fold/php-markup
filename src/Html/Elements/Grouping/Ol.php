@@ -2,6 +2,8 @@
 
 namespace Eightfold\Markup\Html\Elements\Grouping;
 
+use Eightfold\Shoop\ESArray;
+
 use Eightfold\Markup\Html\Elements\Grouping\Ul;
 
 use Eightfold\Markup\Html\Data\Elements;
@@ -22,13 +24,19 @@ class Ol extends Ul
         return Elements::ol()[0];
     }
 
-    static public function optionalAttributes(): array
+    static public function optionalAttributes(): ESArray
     {
-        return array_merge(
-            parent::optionalAttributes(),
-            Content::reversed(),
-            Content::start(),
-            Content::type()
-        );
+        $extras = array_merge(
+                    Content::reversed(),
+                    Content::start(),
+                    Content::type()
+                );
+        return parent::optionalAttributes()->plus(...$extras);
+        // return ESArray::fold(array_merge(
+        //             parent::optionalAttributes(),
+        //             Content::reversed(),
+        //             Content::start(),
+        //             Content::type()
+        //         ));
     }
 }
