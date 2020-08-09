@@ -84,14 +84,14 @@ class ElementTest extends TestCase
     public function testAttributeListAsArray()
     {
         $expected = ["id hello"];
-        $actual = Element::elem()->attr("id hello")->attrList();
+        $actual = Element::fold("elem")->attr("id hello")->attrList();
         $this->assertEqualsWithPerformance($expected, $actual->unfold());
     }
 
     public function testAttributeListAsDictionary()
     {
         $expected = ["id" => "hello"];
-        $actual = Element::elem()->attr("id hello")->attrList(false);
+        $actual = Element::fold("elem")->attr("id hello")->attrList(false);
         $this->assertEqualsWithPerformance($expected, $actual->unfold());
     }
 
@@ -130,12 +130,12 @@ class ElementTest extends TestCase
         $this->assertEqualsWithPerformance($expected, $result);
     }
 
-    public function testStaticCall()
-    {
-        $expected = '<html></html>';
-        $actual = Element::html();
-        $this->assertEqualsWithPerformance($expected, $actual->unfold());
-    }
+    // public function testStaticCall()
+    // {
+    //     $expected = '<html></html>';
+    //     $actual = Element::html();
+    //     $this->assertEqualsWithPerformance($expected, $actual->unfold());
+    // }
 
     public function testParagraphSpanComponent()
     {
@@ -169,8 +169,8 @@ class ElementTest extends TestCase
                         'src http://example.com',
                         'alt A picture of the world'
                     ),
-                Element::fold('p', 'Hello, World!', ['is my_component']),
-                Element::my_link('World Domination')
+                Element::fold('p', 'Hello, World!', ['is my-component']),
+                Element::fold("my-link", 'World Domination')
                     ->attr('href http://example.com/domination'),
                 '<p>Done!</p>'
             )
