@@ -74,8 +74,8 @@ class Body extends HtmlElement implements HtmlElementInterface
         return 'document';
     }
 
-    static public function optionalAriaRoles(): array
+    static public function optionalAriaRoles(): ESArray
     {
-        return AriaRoles::application();
+        return ESArray::fold(AriaRoles::application());
     }
 }

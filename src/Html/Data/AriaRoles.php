@@ -16,6 +16,7 @@ abstract class AriaRoles
         return self::attributesForRoles()[$role];
     }
 
+    // TODO: Doesn't return anything
     static public function attributesForRoles(): array
     {
         $roles = self::all();

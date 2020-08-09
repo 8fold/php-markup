@@ -38,42 +38,11 @@ abstract class HtmlElement extends Element
         return $elem;
     }
 
-//     public function attr(string ...$attributes): Element
-//     {
-// var_dump(__LINE__);
-// var_dump(__FILE__);
-// die("filter out invalid attributes");
-// // Block users from adding invalid attributes in the first place.
-// // Always use and empty array when folding
-// //
-// // To reinstantiate new instance - maybe:
-// //      protected function refreshed($this->main(), ...$this->content())->attr(...$this->attrList())->omitEndTag($this->omitEndTag);
-// var_dump($attributes);
-//         $dictionary = $this->attrArray(false);
-// var_dump(__LINE__);
-//         $attributes = Shoop::array($attributes);
-// var_dump(__LINE__);
-//         $attributes->each(function($item) use (&$dictionary) {
-//             die("here");
-//             list($attr, $value) = Shoop::string($item)->divide(" ", false, 2);
-//             $dictionary = $dictionary->plus($value, $attr);
-//             // die(var_dump($dictionary));
-//         });
-// var_dump($dictionary);
-// die("here");
-
-//         $attributes = $dictionary->each(function($value, $attr) {
-//             return "{$attr} {$value}";
-//         })->unfold();
-// die(var_dump($attributes));
-//         $content = $this->content(false);
-//         $bool    = $this->omitEndTag();
-
-//         return static::fold($this->main(),
-//             ...Shoop::array($content)->plus($attributes)->plus($bool)
-//         );
-//     }
-
+    // TODO: I don't know if there's a way to speed this up, but would like to.
+    //      HTML effectively doubles the time of Element. Two possible areas
+    //      I can think of: 1) is here, 2) the other is in data aggregating. I
+    //      base this primarily on that effectively describing the entirety of
+    //      unique code in HTML.
     public function attrString(ESDictionary $dict = null): ESString
     {
         $ordered   = Shoop::dictionary([]);
@@ -84,60 +53,41 @@ abstract class HtmlElement extends Element
         $boolean   = Shoop::dictionary([]);
         $leftovers = Shoop::dictionary([]);
 
-        $this->attrList(false)->each(function($value, $member) use
-            (&$ordered, &$events, &$aria, &$data, &$other, &$boolean, &$leftovers) {
+        // TODO: Performance test each of this aggregations.
+        $allAriaRoles = static::allAriaRoles();
+        $orderedList = Ordered::order();
+        $optionalEventAttributes = static::optionalEventAttributes();
+        $optionalAriaAttributes = static::optionalAriaAttributes();
+        $otherList = Shoop::array(static::requiredAttributes())
+            ->plus(...static::optionalAttributes());
+        $booleans = Content::booleans();
 
-            $inAriaRoles = static::allAriaRoles()->hasUnfolded($member);
-            $inOrdered   = Ordered::order()->hasUnfolded($member);
-            $inEvents    = static::optionalEventAttributes()->hasUnfolded($member);
-            $inAria      = static::optionalAriaAttributes()->hasUnfolded($member);
-            $inData      = Shoop::string($member)->startsWithUnfolded("data-");
-            $inOther     = Shoop::array(static::requiredAttributes())
-                ->plus(...static::optionalAttributes())->hasUnfolded($member);
-            $inBoolean   = Content::booleans()->hasUnfolded($member);
+        $this->attrList(false)->each(function($value, $member) use (
+                &$ordered, &$events, &$aria, &$data, &$other, &$boolean, &$leftovers,
+                $allAriaRoles, $orderedList, $optionalEventAttributes, $optionalAriaAttributes, $otherList, $booleans
+            ) {
 
             if ($member === "role") {
-var_dump(__LINE__);
-var_dump(__FILE__);
-var_dump("role");
-                if ($inAriaRoles and $value !== static::defaultAriaRole()) {
+                if ($allAriaRoles->hasUnfolded($value) and $value !== static::defaultAriaRole()) {
                     $ordered = $ordered->plus($value, $member);
                 }
 
-            } elseif ($inOrdered and $inOther) {
-var_dump(__LINE__);
-var_dump(__FILE__);
-var_dump("ordered");
+            } elseif ($orderedList->hasUnfolded($member)) {
                 $ordered = $ordered->plus($value, $member);
 
-            } elseif ($inEvents) {
-var_dump(__LINE__);
-var_dump(__FILE__);
-var_dump("events");
+            } elseif ($optionalEventAttributes->hasUnfolded($member)) {
                 $events = $events->plus($value, $member);
 
-            } elseif ($inAria) {
-var_dump(__LINE__);
-var_dump(__FILE__);
-var_dump("aria");
+            } elseif ($optionalAriaAttributes->hasUnfolded($member)) {
                 $aria = $aria->plus($value, $member);
 
-            } elseif ($inData) {
-var_dump(__LINE__);
-var_dump(__FILE__);
-var_dump("data");
+            } elseif (Shoop::string($member)->startsWithUnfolded("data-")) {
                 $data = $data->plus($value, $member);
 
-            } elseif ($inOther) {
-var_dump(__LINE__);
-var_dump(__FILE__);
-var_dump("other");
+            } elseif ($otherList->hasUnfolded($member)) {
                 $other = $other->plus($value, $member);
 
-            } elseif ($inBoolean) {
-var_dump(__LINE__);
-var_dump(__FILE__);
-var_dump("boolean");
+            } elseif ($booleans->hasUnfolded($member)) {
                 $boolean = $boolean->plus($value, $member);
 
             // } else {
@@ -168,7 +118,6 @@ var_dump("boolean");
             // ->plus(...$leftovers->sortMembers()->interleave())
             ->noEmpties();
 
-        // die(var_dump($attr));
         return parent::attrString($dict);
     }
 
@@ -238,7 +187,7 @@ var_dump("boolean");
         return Shoop::array(EventOn::globals());
     }
 
-    static public function optionalAriaRoles(): array
+    static public function optionalAriaRoles(): ESArray
     {
         return Aria::globals();
     }
