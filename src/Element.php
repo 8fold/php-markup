@@ -237,9 +237,12 @@ class Element implements Foldable
         return $this->attrList();
     }
 
+    /**
+     * @deprecated
+     */
     protected function compiledContent()
     {
-        return $this->content->each(function($value) {
+        return $this->content()->each(function($value) {
                 if (is_string($value) || is_int($value)) {
                     return (string) $value;
 
