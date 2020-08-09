@@ -2,7 +2,8 @@
 
 namespace Eightfold\Markup\Tests\Html;
 
-use PHPUnit\Framework\TestCase;
+use Eightfold\Markup\Tests\TestCase;
+// use PHPUnit\Framework\TestCase;
 
 use Eightfold\Markup\Html;
 
@@ -10,11 +11,13 @@ use Eightfold\HtmlComponent\Component;
 
 class HtmlTest extends TestCase
 {
+    protected $maxMilliseconds = 5.5;
+
     public function testHtmlBase()
     {
         $expected = '<!doctype html><html></html>';
         $result = Html::html()->unfold();
-        $this->assertEquals($expected, $result);
+        $this->assertEqualsWithPerformance($expected, $result, 9.75);
     }
 
     public function testHtmlRemovesDeprecatedAttributes()
@@ -23,7 +26,7 @@ class HtmlTest extends TestCase
         $result = Html::html()
             ->attr('manifest something.cache')
             ->unfold();
-        $this->assertEquals($expected, $result);
+        $this->assertEqualsWithPerformance($expected, $result);
     }
 
     public function testHtmlCanHaveId()
@@ -34,7 +37,7 @@ class HtmlTest extends TestCase
                 Html::title('Hello, World!')
             )
         )->attr('id hello')->unfold();
-        $this->assertEquals($expected, $result);
+        $this->assertEqualsWithPerformance($expected, $result, 20);
     }
 
     public function testMetaCanHaveAttributes()
@@ -46,14 +49,14 @@ class HtmlTest extends TestCase
                 Html::meta()->attr('charset utf-8')
             )
         )->unfold();
-        $this->assertEquals($expected, $result);
+        $this->assertEqualsWithPerformance($expected, $result, 20.25);
     }
 
     public function testMetaBase()
     {
         $expected = '<meta charset="utf-8">';
         $result = Html::meta()->attr('charset utf-8')->unfold();
-        $this->assertEquals($expected, $result);
+        $this->assertEqualsWithPerformance($expected, $result);
     }
 
     /**
@@ -66,7 +69,7 @@ class HtmlTest extends TestCase
         $expected = '<!doctype html><html lang="en"><head><title>Hello, World!</title></head><body><p>Hello!</p></body></html>';
         $result = '<!doctype html><html lang="en"><head><title>Hello, World!</title></head><body><p>Hello!</p></body></html>';
 
-        $this->assertEquals($expected, $result);
+        $this->assertEqualsWithPerformance($expected, $result);
     }
 
     public function testIsCanHavAttributes()
@@ -75,7 +78,7 @@ class HtmlTest extends TestCase
         $result = Html::p('Hello')
             ->attr('class hello', "is my-component")
             ->unfold();
-        $this->assertEquals($expected, $result);
+        $this->assertEqualsWithPerformance($expected, $result);
     }
 
     public function testFormIsCanHavAttributes()
@@ -84,14 +87,14 @@ class HtmlTest extends TestCase
         $result = Html::form()
             ->attr('class hello', 'method post', 'action /somewhere', "is my-component")
             ->unfold();
-        $this->assertEquals($expected, $result);
+        $this->assertEqualsWithPerformance($expected, $result);
     }
 
     public function testCanHavePlaceholder()
     {
         $expected = '<input type="text" placeholder="hello">';
         $actual = Html::input()->attr("type text", "placeholder hello");
-        $this->assertEquals($expected, $actual->unfold());
+        $this->assertEqualsWithPerformance($expected, $actual->unfold());
     }
 
     public function testCanHaveAriaHidden()
@@ -105,13 +108,13 @@ class HtmlTest extends TestCase
     {
         $expected = '<button aria-expanded="false"></button>';
         $actual = Html::button()->attr("aria-expanded false");
-        $this->assertEquals($expected, $actual->unfold());
+        $this->assertEqualsWithPerformance($expected, $actual->unfold());
     }
 
     public function testCanHaveAriaLabelledBy()
     {
         $expected = '<div aria-labelledby="hello"></div>';
         $actual = Html::div()->attr("aria-labelledby hello");
-        $this->assertEquals($expected, $actual->unfold());
+        $this->assertEqualsWithPerformance($expected, $actual->unfold());
     }
 }

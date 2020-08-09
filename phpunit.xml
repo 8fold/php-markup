@@ -10,7 +10,7 @@
         <testsuite name="uikit">
           <directory>./tests/UIKit</directory>
         </testsuite>
-        <testsuite name="fee">
+        <testsuite name="feed">
           <directory>./tests/Feed/Rss</directory>
         </testsuite>
     </testsuites>

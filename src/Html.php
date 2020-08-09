@@ -20,6 +20,7 @@ class Html
     {
         $class = self::class($element, self::CLASSES);
         if ($class->count()->is(0)->unfold()) {
+            $element = Shoop::string($element)->replace(["_" => "-"]);
             return Element::fold($element, ...$elements);
         }
 

@@ -69,11 +69,7 @@ class Img extends Embed
 
     static public function optionalAriaRoles(): ESArray
     {
-        return AriaRoles::any()
-            ->plus(...AriaRoles::presentation()); // if `alt` attribute value is empty
-        // return array_merge(
-
-        //     AriaRoles::any()
-        // );
+        return ESArray::fold(AriaRoles::presentation()) // if `alt` attribute value is empty
+            ->plus(...AriaRoles::any());
     }
 }

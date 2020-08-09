@@ -52,10 +52,6 @@ class H1 extends HtmlElement implements HtmlElementInterface
 
     static public function optionalAriaRoles(): ESArray
     {
-        return AriaRoles::tab()->plus(...AriaRoles::presentation());
-        // return array_merge(
-        //     AriaRoles::tab(),
-        //     AriaRoles::presentation()
-        // );
+        return ESArray::fold(AriaRoles::presentation())->plus(...AriaRoles::tab());
     }
 }

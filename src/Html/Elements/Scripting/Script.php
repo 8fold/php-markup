@@ -2,6 +2,8 @@
 
 namespace Eightfold\Markup\Html\Elements\Scripting;
 
+use Eightfold\Shoop\ESArray;
+
 use Eightfold\Markup\Html\Elements\HtmlElement;
 use Eightfold\Markup\Html\Elements\HtmlElementInterface;
 
@@ -55,10 +57,9 @@ class Script extends HtmlElement implements HtmlElementInterface
         return Elements::text();
     }
 
-    static public function optionalAttributes(): array
+    static public function optionalAttributes(): ESArray
     {
-        return array_merge(
-            parent::optionalAttributes(),
+        $extras = array_merge(
             Content::src(),
             Content::type(),
             Content::charset(),
@@ -66,6 +67,7 @@ class Script extends HtmlElement implements HtmlElementInterface
             Content::defer(),
             Content::crossorigin()
         );
+        return parent::optionalAttributes()->plus(...$extras);
     }
 
     static public function defaultAriaRole(): string

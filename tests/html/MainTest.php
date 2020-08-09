@@ -2,7 +2,8 @@
 
 namespace Eightfold\Markup\Tests\Html;
 
-use PHPUnit\Framework\TestCase;
+use Eightfold\Markup\Tests\TestCase;
+// use PHPUnit\Framework\TestCase;
 
 use Eightfold\Markup\Html;
 
@@ -10,6 +11,8 @@ use Eightfold\HtmlComponent\Component;
 
 class MainTest extends TestCase
 {
+    protected $maxMilliseconds = 5.5;
+
     public function testSelectorAttributeOrderBase()
     {
         $expected = '<p role="alert" id="something" class="somethingElse somethingElse2" style="background: red;" tabindex="1" accesskey="S">Hello</p>';
@@ -23,7 +26,7 @@ class MainTest extends TestCase
                 , 'class somethingElse somethingElse2'
                 , 'id something')
             ->unfold();
-        $this->assertEquals($expected, $result);
+        $this->assertEqualsWithPerformance($expected, $result, 10);
     }
 
     // public function testValidParentCheck()
@@ -34,12 +37,12 @@ class MainTest extends TestCase
     //     $result = Html::ul(
     //         Html::dt('Hello, World!')
     //     )->unfold();
-    //     $this->assertEquals($expected, $result);
+    //     $this->assertEqualsWithPerformance($expected, $result);
     // }
 
     public function testPage()
     {
-        $expected = '<!doctype html><html lang="en"><head><title>Hello, World!</title><style></style></head><body><img src="http://example.com" alt="A picture of the world"><p is="my-component">Hello, World!</p><my-link href="http://example.com/domination">World Domination</my-link><p>Done!</p></body></html>';
+        $expected = '<!doctype html><html><head><title>Hello, World!</title><style></style></head><body><img src="http://example.com" alt="A picture of the world"><p is="my-component">Hello, World!</p><my-link href="http://example.com/domination">World Domination</my-link><p>Done!</p></body></html>';
         $result =
             Html::html(
                   Html::head(
@@ -56,13 +59,13 @@ class MainTest extends TestCase
                     , '<p>Done!</p>'
                  )
             )->unfold();
-        $this->assertEquals($expected, $result);
+        $this->assertEqualsWithPerformance($expected, $result, 33.25);
     }
 
     public function testDoubleDiv()
     {
         $expected = "<div><div></div></div>";
         $actual = Html::div(Html::div())->unfold();
-        $this->assertEquals($expected, $actual);
+        $this->assertEqualsWithPerformance($expected, $actual, 7.25);
     }
 }

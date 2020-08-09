@@ -2,7 +2,8 @@
 
 namespace Eightfold\Markup\Tests\Element;
 
-use PHPUnit\Framework\TestCase;
+use Eightfold\Markup\Tests\TestCase;
+// use PHPUnit\Framework\TestCase;
 
 use Eightfold\Shoop\ESArray;
 
@@ -10,31 +11,6 @@ use Eightfold\Markup\Element;
 
 class ElementTest extends TestCase
 {
-    private $start = 0;
-
-    private function assertEqualsWithPerformance(
-        $expected,
-        $actual,
-        $maxMilliseconds = 3.7
-    )
-    {
-        // setUp() return, set private var, etc.
-        $accountForExtraWork = 1;
-
-        $elapsed = hrtime(true) - $this->start;
-        $milliseconds = $elapsed/1e+6 - $accountForExtraWork;
-
-        $this->assertEquals($expected, $actual);
-        $this->assertTrue(
-            $milliseconds <= $maxMilliseconds,
-            "{$milliseconds}ms is greater than {$maxMilliseconds}ms");
-    }
-
-    protected function setUp(): void
-    {
-        $this->start = hrtime(true);
-    }
-
     public function testEmptyArguments()
     {
         $expected = [[], false];

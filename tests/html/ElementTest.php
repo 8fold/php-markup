@@ -2,7 +2,8 @@
 
 namespace Eightfold\Markup\Tests\Html;
 
-use PHPUnit\Framework\TestCase;
+use Eightfold\Markup\Tests\TestCase;
+// use PHPUnit\Framework\TestCase;
 
 use Eightfold\Markup\Html;
 
@@ -10,6 +11,8 @@ use Eightfold\HtmlComponent\Component;
 
 class ElementTest extends TestCase
 {
+    protected $maxMilliseconds = 5.5;
+
     public function testObjectParams()
     {
         $expected = '<object><param name="hello" value="world"><param name="you" value="are"><param name="awesome" value="today!"></object>';
@@ -21,14 +24,14 @@ class ElementTest extends TestCase
             Html::param()
                 ->attr('name awesome', 'value today!')
         )->unfold();
-        $this->assertEquals($expected, $result);
+        $this->assertEqualsWithPerformance($expected, $result, 20);
     }
 
     public function testHrBase()
     {
         $expected = '<hr>';
         $result = Html::hr()->unfold();
-        $this->assertEquals($expected, $result);
+        $this->assertEqualsWithPerformance($expected, $result);
     }
 
     public function testOlListItemSublists()
@@ -49,7 +52,7 @@ class ElementTest extends TestCase
                 )
             )
         )->unfold();
-        $this->assertEquals($expected, $result);
+        $this->assertEqualsWithPerformance($expected, $result, 21.5);
     }
 
     public function testHeadLinks()
@@ -60,7 +63,7 @@ class ElementTest extends TestCase
               Html::link()->attr('rel stylesheet', 'href #'),
               Html::link()->attr('href #', 'rel stylesheet')
         )->unfold();
-        $this->assertEquals($expected, $result);
+        $this->assertEqualsWithPerformance($expected, $result, 12);
     }
 
     public function testCanHaveMicrodata()
@@ -69,14 +72,14 @@ class ElementTest extends TestCase
         $result = Html::a("Hello")
             ->attr("href http://example.com", "itemprop sameAs")
             ->unfold();
-        $this->assertEquals($expected, $result);
+        $this->assertEqualsWithPerformance($expected, $result);
     }
 
     public function testCanHaveRDFA()
     {
         $expected = '<div vocab="http://schema.org/"></div>';
         $result = Html::div()->attr("vocab http://schema.org/")->unfold();
-        $this->assertEquals($expected, $result);
+        $this->assertEqualsWithPerformance($expected, $result);
     }
 
     public function testHeadStyle()
@@ -87,14 +90,14 @@ class ElementTest extends TestCase
             , Html::style('.class { background: #000000; }')
                 ->attr('media print', 'type text/css')
         )->unfold();
-        $this->assertEquals($expected, $result);
+        $this->assertEqualsWithPerformance($expected, $result, 11.5);
     }
 
     public function testInvalidAttributeIsExcludedFromAttributeList()
     {
         $expected = '<textarea></textarea>';
         $result = Html::textarea()->attr('value something');
-        $this->assertEquals($expected, $result->unfold());
+        $this->assertEqualsWithPerformance($expected, $result->unfold());
     }
 
     public function testAnchorWithInitialAttributesAndAddedAttributesAtCompile()
@@ -103,7 +106,7 @@ class ElementTest extends TestCase
         $result = Html::a('Hello')
             ->attr('class some-class', 'href http://example.com')
             ->unfold();
-        $this->assertEquals($expected, $result);
+        $this->assertEqualsWithPerformance($expected, $result);
     }
 
     public function testAbbrCanHaveTitle()
@@ -111,7 +114,7 @@ class ElementTest extends TestCase
         // $actual = Html::a("hello")->unfold();
         $expected = '<abbr title="Hello">hi</abbr>';
         $actual = Html::abbr("hi")->attr("title Hello");
-        $this->assertEquals($expected, $actual->unfold());
+        $this->assertEqualsWithPerformance($expected, $actual->unfold());
     }
 
     public function testDetailsAndSummary()
@@ -121,6 +124,6 @@ class ElementTest extends TestCase
             Html::summary("Hello"),
             Html::p("Here it is.")
         );
-        $this->assertEquals($expected, $actual->unfold());
+        $this->assertEqualsWithPerformance($expected, $actual->unfold(), 6);
     }
 }
