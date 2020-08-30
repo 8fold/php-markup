@@ -92,7 +92,7 @@ class Element implements Foldable
              $attributes[] = "{$attr} {$content}";
          }
 
-        return new Element(
+        return new static(
             $this->main,
             $attributes,
             $this->omitEndTag,
@@ -127,9 +127,14 @@ class Element implements Foldable
     //     })->noEmpties();
     // }
 
+    public function attrString()
+    {
+        return AttrString::apply()->unfoldUsing($this->attributes);
+    }
+
     public function unfold()
     {
-        $attributes = AttrString::apply()->unfoldUsing($this->attributes);
+        $attributes = $this->attrString();
 
         // TODO: Make variadic again, or maybe be able to take an array.
         $base = Shoop::this("<")->plus($this->main)->plus($attributes)->plus(">");

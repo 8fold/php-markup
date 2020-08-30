@@ -11,11 +11,15 @@ class AttrDictionary extends Filter
 {
     public function __invoke(array $using): array
     {
-        $dictionary = [];
+        if (count($using) === 0) {
+            return [];
+        }
+
+        $attributes = [];
         foreach ($using as $item) {
             list($attr, $content) = Shoop::this($item)->asArray(" ", false, 2);
-            $dictionary[$attr] = $content;
+            $attributes[$attr] = $content;
         }
-        return $dictionary;
+        return $attributes;
     }
 }

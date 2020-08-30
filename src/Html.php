@@ -4,11 +4,8 @@ namespace Eightfold\Markup;
 
 // use Eightfold\HtmlComponent\Component;
 
-use Eightfold\Shoop\{
-    Shoop,
-    ESElement,
-    ESString
-};
+use Eightfold\Shoop\Shoop;
+use Eightfold\Shoop\Shooped;
 
 use Eightfold\Markup\Element;
 
@@ -19,21 +16,27 @@ class Html
     public static function __callStatic(string $element, array $elements)
     {
         $class = self::class($element, self::CLASSES);
-        if ($class->count()->is(0)->unfold()) {
-            $element = Shoop::string($element)->replace(["_" => "-"]);
+        if ($class->asInteger()->is(0)->unfold()) {
+            $element = Shoop::this($element)->replace(["_" => "-"]);
             return Element::fold($element, ...$elements);
         }
 
+        if (in_array($element, ["body"])) {
+            return HtmlElement::fold($element, ...$elements);
+        }
         $class = $class->unfold();
+        // die(var_dump(
+        //     $class::fold($element, [], false, ...$elements)->attr("role document")->unfold()
+        // ));
         return $class::fold($element, [], false, ...$elements);
     }
 
-    static public function class(string $element, array $classes): ESString
+    static public function class(string $element, array $classes): Shooped
     {
         if (array_key_exists($element, $classes)) {
-            return Shoop::string($classes[$element]);
+            return Shoop::this($classes[$element]);
         }
-        return Shoop::string("");
+        return Shoop::this("");
     }
 
     private const CLASSES = [

@@ -10,6 +10,8 @@ use Eightfold\Shoop\ESArray;
 
 use Eightfold\Markup\Element;
 
+use Eightfold\Markup\Filters\AttrDictionary;
+
 class ElementTest extends TestCase
 {
     /**
@@ -20,7 +22,7 @@ class ElementTest extends TestCase
         AssertEquals::applyWith(
             '<container id="hello">',
             Element::class,
-            4.63
+            6.06
         )->unfoldUsing(
             Element::fold("container")->attr("id hello")->omitEndTag(true)
         );
@@ -91,6 +93,41 @@ class ElementTest extends TestCase
             2.48 // 1.91
         )->unfoldUsing(
             Element::fold("hello")->args()
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function attribute_list()
+    {
+        AssertEquals::applyWith(
+            ["id" => "hello"],
+            "array",
+            6.59
+        )->unfoldUsing(
+            AttrDictionary::apply()->unfoldUsing(["id hello"])
+        );
+
+        AssertEquals::applyWith(
+            ["id hello"],
+            "array"
+        )->unfoldUsing(
+            (new Element("hello", ["id hello"]))->attrList()
+        );
+
+        AssertEquals::applyWith(
+            ["id" => "hello"],
+            "array"
+        )->unfoldUsing(
+            (new Element("hello", ["id hello"]))->attrList(false)
+        );
+
+        AssertEquals::applyWith(
+            ["id" => "hello"],
+            "array"
+        )->unfoldUsing(
+            Element::fold("hello")->attr("id hello")->attrList(false)
         );
     }
 

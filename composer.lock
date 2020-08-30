@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bba4b725bcaea6c127e709ff6286bd40",
+    "content-hash": "2f7d306910147679a195d2fa9c288cb0",
     "packages": [
         {
             "name": "8fold/commonmark-abbreviations",
@@ -112,12 +112,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/8fold/html-spec-structured.git",
-                "reference": "b0aa3250d53252c9134b694ed76400a6e17a17d2"
+                "reference": "226766d673180ff3a9768903e202737f3c23e4ee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/8fold/html-spec-structured/zipball/b0aa3250d53252c9134b694ed76400a6e17a17d2",
-                "reference": "b0aa3250d53252c9134b694ed76400a6e17a17d2",
+                "url": "https://api.github.com/repos/8fold/html-spec-structured/zipball/226766d673180ff3a9768903e202737f3c23e4ee",
+                "reference": "226766d673180ff3a9768903e202737f3c23e4ee",
                 "shasum": ""
             },
             "require": {
@@ -148,7 +148,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-08-30T01:13:58+00:00"
+            "time": "2020-08-30T15:44:47+00:00"
         },
         {
             "name": "8fold/php-foldable",
