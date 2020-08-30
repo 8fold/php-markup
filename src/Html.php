@@ -25,7 +25,7 @@ class Html
         }
 
         $class = $class->unfold();
-        return $class::fold($element, ...$elements);
+        return $class::fold($element, [], false, ...$elements);
     }
 
     static public function class(string $element, array $classes): ESString

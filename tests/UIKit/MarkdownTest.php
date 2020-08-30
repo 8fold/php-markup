@@ -2,7 +2,8 @@
 
 namespace Eightfold\Markup\Tests\UIKit;
 
-use PHPUnit\Framework\TestCase;
+use Eightfold\Markup\Tests\TestCase;
+// use PHPUnit\Framework\TestCase;
 
 use Eightfold\Markup\UIKit;
 
@@ -10,36 +11,18 @@ use Eightfold\CommonMarkAbbreviations\AbbreviationExtension;
 
 class MarkdownTest extends TestCase
 {
-    public function testGeneral($value='')
+    private function doc()
     {
-        $doc = <<< EOD
+        return <<< EOD
         # Heading
 
         Content
         EOD;
-
-        $expected = '<h1>Heading</h1><p>Content</p>';
-        $actual = UIKit::markdown($doc);
-        $this->assertEquals($expected, $actual->unfold());
-
-        $expected = '<p>Heading</p><p>Content</p>';
-        $actual = UIKit::markdown($doc)->markdownReplacements(["# " => ""]);
-        $this->assertEquals($expected, $actual->unfold());
-
-        $expected = '<p>Content</p>';
-        $actual = UIKit::markdown($doc)->markdownReplacements(["# Heading" => ""]);
-        $this->assertEquals($expected, $actual->unfold());
-
-        $expected = 'Content';
-        $actual = UIKit::markdown($doc)
-            ->markdownReplacements(["# Heading" => ""])
-            ->htmlReplacements(["<p>" => "", "</p>" => ""]);
-        $this->assertEquals($expected, $actual->unfold());
     }
 
-    public function testDefaultExtensions($value='')
+    private function docTable()
     {
-        $doc = <<< EOD
+        return <<< EOD
         |Header 1 |Header 2 |
         |:--------|:--------|
         |Cell 1   |Cell 2   |
@@ -47,16 +30,57 @@ class MarkdownTest extends TestCase
         - [ ] Task 1
         - [x] Task 2
         EOD;
+    }
 
+    public function testBase()
+    {
+        $expected = '<h1>Heading</h1><p>Content</p>';
+        $actual = UIKit::markdown($this->doc());
+        $this->assertEqualsWithPerformance($expected, $actual->unfold(), 15.25);
+    }
+
+    public function testReplacement()
+    {
+        $expected = '<p>Heading</p><p>Content</p>';
+        $actual = UIKit::markdown($this->doc())
+            ->markdownReplacements(["# " => ""]);
+        $this->assertEqualsWithPerformance($expected, $actual->unfold());
+    }
+
+    public function testRemove()
+    {
+        $expected = '<p>Content</p>';
+        $actual = UIKit::markdown($this->doc())
+            ->markdownReplacements(["# Heading" => ""]);
+        $this->assertEqualsWithPerformance($expected, $actual->unfold());
+    }
+
+    public function testReplacements()
+    {
+        $expected = 'Content';
+        $actual = UIKit::markdown($this->doc())
+            ->markdownReplacements(["# Heading" => ""])
+            ->htmlReplacements(["<p>" => "", "</p>" => ""]);
+        $this->assertEqualsWithPerformance($expected, $actual->unfold());
+    }
+
+    public function testNoExtensions()
+    {
         // No extensions
         $expected = '<p>|Header 1 |Header 2 ||:--------|:--------||Cell 1   |Cell 2   |</p><ul><li>[ ] Task 1</li><li>[x] Task 2</li></ul>';
-        $actual = UIKit::markdown($doc);
-        $this->assertEquals($expected, $actual->unfold());
+        $actual = UIKit::markdown($this->docTable());
+        $this->assertEqualsWithPerformance($expected, $actual->unfold());
+    }
 
+    public function testDefaultExtensions()
+    {
         $expected = '<table><thead><tr><th align="left">Header 1</th><th align="left">Header 2</th></tr></thead><tbody><tr><td align="left">Cell 1</td><td align="left">Cell 2</td></tr></tbody></table><ul><li><input disabled="" type="checkbox"> Task 1</li><li><input checked="" disabled="" type="checkbox"> Task 2</li></ul>';
-        $actual = UIKit::markdown($doc)->extensions();
-        $this->assertEquals($expected, $actual->unfold());
+        $actual = UIKit::markdown($this->docTable())->extensions();
+        $this->assertEqualsWithPerformance($expected, $actual->unfold());
+    }
 
+    public function testAbbreviationExtensionAndAllowHtml()
+    {
         $doc = <<<EOD
         [.abbr](abbreviation)
 
@@ -65,7 +89,7 @@ class MarkdownTest extends TestCase
         $expected = '<p><abbr title="abbreviation">abbr</abbr></p><p><abbr title="abbreviation">abbr</abbr></p>';
         $actual = UIKit::markdown($doc, ['html_input' => 'allow'])
             ->extensions(AbbreviationExtension::class);
-        $this->assertEquals($expected, $actual->unfold());
+        $this->assertEqualsWithPerformance($expected, $actual->unfold());
     }
 
     public function testCanPrepend()
@@ -76,6 +100,6 @@ class MarkdownTest extends TestCase
         $prepend = "# Heading\n\n";
         $expected = '<h1>Heading</h1><p>Base</p>';
         $actual = UIKit::markdown($doc)->prepend($prepend);
-        $this->assertSame($expected, $actual->unfold());
+        $this->assertEqualsWithPerformance($expected, $actual->unfold());
     }
 }

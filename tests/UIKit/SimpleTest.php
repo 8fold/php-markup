@@ -2,7 +2,8 @@
 
 namespace Eightfold\Markup\Tests\UIKit;
 
-use PHPUnit\Framework\TestCase;
+use Eightfold\Markup\Tests\TestCase;
+// use PHPUnit\Framework\TestCase;
 
 use Eightfold\Markup\UIKit;
 use Eightfold\Markup\FormControls\InputText;
@@ -13,7 +14,7 @@ class SimpleTest extends TestCase
     {
         $expected = "<p>Hello!</p>";
         $result = UIKit::p("Hello!");
-        $this->assertEquals($expected, $result->unfold());
+        $this->assertEqualsWithPerformance($expected, $result->unfold(), 11.25);
     }
 
     public function testLinkBase()
@@ -23,14 +24,18 @@ class SimpleTest extends TestCase
             'Hello, World!',
             'http://example.com'
         )->unfold();
-        $this->assertEquals($expected, $result);
+        $this->assertEqualsWithPerformance($expected, $result, 13.5);
+    }
 
+    public function testLinkWithAttributes()
+    {
         $expected = '<a id="hello" href="http://example.com">Hello, World!</a>';
         $result = UIKit::anchor(
             'Hello, World!',
             'http://example.com'
         )->attr("id hello")->unfold();
-        $this->assertEquals($expected, $result);
+        die("Here");
+        $this->assertEqualsWithPerformance($expected, $result);
     }
 
     // public function testSimpleTable()
@@ -40,7 +45,7 @@ class SimpleTest extends TestCase
     //         ['world'],
     //         ['world2']
     //     )->headers('Hello')->caption('Hello table')->unfold();
-    //     $this->assertEquals($expected, $result);
+    //     $this->assertEqualsWithPerformance($expected, $result);
     // }
 
     public function testSimpleList()
@@ -50,14 +55,14 @@ class SimpleTest extends TestCase
             'hello',
             'good-bye'
         )->unfold();
-        $this->assertEquals($expected, $result);
+        $this->assertEqualsWithPerformance($expected, $result);
 
         $expected = '<ul class="test"><li>hello</li><li>good-bye</li></ul>';
         $result = UIKit::listWith(
             'hello',
             'good-bye'
         )->attr("class test");
-        $this->assertEquals($expected, $result->unfold());
+        $this->assertEqualsWithPerformance($expected, $result->unfold());
     }
 
     public function testSimpleOrderedList()
@@ -67,7 +72,7 @@ class SimpleTest extends TestCase
             'hello',
             'good-bye'
         )->ordered()->unfold();
-        $this->assertEquals($expected, $result);
+        $this->assertEqualsWithPerformance($expected, $result);
     }
 
     public function testSimpleDefinitionList()
@@ -77,7 +82,7 @@ class SimpleTest extends TestCase
             'hello',
             'good-bye'
         )->definition()->unfold();
-        $this->assertEquals($expected, $result);
+        $this->assertEqualsWithPerformance($expected, $result);
     }
 
     public function testSimpleDLWithDefinedTerms()
@@ -90,13 +95,13 @@ class SimpleTest extends TestCase
             'good-bye',
             'good-bye'
         )->description(1, 3)->unfold();
-        $this->assertEquals($expected, $result);
+        $this->assertEqualsWithPerformance($expected, $result);
     }
 
     public function testSimpleImage()
     {
         $expected = '<img src="https://path.to/image.jpg" alt="Alt text">';
         $actual = UIKit::image("Alt text", "https://path.to/image.jpg");
-        $this->assertEquals($expected, $actual->unfold());
+        $this->assertEqualsWithPerformance($expected, $actual->unfold());
     }
 }

@@ -9,15 +9,6 @@ use Eightfold\Html\Html;
 use Eightfold\UIKit\UIKit;
 use Eightfold\UIKit\Elements\Simple\Link;
 
-/**
- *
- * UIKit::ef_progress(value, min = 0, max = 100)
- *     ->meter(low = 25, high = 50, optimum = 75)
- *     ->range(step = 1)
- *     ->labels('label1', 'label2', label3)
- *     ->links(Link1, Link2, Link3)
- *
- */
 class Progress extends HtmlElement
 {
     private $_type = 'progress'; // meter, range

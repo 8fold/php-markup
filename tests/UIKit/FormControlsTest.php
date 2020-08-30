@@ -2,7 +2,8 @@
 
 namespace Eightfold\Markup\Tests\UIKit;
 
-use PHPUnit\Framework\TestCase;
+use Eightfold\Markup\Tests\TestCase;
+// use PHPUnit\Framework\TestCase;
 
 use Carbon\Carbon;
 
@@ -11,25 +12,27 @@ use Eightfold\Markup\UIKit\FormControls\InputText;
 
 class FormControlsTest extends TestCase
 {
+    protected $maxMilliseconds = 5.5;
+
     public function testFlowsToHtml()
     {
         $expected = '<input type="text" placeholder="hello">';
         $actual = UIKit::input()->attr("type text", "placeholder hello");
-        $this->assertEquals($expected, $actual->unfold());
+        $this->assertEqualsWithPerformance($expected, $actual->unfold(), 11.25);
     }
 
     // public function testFileInputBase()
     // {
     //     $expected = '<div><label for="some_file">Label</label><input id="some_file" type="file" name="some_file" required></div>';
     //     $result = UIKit::fileInput('Label', 'some_file')->unfold();
-    //     $this->assertEquals($expected, $result);
+    //     $this->assertEqualsWithPerformance($expected, $result);
     // }
 
     // public function testHiddenInputBase()
     // {
     //     $expected = '<input type="hidden" name="input_name" value="input_value">';
     //     $result = UIKit::hiddenInput('input_name', 'input_value')->unfold();
-    //     $this->assertEquals($expected, $result);
+    //     $this->assertEqualsWithPerformance($expected, $result);
     // }
 
     // public function testStripeElementsBase()
@@ -40,6 +43,6 @@ class FormControlsTest extends TestCase
     //         , 'MY_API_KEY'
     //         , 'Input label'
     //         , 'Button label')->unfold();
-    //     $this->assertEquals($expected, $result);
+    //     $this->assertEqualsWithPerformance($expected, $result);
     // }
 }

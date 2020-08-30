@@ -24,6 +24,7 @@ class Accordion extends HtmlElement
         ...$content
     )
     {
+
         $this->summary = (Type::is($summary, ESString::class, "string")) ? $summary : Type::sanitizeType($summary, ESArray::class);
         $this->summaryId = $summaryId;
 

@@ -15,7 +15,7 @@ class CompoundTest extends TestCase
     {
         $expected = "<div><div></div></div>";
         $result = UIKit::doubleWrap()->unfold();
-        $this->assertEqualsWithPerformance($expected, $result, 18.25);
+        $this->assertEqualsWithPerformance($expected, $result, 18.75);
     }
 
     public function testMarkdown()
@@ -56,13 +56,15 @@ class CompoundTest extends TestCase
 
     public function testWebHeadSocialBlock()
     {
-        $expected = '<meta name="viewport" content="width=device-width,initial-scale=1"><meta content="website" property="og:type"><meta content="8fold PHP Markup" property="og:title"><meta content="https://8fold.dev/open-source/markup/php" property="og:url"><meta content="Get the HTML out of your PHP with this HTML generator." property="og:description"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:" content="site 8foldPros">';
+        $expected = '<meta name="viewport" content="width=device-width,initial-scale=1"><meta content="website" property="og:type"><meta content="8fold PHP Markup" property="og:title"><meta content="https://8fold.dev/open-source/markup/php" property="og:url"><meta content="Get the HTML out of your PHP with this HTML generator." property="og:description"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="8foldPros">';
+
         $actual = UIKit::webHead()->social(
             "8fold PHP Markup",
             "https://8fold.dev/open-source/markup/php",
             "Get the HTML out of your PHP with this HTML generator."
         )->socialTwitter("8foldPros");
-        $this->assertEqualsWithPerformance($expected, $actual->unfold());
+
+        $this->assertEqualsWithPerformance($expected, $actual->unfold(), 25);
     }
 
     public function testAccordion()
@@ -70,14 +72,13 @@ class CompoundTest extends TestCase
         $summaryId = "accordion";
         $summary = "Summary";
         $content = UIKit::p("The content.");
-        $expected = '<h2 is="accordion"><button id="'. $summaryId .'" aria-controls="'. $summaryId .'-panel" aria-expanded="true">'. $summary .'</button></h2><div is="accordion-panel" role="region" id="'. $summaryId .'-panel" tabindex="-1" aria-hidden="false" aria-labelledby="'. $summaryId .'">'. $content->unfold() .'</div>';
 
-         '<h2 is="accordion"><button id="" aria-controls="" aria-expanded="true"></button></h2><div is="accordion-panel" id="" aria-labelledby="'. $summaryId .'" tabindex="-1" role="region" aria-hidden="false">'. $content->unfold() .'</div>';
+        $expected = '<h2 is="accordion"><button id="'. $summaryId .'" aria-controls="'. $summaryId .'-panel" aria-expanded="true">'. $summary .'</button></h2><div is="accordion-panel" role="region" id="'. $summaryId .'-panel" tabindex="-1" aria-hidden="false" aria-labelledby="'. $summaryId .'">'. $content->unfold() .'</div>';
         $actual = UIKit::accordion(
             $summaryId,
             $summary,
             $content
         );
-        $this->assertEqualsWithPerformance($expected, $actual->unfold());
+        $this->assertEqualsWithPerformance($expected, $actual->unfold(), 24);
     }
 }

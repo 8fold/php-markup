@@ -3,6 +3,7 @@
 namespace Eightfold\Markup\UIKit\Elements\Compound;
 
 use Eightfold\Shoop\Shoop;
+use Eightfold\Shoop\Helpers\Type;
 
 use Eightfold\Markup\Html\Elements\HtmlElement;
 use Eightfold\Markup\Html;
@@ -106,18 +107,26 @@ class WebHead extends HtmlElement
 
     public function unfold(): string
     {
-        return Shoop::array([
-            Html::meta()->attr(
+        $base = Html::meta()->attr(
                 "name viewport",
                 "content width=device-width,initial-scale=1"
-            )
-        ])->plus(...$this->favicons)
-        ->plus($this->social)
-        ->plus(...$this->styles)
-        ->plus(...$this->scripts)
-        ->noEmpties()
-        ->each(function($element) {
-            return $element->unfold();
-        })->join("");
+            );
+
+        return Shoop::array([$base])
+            ->plus(...$this->favicons)
+            ->plus($this->social)
+            ->plus(...$this->styles)
+            ->plus(...$this->scripts)
+            ->noEmpties()
+            ->each(function($element) {
+                if (Type::isFoldable($element)) {
+                    return $element->unfold();
+
+                } elseif (Type::isString($element)) {
+                    return $element;
+
+                }
+                var_dump($element);
+            })->join("")->unfold();
     }
 }

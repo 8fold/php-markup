@@ -9,19 +9,22 @@ use Eightfold\Markup\Html;
 
 class Anchor extends HtmlElement
 {
-    private $text = '';
-    private $href = '';
+    // private $text = '';
+    // private $href = '';
 
-    public function __construct(string $text, string $href)
+    public function __construct(string $text, string $href, ...$args)
     {
-        $this->text = $text;
-        $this->href = $href;
+        parent::__construct($text, ["href {$href}"]);
     }
 
     public function unfold(): string
     {
-        $attributes = $this->attributes()->plus("href {$this->href}");
-        return Html::a($this->text)->attr(...$attributes)->unfold();
+        var_dump($this->args());
+        // die(var_dump("href {$this->content()->first}"));
+        // $href = Shoop::array($this->args())->first;
+        var_dump($this->attrList());
+        $attributes = $this->attrList()->plus("href {$this->content()->first}");
+        return Html::a($this->main())->attr(...$attributes)->unfold();
     }
 }
 

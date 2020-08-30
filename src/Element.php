@@ -4,86 +4,76 @@ namespace Eightfold\Markup;
 
 use Eightfold\Shoop\Helpers\Type;
 
-use Eightfold\Shoop\{
-    Interfaces\Foldable,
-    Traits\FoldableImp,
-    Shoop,
-    ESArray,
-    ESDictionary,
-    ESString
-};
+use Eightfold\Foldable\Foldable;
+use Eightfold\Foldable\FoldableImp;
+
+use Eightfold\Shoop\Shoop;
+
+use Eightfold\Markup\Filters\AttrString;
+use Eightfold\Markup\Filters\AttrDictionary;
 
 class Element implements Foldable
 {
     use FoldableImp;
 
-    protected $element;
+    protected $content = [];
 
-    protected $content;
-
-    protected $attributes;
+    protected $attributes = [];
 
     protected $omitEndTag = false;
 
-    static public function processedMain($main): string
+    static public function fold(...$args): Foldable
     {
-        return Type::sanitizeType($main, ESString::class)->unfold();
-    }
-
-    /**
-     * May contain content, attributes, and whether to omit the end tag.
-     *
-     * To facilitate Shoop being able to generate a new instance without overriding
-     * the metchanism already in place, the value of `args` can be the following.
-     *
-     * $args = [
-     *     0   => {n Elements},
-     *     n+1 => [],
-     *     n+2 => true|false
-     * ];
-     *
-     * We highly recommend calling `attr()` and `omitEndTag()` to set those values.
-     *
-     */
-    static public function processedArgs(...$args): array
-    {
-        $args = Shoop::array($args);
-        if ($args->isEmpty or is_string($args->last) or is_a($args->last(), Element::class)) {
-            $args = $args->plus([], false);
-
-        } elseif (is_array($args->last)) {
-            $args = $args->plus(false);
-
-        } elseif (is_bool($args->last)) {
-            $bool = $args->last;
-            $array = $args->dropLast();
-            if (! is_array($array->last)) {
-                $args = $args->dropLast()->plus([], $bool);
-
-            }
+        if (count($args) === 1) {
+            return new static($args[0]);
         }
-        return $args->unfold();
+        $element = $args[0];
+        unset($args[0]);
+        $args = array_filter($args, function($v) {
+            return ! is_array($v) and ! is_bool($v);
+        });
+        return new static($element, [], false, ...$args);
     }
 
-    /**
-     * @depreated - Would like it to not be, but calling cause stackoverflow
-     */
-    // static public function __callStatic($element, $args)
-    // {
-    //     die($element);
-    //     $element = Shoop::string($element)->replace(["_" => "-"])->unfold();
-    //     return new static($element, ...$args);
-    // }
+    public function __construct(string $element, array $attributes = [], bool $omitEndTag = false, ...$content)
+    {
+        $this->main = $element;
+        $this->attributes = $attributes;
+        $this->omitEndTag = $omitEndTag;
+        $this->content = $content;
+    }
+
+    public function args(bool $includeMain = false): array
+    {
+        $args = [];
+
+        if ($includeMain) {
+            $args[] = $this->main;
+        }
+
+        $args[] = $this->attributes;
+        $args[] = $this->omitEndTag;
+
+        if (Shoop::this($this->content)->isEmpty()->reverse()->unfold()) {
+            $args[] = $this->content;
+        }
+
+        return $args;
+    }
 
     // TODO: PHP 8.0 bool|ESBool
-    public function omitEndTag($omit = null)// TODO: PHP 8.0 : static|bool
+    public function omitEndTag(bool $omit = null)// TODO: PHP 8.0 : static|bool
     {
         if ($omit === null) {
-            return Shoop::array($this->args())->last;
+            return $this->omitEndTag;
         }
-        $omit = Type::sanitizeType($omit, ESBool::class)->unfold();
-        $args = Shoop::array($this->args())->dropLast()->plus($omit);
-        return static::fold($this->main(), ...$args);
+
+        return new Element(
+            $this->main,
+            $this->attributes,
+            $omit,
+            ...$this->content
+        );
     }
 
     /**
@@ -94,162 +84,70 @@ class Element implements Foldable
      */
     public function attr(string ...$attributes): Element
     {
-// var_dump(__LINE__);
-// var_dump($attributes);
-        $dictionary = $this->attrList(false);
-// var_dump(__LINE__);
-        $attributes = Shoop::array($attributes);
-// var_dump(__LINE__);
-        $attributes->each(function($item) use (&$dictionary) {
-            list($attr, $value) = Shoop::string($item)->divide(" ", false, 2);
-            $dictionary = $dictionary->plus($value, $attr);
-        });
-// var_dump($dictionary);
-// die("here");
+        $current = $this->attrList(false);
+        $new     = AttrDictionary::apply()->unfoldUsing($attributes);
 
-        $attributes = $dictionary->each(function($value, $attr) {
-            return "{$attr} {$value}";
-        })->unfold();
-// die(var_dump($attributes));
-        $content = $this->content(false);
-        $bool    = $this->omitEndTag();
+        $attributes = [];
+        foreach (array_merge($current, $new) as $attr => $content) {
+             $attributes[] = "{$attr} {$content}";
+         }
 
-        return static::fold($this->main(),
-            ...Shoop::array($content)->plus($attributes)->plus($bool)
+        return new Element(
+            $this->main,
+            $attributes,
+            $this->omitEndTag,
+            ...$this->content
         );
     }
 
     // TODO: PHP 8.0 bool|ESBool -> ESArray|ESDictionary
-    public function attrList($useArray = true)
+    public function attrList(bool $useArray = true): array
     {
-        $base = Shoop::array($this->args())->dropLast()->last();
-        if ($useArray) {
-            return $base;
-        }
-
-        $dictionary = Shoop::dictionary([]);
-        $base->each(function($item) use (&$dictionary) {
-            list($member, $value) = Shoop::string($item)->divide(" ", false, 2);
-            $dictionary = $dictionary->plus($value, $member);
-        });
-        return $dictionary;
+        return ($useArray)
+            ? $this->attributes
+            : AttrDictionary::apply()->unfoldUsing($this->attributes);
     }
 
-    // TODO: PHP 8.0 bool|ESBool
-    public function attrString(ESDictionary $dict = null): ESString
-    {
-        $list = $dict;
-        if ($dict === null) {
-            $list = $this->attrList(false);
-        }
+    // public function content($unfold = false)
+    // {
+    //     $unfold = Type::sanitizeType($unfold, ESBool::class)->unfold();
+    //     return Shoop::array($this->args())->each(function($item) use ($unfold) {
+    //         if (is_array($item)) { return ""; }
 
-        return $list->isEmpty(function($result, $dict) {
-            if ($result->unfold()) { return Shoop::string(""); }
-            return $dict->each(function($value, $attr) {
-                if ($attr === "is") {
-                    $value = Shoop::string($value)->replace(["_" => "-"]);
-                }
-                return "{$attr}=\"{$value}\"";
-            })->join(" ")->start(" ");
-        });
-    }
+    //         if (is_string($item)) {
+    //             return $item;
 
-    public function content($unfold = false)
-    {
-        $unfold = Type::sanitizeType($unfold, ESBool::class)->unfold();
-        return Shoop::array($this->args())->each(function($item) use ($unfold) {
-            if (is_array($item)) { return ""; }
+    //         } elseif ($unfold and is_a($item, Foldable::class)) {
+    //             return $item->unfold();
 
-            if (is_string($item)) {
-                return $item;
+    //         } elseif (! $unfold and ! is_array($item) and ! is_bool($item)) {
+    //             return $item;
 
-            } elseif ($unfold and is_a($item, Foldable::class)) {
-                return $item->unfold();
-
-            } elseif (! $unfold and ! is_array($item) and ! is_bool($item)) {
-                return $item;
-
-            }
-        })->noEmpties();
-    }
+    //         }
+    //     })->noEmpties();
+    // }
 
     public function unfold()
     {
-        return Shoop::string($this->main())->start("<")->plus($this->attrString())
-            ->plus(">")
-            ->plus(...$this->content())
-            ->plus($this->omitEndTag()
-                ? ""
-                : Shoop::string($this->main())->start("</")->end(">")
-            )->unfold();
+        $attributes = AttrString::apply()->unfoldUsing($this->attributes);
 
-        // return Shoop::string($this->main())->start("<")->plus(
-        //         $this->attrList()
-        //     )->end(">")->plus(...$this->content())->plus(
-        //         ($this->omitEndTag())
-        //             ? ""
-        //             : Shoop::string($this->main())->start("</")->end(">")
-        //     )->unfold();
-        // return Shoop::string($this->main())
-        //     ->plus($this->compiledAttributes())
-        //     ->plus($this->compiledContent())->plus(
-        //         ($this->omitEndTag())
-        //             ? ""
-        //             : Shoop::string($this->main())->start("</")->end(">")
-        //     )->unfold();
-    }
+        // TODO: Make variadic again, or maybe be able to take an array.
+        $base = Shoop::this("<")->plus($this->main)->plus($attributes)->plus(">");
 
-    /**
-     * @deprecated
-     */
-    protected function attributes(): ESArray
-    {
-        return $this->attrArray();
-    }
+        // TODO: RFC example
+        if (Shoop::this($this->omitEndTag)->reverse()->efToBoolean()) {
+            $content = Shoop::this([]);
+            foreach ($this->content as $c) {
+                if (is_string($c)) {
+                    $content = $content->plus($c);
 
-    /**
-     * @deprecated
-     */
-    public function extends($extends): Element
-    {
-        $extends = Type::sanitizeType($extends, ESString::class);
-        $elem = $this->element;
-
-        $this->element = $extends;
-        $this->attr("is {$elem}");
-
-        return $this;
-    }
-
-    /**
-     * @deprecated
-     */
-    protected function compiledElement()
-    {
-        return $this->main();
-    }
-
-    /**
-     * @deprecated
-     */
-    protected function compiledAttributes(): string
-    {
-        return $this->attrList();
-    }
-
-    /**
-     * @deprecated
-     */
-    protected function compiledContent()
-    {
-        return $this->content()->each(function($value) {
-                if (is_string($value) || is_int($value)) {
-                    return (string) $value;
-
-                } elseif (is_a($value, Element::class) || is_subclass_of($value, Element::class)) {
-                    return $value->unfold();
+                } elseif (is_a($c, Foldable::class)) {
+                    $content = $content->plus($c->unfold());
 
                 }
-            })->join("");
+            }
+            $base = $base->plus($content->asString())->plus("</{$this->main}>");
+        }
+        return $base->unfold();
     }
 }

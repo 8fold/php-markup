@@ -11,13 +11,14 @@
   ],
   "require": {
     "php": "~7.0",
-    "8fold/php-shoop-extras": "~0.1",
+    "8fold/php-shoop": "dev-master@dev",
     "8fold/commonmark-abbreviations": "~1.0",
     "8fold/commonmark-accordions": "~1.0",
+    "8fold/html-spec-structured": "dev-master@dev",
     "nesbot/carbon": "~2.36"
   },
   "require-dev": {
-    "brianium/paratest": "^4.1"
+    "phpunit/phpunit": "~9.1"
   },
   "autoload": {
     "psr-4": {
@@ -26,7 +27,8 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Eightfold\\Markup\\Tests\\": "./tests/"
+      "Eightfold\\Markup\\Tests\\": "./tests/",
+      "Eightfold\\Foldable\\Tests\\": "./vendor/8fold/php-foldable/tests/"
     }
   },
   "config": {
