@@ -2,8 +2,6 @@
 
 namespace Eightfold\Markup;
 
-// use Eightfold\HtmlComponent\Component;
-
 use Eightfold\Shoop\Shoop;
 use Eightfold\Shoop\Shooped;
 
@@ -15,19 +13,18 @@ class Html
 {
     public static function __callStatic(string $element, array $elements)
     {
+        if (in_array($element, ["body"])) {
+            return HtmlElement::fold($element, ...$elements);
+        }
+
         $class = self::class($element, self::CLASSES);
         if ($class->asInteger()->is(0)->unfold()) {
             $element = Shoop::this($element)->replace(["_" => "-"]);
             return Element::fold($element, ...$elements);
         }
 
-        if (in_array($element, ["body"])) {
-            return HtmlElement::fold($element, ...$elements);
-        }
+
         $class = $class->unfold();
-        // die(var_dump(
-        //     $class::fold($element, [], false, ...$elements)->attr("role document")->unfold()
-        // ));
         return $class::fold($element, [], false, ...$elements);
     }
 
@@ -49,7 +46,6 @@ class Html
         , 'meta'  => \Eightfold\Markup\Html\Elements\Metadata\Meta::class
         , 'style' => \Eightfold\Markup\Html\Elements\Metadata\Style::class
 
-        , 'body'    => \Eightfold\Markup\Html\Elements\Sections\Body::class
         , 'article' => \Eightfold\Markup\Html\Elements\Sections\Article::class
         , 'section' => \Eightfold\Markup\Html\Elements\Sections\Section::class
         , 'nav'     => \Eightfold\Markup\Html\Elements\Sections\Nav::class
