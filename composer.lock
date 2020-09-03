@@ -112,12 +112,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/8fold/html-spec-structured.git",
-                "reference": "1f751e91b9a37b76880998b03df0d26d3f5138db"
+                "reference": "b013bd87acb16de23198d1d026622cdbb75aea50"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/8fold/html-spec-structured/zipball/1f751e91b9a37b76880998b03df0d26d3f5138db",
-                "reference": "1f751e91b9a37b76880998b03df0d26d3f5138db",
+                "url": "https://api.github.com/repos/8fold/html-spec-structured/zipball/b013bd87acb16de23198d1d026622cdbb75aea50",
+                "reference": "b013bd87acb16de23198d1d026622cdbb75aea50",
                 "shasum": ""
             },
             "require": {
@@ -148,20 +148,20 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-09-03T16:03:14+00:00"
+            "time": "2020-09-03T17:44:42+00:00"
         },
         {
             "name": "8fold/php-foldable",
-            "version": "0.0.13",
+            "version": "0.0.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/8fold/php-foldable.git",
-                "reference": "d86327fad71d6b705deb4aa5dc90768699697970"
+                "reference": "e92e36e15b38095df362ee4e5799b1d7cc955f18"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/8fold/php-foldable/zipball/d86327fad71d6b705deb4aa5dc90768699697970",
-                "reference": "d86327fad71d6b705deb4aa5dc90768699697970",
+                "url": "https://api.github.com/repos/8fold/php-foldable/zipball/e92e36e15b38095df362ee4e5799b1d7cc955f18",
+                "reference": "e92e36e15b38095df362ee4e5799b1d7cc955f18",
                 "shasum": ""
             },
             "require": {
@@ -198,7 +198,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-08-28T00:53:45+00:00"
+            "time": "2020-09-03T16:16:16+00:00"
         },
         {
             "name": "8fold/php-shoop",

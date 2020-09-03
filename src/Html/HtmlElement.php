@@ -11,6 +11,8 @@ use Eightfold\HtmlSpecStructured\Read\HtmlAttributeIndex;
 
 use Eightfold\Markup\Filters\AttrString;
 
+// TODO: Consider moving to root.
+//      Incorporating into HTML has the risk of not generating an element because a method with that name exists.
 class HtmlElement extends Element
 {
     private $elementReference;
@@ -53,10 +55,7 @@ class HtmlElement extends Element
         "start"
     ];
 
-    const OTHER = [];
-
-    const BOOLEAN = [];
-
+    // TODO: Never called - ??
     public function elementDefinition()
     {
         if ($this->elementDefinition === null) {
@@ -77,6 +76,7 @@ class HtmlElement extends Element
         return $this->elementDefinition;
     }
 
+    // TODO: Turn into filter call - AttrStringHtml
     public function attrString()
     {
         $index = HtmlAttributeIndex::init();
@@ -165,6 +165,7 @@ class HtmlElement extends Element
             ! $element->acceptsChildren()
         ) {
             $this->omitEndTag = true;
+
         }
         return parent::unfold();
     }

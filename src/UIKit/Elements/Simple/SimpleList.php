@@ -2,7 +2,7 @@
 
 namespace Eightfold\Markup\UIKit\Elements\Simple;
 
-use Eightfold\Markup\Html\Elements\HtmlElement;
+use Eightfold\Markup\Html\HtmlElement;
 
 use Eightfold\Markup\Html;
 
@@ -10,35 +10,32 @@ use Eightfold\Markup\UIKit;
 
 class SimpleList extends HtmlElement
 {
-    private $items = [];
-
     private $type = 'unordered';
 
     private $descriptionTerms = [];
 
     public function __construct(...$items)
     {
-        $this->items = $items;
+        $this->main = $items;
     }
 
     public function unfold(): string
     {
-        if (count($this->items) == 0) {
-            return '';
+        if (count($this->main) == 0) {
+            return "";
         }
-
-        $listItems = $this->listItems($this->items);
 
         $container = 'ul';
         if ($this->type == 'ordered') {
             $container = 'ol';
 
-        } elseif ($this->type == 'definition') {
+        } elseif ($this->type == 'description') {
             $container = 'dl';
 
         }
 
-        return Html::$container(...$listItems)->attr(...$this->attributes())->unfold();
+        $listItems = $this->listItems($this->main);
+        return Html::$container(...$listItems)->attr(...$this->attributes)->unfold();
     }
 
     public function ordered(): SimpleList
@@ -47,17 +44,9 @@ class SimpleList extends HtmlElement
         return $this;
     }
 
-    /**
-     * @deprecate
-     */
-    public function definition(int ...$terms): SimpleList
-    {
-        return $this->description(...$terms);
-    }
-
     public function description(int ...$terms): SimpleList
     {
-        $this->type = 'definition';
+        $this->type = 'description';
         $this->descriptionTerms = $terms;
         return $this;
     }
@@ -73,7 +62,7 @@ class SimpleList extends HtmlElement
                 $listItems[] = Html::li($item);
 
             } else {
-                $count = $count + 1;
+                $count++;
 
                 if (count($this->descriptionTerms) == 0) {
                     if ($count % 2 == 0) {

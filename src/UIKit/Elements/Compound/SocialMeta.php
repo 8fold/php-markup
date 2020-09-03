@@ -8,7 +8,7 @@ use Eightfold\Shoop\Apply;
 use Eightfold\Foldable\Foldable;
 use Eightfold\Foldable\FoldableImp;
 
-use Eightfold\Markup\Html\Elements\HtmlElement;
+use Eightfold\Markup\Html\HtmlElement;
 use Eightfold\Markup\Html;
 
 class SocialMeta implements Foldable

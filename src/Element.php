@@ -69,12 +69,7 @@ class Element implements Foldable
             return $this->omitEndTag;
         }
 
-        return new Element(
-            $this->main,
-            $this->attributes,
-            $omit,
-            ...$this->content
-        );
+        return $this;
     }
 
     /**
@@ -93,12 +88,9 @@ class Element implements Foldable
              $attributes[] = "{$attr} {$content}";
          }
 
-        return new static(
-            $this->main,
-            $attributes,
-            $this->omitEndTag,
-            ...$this->content
-        );
+         $this->attributes = $attributes;
+
+        return $this;
     }
 
     // TODO: PHP 8.0 bool|ESBool -> ESArray|ESDictionary

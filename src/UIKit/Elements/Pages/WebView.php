@@ -2,7 +2,7 @@
 
 namespace Eightfold\Markup\UIKit\Elements\Pages;
 
-use Eightfold\Markup\Html\Elements\HtmlElement;
+use Eightfold\Markup\Html\HtmlElement;
 
 // use Eightfold\UIKit\Elements\HtmlElementBridge;
 

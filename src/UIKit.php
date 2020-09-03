@@ -49,8 +49,7 @@ class UIKit extends Html
 
     static public function listWith(...$content)
     {
-        $class = self::class("listWith", self::CLASSES)->unfold();
-        return new $class(...$content);
+        return new UIKit\Elements\Simple\SimpleList(...$content);
     }
 
     static public function fileInput($label, $name)
@@ -68,14 +67,12 @@ class UIKit extends Html
     // TODO: Should be able to accept unfoldable
     static public function anchor(string $text, string $href)
     {
-        $class = self::class("anchor", self::CLASSES)->unfold();
-        return new $class($text, $href);
+        return new UIKit\Elements\Simple\Anchor($text, $href);
     }
 
     static public function image(string $altText, string $path)
     {
-        $class = self::class("image", self::CLASSES)->unfold();
-        return new $class($altText, $path);
+        return new UIKit\Elements\Simple\Image($altText, $path);
     }
 
     static public function markdown(string $markdown, array $config = [])
@@ -121,71 +118,69 @@ class UIKit extends Html
 
     static public function __callStatic(string $element, array $elements)
     {
-        $class = Html::class($element, self::CLASSES);
-        if ($class->count()->is(0)->unfold()) {
-            return Html::$element(...$elements);
-        }
+        if (array_key_exists($element, static::CLASSES)) {
+            switch ($element) {
+                case ('primary_nav'
+                    || 'secondary_nav'
+                    || 'side_nav'
+                    || 'user_card'):
+                    return new $class(...$elements);
+                    break;
 
-        switch ($element) {
-            case ('primary_nav'
-                || 'secondary_nav'
-                || 'side_nav'
-                || 'user_card'):
-                return new $class(...$elements);
-                break;
+                case ('glyph' || 'head' || 'avatar'):
+                    return new $class($args[0]);
+                    break;
 
-            case ('glyph' || 'head' || 'avatar'):
-                return new $class($args[0]);
-                break;
+                case ('footer' || 'image'):
+                    if (isset($args[1])) {
+                        return new $class($args[0], $args[1]);
 
-            case ('footer' || 'image'):
-                if (isset($args[1])) {
+                    }
+                    return new $class($args[0]);
+                    break;
+
+                case ('alert'):
                     return new $class($args[0], $args[1]);
+                    break;
 
-                }
-                return new $class($args[0]);
-                break;
+                case 'header':
+                    $main = $args[0];
+                    unset($args[0]);
+                    return new $class($main, ...$args);
+                    break;
 
-            case ('alert'):
-                return new $class($args[0], $args[1]);
-                break;
+                case ('select'
+                    || 'textarea'
+                    || 'markdown_textarea'
+                    || 'textInput'
+                    || 'date_input'):
+                    if (isset($args[3])) {
+                        return new $class($args[0], $args[1], $args[2], $args[3]);
 
-            case 'header':
-                $main = $args[0];
-                unset($args[0]);
-                return new $class($main, ...$args);
-                break;
+                    } elseif ($isset(args[2])) {
+                        return new $class($args[0], $args[1], $args[3]);
 
-            case ('select'
-                || 'textarea'
-                || 'markdown_textarea'
-                || 'textInput'
-                || 'date_input'):
-                if (isset($args[3])) {
-                    return new $class($args[0], $args[1], $args[2], $args[3]);
-
-                } elseif ($isset(args[2])) {
-                    return new $class($args[0], $args[1], $args[3]);
-
-                }
-                return new $class($args[0], $args[1]);
-                break;
-
-            case 'progress':
-                if (isset($args[2])) {
-                    return new $class($args[0], $args[1], $args[2]);
-
-                } elseif (isset($args[1])) {
+                    }
                     return new $class($args[0], $args[1]);
+                    break;
 
-                }
-                return new $class($args[0]);
-                break;
+                case 'progress':
+                    if (isset($args[2])) {
+                        return new $class($args[0], $args[1], $args[2]);
 
-            default:
-                return parent::$element(...$args);
-                break;
+                    } elseif (isset($args[1])) {
+                        return new $class($args[0], $args[1]);
+
+                    }
+                    return new $class($args[0]);
+                    break;
+
+                default:
+                    return parent::$element(...$args);
+                    break;
+            }
         }
+        return Html::$element(...$elements);
     }
 
     private const CLASSES = [
