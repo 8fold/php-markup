@@ -68,14 +68,14 @@ class Channel extends Element
             Element::description($this->description)
         ]);
 
-        Shoop::dictionary($this->otherChannelMeta)->each(
+        Shoop::this($this->otherChannelMeta)->each(
             function($value, $element) use (&$content) {
                 $content = $content->plus(Element::fold($element, $value));
             });
 
         $content = $content->plus(...$this->content);
 
-        return Shoop::string(
+        return Shoop::this(
             Element::rss(
                 Element::channel(
                     ...Shoop::array($content)

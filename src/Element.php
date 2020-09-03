@@ -8,6 +8,7 @@ use Eightfold\Foldable\Foldable;
 use Eightfold\Foldable\FoldableImp;
 
 use Eightfold\Shoop\Shoop;
+use Eightfold\Shoop\Apply;
 
 use Eightfold\Markup\Filters\AttrString;
 use Eightfold\Markup\Filters\AttrDictionary;
@@ -123,7 +124,7 @@ class Element implements Foldable
         $base = Shoop::this("<")->plus($main)->plus($attributes)->plus(">");
 
         // TODO: RFC example
-        if (Shoop::this($this->omitEndTag)->reverse()->efToBoolean()) {
+        if (Apply::reversed()->unfoldUsing($this->omitEndTag)) {
             $content = Shoop::this([]);
             foreach ($this->content as $c) {
                 if (is_string($c)) {

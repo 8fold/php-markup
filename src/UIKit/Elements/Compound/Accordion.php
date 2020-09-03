@@ -54,6 +54,6 @@ class Accordion extends HtmlElement
             "id {$this->panelId}",
             "aria-labelledby {$this->summaryId}"
         )->unfold();
-        return Shoop::string($header)->plus($panel);
+        return Shoop::this($header)->plus($panel);
     }
 }

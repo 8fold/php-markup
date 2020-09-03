@@ -5,7 +5,8 @@ namespace Eightfold\Markup;
 use Eightfold\Markup\Element;
 use Eightfold\Markup\Html;
 
-use Eightfold\Shoop\{Shoop, ESString};
+use Eightfold\Shoop\Shoop;
+use Eightfold\Shoop\ESString;
 
 
 class UIKit extends Html

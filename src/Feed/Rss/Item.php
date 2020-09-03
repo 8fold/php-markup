@@ -64,7 +64,7 @@ class Item extends Element
 
     private function description()
     {
-        $return = Shoop::string($this->description)
+        $return = Shoop::this($this->description)
             ->dropTags()
             ->divide(" ");
 
@@ -87,7 +87,7 @@ class Item extends Element
             Element::description($this->description())
         ]);
 
-        return Shoop::string(
+        return Shoop::this(
             Element::item(...$content)->unfold()
         )->unfold();
 

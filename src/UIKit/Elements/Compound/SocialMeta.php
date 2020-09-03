@@ -3,8 +3,10 @@
 namespace Eightfold\Markup\UIKit\Elements\Compound;
 
 use Eightfold\Shoop\Shoop;
-use Eightfold\Shoop\Interfaces\Foldable;
-use Eightfold\Shoop\Traits\FoldableImp;
+use Eightfold\Shoop\Apply;
+
+use Eightfold\Foldable\Foldable;
+use Eightfold\Foldable\FoldableImp;
 
 use Eightfold\Markup\Html\Elements\HtmlElement;
 use Eightfold\Markup\Html;
@@ -37,43 +39,42 @@ class SocialMeta implements Foldable
     )
     {
         $this->args = [$title, $url, $description, $image, $type, $appId];
-        $this->meta = Shoop::dictionary([])->plus(
-            $type, "og:type",
-            $title, "og:title",
-            $url, "og:url",
-            $description, "og:description"
-        );
+        $this->meta = Shoop::this([
+            "og:type"        => $type,
+            "og:title"       => $title,
+            "og:url"         => $url,
+            "og:description" => $description
+        ]);
 
-        if (Shoop::string($image)->isNotEmpty) {
-            $this->meta = $this->meta->plus($image, "og:image");
+        if (Shoop::this($image)->isEmpty()->reverse()->unfold()) {
+            $this->meta = $this->meta->plus(["og:image" => $image]);
         }
 
-        if (Shoop::string($appId)->isNotEmpty) {
-            $this->meta = $this->meta->plus($appId, "og:app_id");
+        if (Shoop::this($appId)->isEmpty()->reverse()->unfold()) {
+            $this->meta = $this->meta->plus(["og:app_id" => $appId]);
         }
     }
 
     public function twitter($site = "", $card = "summary_large_image")
     {
-        $this->meta = $this->meta->plus($card, "twitter:card");
-        Shoop::string($site)->isNotEmpty(function($result, $site) {
-            if ($result->unfold()) {
-                $this->meta = $this->meta->plus($site, "twitter:site");
-            }
-        });
+        $this->meta = $this->meta->plus(["twitter:card" => $card]);
+        if (Shoop::this($site)->isEmpty()->reverse()->unfold()) {
+             $this->meta = $this->meta->plus(["twitter:site" => $site]);
+        }
         return $this;
     }
 
     public function unfold(): string
     {
-        return $this->meta->each(function($value, $attr) {
-            return Shoop::string($attr)
-                ->startsWith("og:", function($result, $name) use ($value) {
-                    // die(var_dump(Html::meta()->attr("property {$name}", "content {$value}")->unfold()));
-                    return ($result->unfold())
-                        ? Html::meta()->attr("property {$name}", "content {$value}")
-                        : Html::meta()->attr("name {$name}", "content {$value}");
-                });
-        })->join("")->unfold();
+        $build = Shoop::this([]);
+        foreach ($this->meta as $attr => $value) {
+            $plus = (Apply::startsWith("og:")->unfoldUsing($attr))
+                 ? Html::meta()->attr("property {$attr}", "content {$value}")
+                 : Html::meta()->attr("name {$attr}", "content {$value}");
+
+            $build = $build->plus($plus);
+        }
+
+        return $build->asString()->unfold();
     }
 }

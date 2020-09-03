@@ -40,19 +40,19 @@ class WebHead extends HtmlElement
             Html::link()->attr("type image/x-icon", "rel icon", "href {$baseIcon}")
         ]);
 
-        if (Shoop::string($appleTouch)->isNotEmpty) {
+        if (Shoop::this($appleTouch)->isNotEmpty) {
             $this->favicons = $this->favicons->plus(
                 Html::link()->attr("rel apple-touch-icon", "href {$appleTouch}", "sizes 180x180")
             );
         }
 
-        if (Shoop::string($icon32)->isNotEmpty) {
+        if (Shoop::this($icon32)->isNotEmpty) {
             $this->favicons = $this->favicons->plus(
                 Html::link()->attr("rel image/png", "href {$icon32}", "sizes 32x32")
             );
         }
 
-        if (Shoop::string($icon16)->isNotEmpty) {
+        if (Shoop::this($icon16)->isNotEmpty) {
             $this->favicons = $this->favicons->plus(
                 Html::link()->attr("rel image/png", "href {$icon16}", "sizes 16x16")
             );

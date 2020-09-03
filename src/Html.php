@@ -9,7 +9,7 @@ use Eightfold\Shoop\Shooped;
 
 use Eightfold\Markup\Element;
 
-use Eightfold\Markup\Html\Elements\HtmlElement;
+use Eightfold\Markup\Html\HtmlElement;
 
 class Html
 {
