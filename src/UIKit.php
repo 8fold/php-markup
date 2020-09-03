@@ -13,8 +13,7 @@ class UIKit extends Html
 {
     static public function webView($title, ...$content)
     {
-        $class = self::class("webView", self::CLASSES)->unfold();
-        return new $class($title, ...$content);
+        return new UIKit\Elements\Pages\WebView($title, ...$content);
     }
 
     static public function doubleWrap(...$content)

@@ -4,15 +4,13 @@ namespace Eightfold\Markup\UIKit\Elements\Pages;
 
 use Eightfold\Markup\Html\HtmlElement;
 
-// use Eightfold\UIKit\Elements\HtmlElementBridge;
-
 use Eightfold\Shoop\Shoop;
+
 use Eightfold\Markup\UIKit;
-use Eightfold\HtmlComponent\Interfaces\Compile;
 
 class WebView extends HtmlElement
 {
-    protected $pageTitle = 'Page title';
+    protected $title = "Page title";
 
     protected $meta = [];
 
@@ -20,20 +18,23 @@ class WebView extends HtmlElement
 
     protected $scripts = [];
 
-    public function __construct(string $pageTitle, ...$content)
+    public function __construct(string $title, ...$content)
     {
-        $this->pageTitle = UIKit::title($pageTitle);
+        $this->title = $title;
         $this->content = $content;
     }
 
-    public function unfold(string ...$attributes): string
+    public function unfold(): string
     {
-        $head = Shoop::array([$this->pageTitle])->plus(...$this->meta);
-        $result = UIKit::html(
-            UIKit::head(...$head->unfold()),
+        $string = UIKit::html(
+            UIKit::head(...Shoop::this([
+                    UIKit::title($this->title)
+                ])->plus($this->meta)
+            ),
             UIKit::body(...$this->content)->attr(...$this->bodyAttributes)
-        );
-        return $result->unfold(...$attributes);
+        )->unfold();
+
+        return "<!doctype html>". $string;
     }
 
     public function meta(...$meta)
