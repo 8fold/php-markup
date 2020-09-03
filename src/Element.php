@@ -134,10 +134,12 @@ class Element implements Foldable
 
     public function unfold()
     {
+        $main = str_replace("_", "-", $this->main);
+
         $attributes = $this->attrString();
 
         // TODO: Make variadic again, or maybe be able to take an array.
-        $base = Shoop::this("<")->plus($this->main)->plus($attributes)->plus(">");
+        $base = Shoop::this("<")->plus($main)->plus($attributes)->plus(">");
 
         // TODO: RFC example
         if (Shoop::this($this->omitEndTag)->reverse()->efToBoolean()) {
@@ -151,7 +153,7 @@ class Element implements Foldable
 
                 }
             }
-            $base = $base->plus($content->asString())->plus("</{$this->main}>");
+            $base = $base->plus($content->asString())->plus("</{$main}>");
         }
         return $base->unfold();
     }

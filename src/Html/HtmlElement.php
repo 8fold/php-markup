@@ -1,6 +1,6 @@
 <?php
 
-namespace Eightfold\Markup\Html\Elements;
+namespace Eightfold\Markup\Html;
 
 use Eightfold\Markup\Element;
 

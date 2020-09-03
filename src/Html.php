@@ -2,6 +2,8 @@
 
 namespace Eightfold\Markup;
 
+use Eightfold\HtmlSpecStructured\Read\HtmlIndex;
+
 use Eightfold\Shoop\Shoop;
 use Eightfold\Shoop\Shooped;
 
@@ -13,19 +15,10 @@ class Html
 {
     public static function __callStatic(string $element, array $elements)
     {
-        if (in_array($element, ["body"])) {
+        if (HtmlIndex::init()->hasComponentNamed($element)) {
             return HtmlElement::fold($element, ...$elements);
         }
-
-        $class = self::class($element, self::CLASSES);
-        if ($class->asInteger()->is(0)->unfold()) {
-            $element = Shoop::this($element)->replace(["_" => "-"]);
-            return Element::fold($element, ...$elements);
-        }
-
-
-        $class = $class->unfold();
-        return $class::fold($element, [], false, ...$elements);
+        return Element::fold($element, ...$elements);
     }
 
     static public function class(string $element, array $classes): Shooped
