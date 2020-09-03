@@ -108,25 +108,6 @@ class Element implements Foldable
             : AttrDictionary::apply()->unfoldUsing($this->attributes);
     }
 
-    // public function content($unfold = false)
-    // {
-    //     $unfold = Type::sanitizeType($unfold, ESBool::class)->unfold();
-    //     return Shoop::array($this->args())->each(function($item) use ($unfold) {
-    //         if (is_array($item)) { return ""; }
-
-    //         if (is_string($item)) {
-    //             return $item;
-
-    //         } elseif ($unfold and is_a($item, Foldable::class)) {
-    //             return $item->unfold();
-
-    //         } elseif (! $unfold and ! is_array($item) and ! is_bool($item)) {
-    //             return $item;
-
-    //         }
-    //     })->noEmpties();
-    // }
-
     public function attrString()
     {
         return AttrString::apply()->unfoldUsing($this->attributes);
