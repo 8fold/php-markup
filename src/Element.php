@@ -25,14 +25,19 @@ class Element implements Foldable
 
     static public function fold(...$args): Foldable
     {
-        if (count($args) === 1) {
-            return new static($args[0]);
+        // TODO: Switch to using Shoop, see how it impacts performance
+        $args    = Shoop::this($args);
+        $element = $args->at(0)->unfold();
+        if ($args->length()->is(1)->unfold()) {
+            return new static($element);
         }
-        $element = $args[0];
-        unset($args[0]);
-        $args = array_filter($args, function($v) {
-            return ! is_array($v) and ! is_bool($v);
+
+        $args = $args->dropAt(0)->retain(function($v) {
+            $v = Shoop::this($v);
+            return $v->isArray()->reversed()->unfold() and
+                $v->isBoolean()->reversed()->unfold();
         });
+
         return new static($element, [], false, ...$args);
     }
 
@@ -44,7 +49,7 @@ class Element implements Foldable
         $this->content = $content;
     }
 
-    public function args(bool $includeMain = false): array
+    public function args($includeMain = false)
     {
         $args = [];
 
@@ -55,7 +60,7 @@ class Element implements Foldable
         $args[] = $this->attributes;
         $args[] = $this->omitEndTag;
 
-        if (Shoop::this($this->content)->isEmpty()->reverse()->unfold()) {
+        if (Shoop::this($this->content)->isEmpty()->reversed()->unfold()) {
             $args[] = $this->content;
         }
 
@@ -67,6 +72,10 @@ class Element implements Foldable
     {
         if ($omit === null) {
             return $this->omitEndTag;
+
+        } elseif (Shoop::this($omit)->efIsBoolean()) {
+            $this->omitEndTag = $omit;
+
         }
 
         return $this;
@@ -80,15 +89,15 @@ class Element implements Foldable
      */
     public function attr(string ...$attributes): Element
     {
-        $current = $this->attrList(false);
-        $new     = AttrDictionary::apply()->unfoldUsing($attributes);
-
-        $attributes = [];
-        foreach (array_merge($current, $new) as $attr => $content) {
-             $attributes[] = "{$attr} {$content}";
-         }
-
-         $this->attributes = $attributes;
+        $this->attributes = Shoop::this(
+            $this->attrList(false)
+        )->append(
+            AttrDictionary::apply()->unfoldUsing($attributes)
+        )->each(
+            function($v, $m, &$build) {
+                $build[] = Shoop::this($m)->append(" ")->append($v)->unfold();
+            }
+        )->unfold();
 
         return $this;
     }
@@ -108,27 +117,28 @@ class Element implements Foldable
 
     public function unfold()
     {
+        // TODO: some type of str_replace for Shooped
         $main = str_replace("_", "-", $this->main);
 
-        $attributes = $this->attrString();
+        $base = Shoop::this($main)->prepend("<")->append(
+                $this->attrString()
+            )->append(">");
 
-        // TODO: Make variadic again, or maybe be able to take an array.
-        $base = Shoop::this("<")->plus($main)->plus($attributes)->plus(">");
+        if (Shoop::this($this->omitEndTag)->unfold()) {
+            return $base->unfold();
+        }
 
-        // TODO: RFC example
-        if (Apply::reversed()->unfoldUsing($this->omitEndTag)) {
-            $content = Shoop::this([]);
-            foreach ($this->content as $c) {
-                if (is_string($c)) {
-                    $content = $content->plus($c);
+        $base = $base->append(
+            Shoop::this($this->content)->each(function($v, $m, &$build) {
+                if (Apply::isString()->unfoldUsing($v)) {
+                    $build[] = $v;
 
-                } elseif (is_a($c, Foldable::class)) {
-                    $content = $content->plus($c->unfold());
+                } elseif (is_a($v, Foldable::class)) {
+                    $build[] = $v->unfold();
 
                 }
-            }
-            $base = $base->plus($content->asString())->plus("</{$main}>");
-        }
-        return $base->unfold();
+            })->efToString()
+        );
+        return $base->append("</")->append($main)->append(">")->unfold();
     }
 }

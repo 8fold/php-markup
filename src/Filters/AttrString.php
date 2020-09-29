@@ -15,14 +15,9 @@ class AttrString extends Filter
             return "";
         }
 
-        $attributes = [];
-        foreach (Shoop::this($using) as $attr) {
-            list($attr, $content) = Shoop::this($attr)->asArray(" ", false, 2);
-            $attributes[] = "{$attr}=\"{$content}\"";
-        }
-
-        return Shoop::this(" ")->plus(
-            Shoop::this($attributes)->efToString(" ")
-        )->unfold();
+        return Shoop::this($using)->each(function($v, $m, &$build) {
+            list($attr, $content) = Shoop::this($v)->divide(" ", false, 2);
+            $build[] = "{$attr}=\"{$content}\"";
+        })->asString(" ")->prepend(" ")->unfold();
     }
 }

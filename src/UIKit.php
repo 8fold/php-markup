@@ -8,7 +8,6 @@ use Eightfold\Markup\Html;
 use Eightfold\Shoop\Shoop;
 use Eightfold\Shoop\ESString;
 
-
 class UIKit extends Html
 {
     static public function webView($title, ...$content)
@@ -16,10 +15,14 @@ class UIKit extends Html
         return new UIKit\Elements\Pages\WebView($title, ...$content);
     }
 
+    static public function webHead()
+    {
+        return new UIKit\Elements\Compound\WebHead();
+    }
+
     static public function doubleWrap(...$content)
     {
-        $class = self::class("doubleWrap", self::CLASSES)->unfold();
-        return new $class(...$content);
+        return new UIKit\Elements\Compound\DoubleWrap(...$content);
     }
 
     static public function pagination(
@@ -76,8 +79,7 @@ class UIKit extends Html
 
     static public function markdown(string $markdown, array $config = [])
     {
-        $class = self::class("markdown", self::CLASSES)->unfold();
-        return new $class($markdown, $config);
+        return new UIKit\Elements\Compound\Markdown($markdown, $config);
     }
 
     static public function stripeElements($formId, $apiKey, $inputLabel, $buttonLabel)
@@ -95,24 +97,27 @@ class UIKit extends Html
         string $appId = ""
     )
     {
-        $class = self::class("socialMeta", self::CLASSES)->unfold();
-        return new $class($title, $url, $description, $image, $type, $appId);
-    }
-
-    static public function webHead()
-    {
-        $class = self::class("webHead", self::CLASSES)->unfold();
-        return new $class();
+        return new UIKit\Elements\Compound\SocialMeta(
+            $title,
+            $url,
+            $description,
+            $image,
+            $type,
+            $appId
+        );
     }
 
     static public function accordion(
         string $summaryId,
-        $summary,
+        string $summary,
         ...$content
     )
     {
-        $class = self::class("accordion", self::CLASSES)->unfold();
-        return new $class($summaryId, $summary, ...$content);
+        return new UIKit\Elements\Compound\Accordion(
+            $summaryId,
+            $summary,
+            ...$content
+        );
     }
 
     static public function __callStatic(string $element, array $elements)

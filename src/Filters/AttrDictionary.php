@@ -15,11 +15,9 @@ class AttrDictionary extends Filter
             return [];
         }
 
-        $attributes = [];
-        foreach ($using as $item) {
-            list($attr, $content) = Shoop::this($item)->asArray(" ", false, 2);
-            $attributes[$attr] = $content;
-        }
-        return $attributes;
+        return Shoop::this($using)->each(function($v, $k, &$build) {
+            list($attr, $content) = Shoop::this($v)->divide(" ", false, 2);
+            $build[$attr] = $content;
+        })->unfold();
     }
 }

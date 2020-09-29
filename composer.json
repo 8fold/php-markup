@@ -11,10 +11,10 @@
   ],
   "require": {
     "php": "~7.0",
-    "8fold/php-shoop": "dev-master@dev",
+    "8fold/php-shoop-shelf": "dev-master@dev",
+    "8fold/php-html-spec": "dev-master@dev",
     "8fold/commonmark-abbreviations": "~1.0",
     "8fold/commonmark-accordions": "~1.0",
-    "8fold/html-spec-structured": "dev-master@dev",
     "nesbot/carbon": "~2.36"
   },
   "require-dev": {

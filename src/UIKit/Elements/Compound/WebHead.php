@@ -17,8 +17,7 @@ class WebHead extends HtmlElement
     private $social = "";
 
     public function __construct()
-    {
-    }
+    {}
 
     /**
      *
@@ -36,23 +35,23 @@ class WebHead extends HtmlElement
         string $icon16 = ""
     )
     {
-        $this->favicons = Shoop::array([
+        $this->favicons = Shoop::this([
             Html::link()->attr("type image/x-icon", "rel icon", "href {$baseIcon}")
         ]);
 
-        if (Shoop::this($appleTouch)->isNotEmpty) {
+        if (Shoop::this($appleTouch)->efToBoolean()) {
             $this->favicons = $this->favicons->plus(
                 Html::link()->attr("rel apple-touch-icon", "href {$appleTouch}", "sizes 180x180")
             );
         }
 
-        if (Shoop::this($icon32)->isNotEmpty) {
+        if (Shoop::this($icon32)->efToBoolean()) {
             $this->favicons = $this->favicons->plus(
                 Html::link()->attr("rel image/png", "href {$icon32}", "sizes 32x32")
             );
         }
 
-        if (Shoop::this($icon16)->isNotEmpty) {
+        if (Shoop::this($icon16)->efToBoolean()) {
             $this->favicons = $this->favicons->plus(
                 Html::link()->attr("rel image/png", "href {$icon16}", "sizes 16x16")
             );
@@ -62,17 +61,23 @@ class WebHead extends HtmlElement
 
     public function styles(...$paths)
     {
-        $this->styles = Shoop::array($paths)->each(function($path) {
-            return Html::link()->attr("rel stylesheet", "href {$path}");
-        });
+        $this->styles = Shoop::this([]);
+        foreach($paths as $path) {
+            $this->styles = $this->styles->plus(
+                Html::link()->attr("rel stylesheet", "href {$path}")
+            );
+        }
         return $this;
     }
 
     public function scripts(...$paths)
     {
-        $this->scripts = Shoop::array($paths)->each(function($path) {
-            return Html::script()->attr("src {$path}");
-        });
+        $this->scripts = Shoop::this([]);
+        foreach($paths as $path) {
+            $this->scripts = $this->scripts->plus(
+                Html::script()->attr("src {$path}")
+            );
+        }
         return $this;
     }
 
@@ -112,21 +117,20 @@ class WebHead extends HtmlElement
                 "content width=device-width,initial-scale=1"
             );
 
-        return Shoop::array([$base])
-            ->plus(...$this->favicons)
+        $base = Shoop::this([$base])
+            ->plus($this->favicons)
             ->plus($this->social)
-            ->plus(...$this->styles)
-            ->plus(...$this->scripts)
-            ->noEmpties()
-            ->each(function($element) {
-                if (Type::isFoldable($element)) {
-                    return $element->unfold();
+            ->plus($this->styles)
+            ->plus($this->scripts)
+            ->asArray(0, false);
 
-                } elseif (Type::isString($element)) {
-                    return $element;
+        $build = Shoop::this([]);
+        foreach ($base as $element) {
+            $build = (is_string($element))
+                ? $build->plus($element)
+                : $build->plus($element->unfold());
+        }
 
-                }
-                var_dump($element);
-            })->join("")->unfold();
+        return $build->asString()->unfold();
     }
 }

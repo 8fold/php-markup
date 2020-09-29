@@ -3,12 +3,15 @@
 namespace Eightfold\Markup\Tests\UIKit;
 
 use Eightfold\Markup\Tests\TestCase;
-// use PHPUnit\Framework\TestCase;
+use Eightfold\Foldable\Tests\TestEqualsPerformance as AssertEquals;
 
 use Eightfold\Markup\UIKit;
 
 use Eightfold\CommonMarkAbbreviations\AbbreviationExtension;
 
+/**
+ * @group Markdown
+ */
 class MarkdownTest extends TestCase
 {
     private function doc()
@@ -32,11 +35,24 @@ class MarkdownTest extends TestCase
         EOD;
     }
 
-    public function testBase()
+    /**
+     * @test
+     */
+    public function basic()
     {
-        $expected = '<h1>Heading</h1><p>Content</p>';
-        $actual = UIKit::markdown($this->doc());
-        $this->assertEqualsWithPerformance($expected, $actual->unfold(), 15.25);
+        AssertEquals::applyWith(
+            '<h1>Heading</h1><p>Content</p>',
+            "string"
+        )->unfoldUsing(
+            UIKit::markdown($this->doc())
+        );
+        // $expected = ;
+        // $actual = ;
+        // $this->assertEqualsWithPerformance($expected, $actual->unfold(), 15.25);
+        //
+        $expected = "<p>Hello, World!</p>";
+        $actual = UIKit::markdown("Hello, World!");
+        $this->assertSame($expected, $actual->unfold());
     }
 
     public function testReplacement()

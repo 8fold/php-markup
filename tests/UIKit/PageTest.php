@@ -14,14 +14,13 @@ class PageTest extends TestCase
 {
     /**
      * @test
-     * @group current
      */
     public function web_view()
     {
         AssertEquals::applyWith(
             '<!doctype html><html><head><title>UIKit</title><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"></head><body class="theme"><p>Hello, World!</p></body></html>',
             "string",
-            9.46
+            10.21 // 9.69 // 9.46
         )->unfoldUsing(
             UIKit::webView(
                 "UIKit",
