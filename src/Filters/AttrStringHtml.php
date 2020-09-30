@@ -5,7 +5,7 @@ namespace Eightfold\Markup\Filters;
 
 use Eightfold\Foldable\Filter;
 
-use Eightfold\HtmlSpecStructured\Read\HtmlAttributeIndex;
+use Eightfold\HtmlSpec\Read\HtmlAttributeIndex;
 
 class AttrStringHtml extends Filter
 {

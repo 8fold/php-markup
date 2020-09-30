@@ -161,15 +161,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/8fold/php-html-spec.git",
-                "reference": "3d6fae30ae835d49c465182358cfe64b8485c80d"
+                "reference": "595216a78df99a442d20651b5846a158284ff76e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/8fold/php-html-spec/zipball/3d6fae30ae835d49c465182358cfe64b8485c80d",
-                "reference": "3d6fae30ae835d49c465182358cfe64b8485c80d",
+                "url": "https://api.github.com/repos/8fold/php-html-spec/zipball/595216a78df99a442d20651b5846a158284ff76e",
+                "reference": "595216a78df99a442d20651b5846a158284ff76e",
                 "shasum": ""
             },
             "require": {
+                "8fold/php-shoop": "~0.10",
                 "illuminate/support": "^7.26",
                 "php": "~7"
             },
@@ -197,20 +198,20 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-09-04T04:04:24+00:00"
+            "time": "2020-09-29T19:18:48+00:00"
         },
         {
             "name": "8fold/php-shoop",
-            "version": "0.10.11",
+            "version": "0.10.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/8fold/php-shoop.git",
-                "reference": "d12a1730ddcbf63f50e5941560598f85ef94008e"
+                "reference": "f60526b586f311de4524dad3469f4821fc81572f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/8fold/php-shoop/zipball/d12a1730ddcbf63f50e5941560598f85ef94008e",
-                "reference": "d12a1730ddcbf63f50e5941560598f85ef94008e",
+                "url": "https://api.github.com/repos/8fold/php-shoop/zipball/f60526b586f311de4524dad3469f4821fc81572f",
+                "reference": "f60526b586f311de4524dad3469f4821fc81572f",
                 "shasum": ""
             },
             "require": {
@@ -248,7 +249,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-09-28T23:18:08+00:00"
+            "time": "2020-09-30T18:20:08+00:00"
         },
         {
             "name": "8fold/php-shoop-shelf",
@@ -1920,16 +1921,16 @@
         },
         {
             "name": "phpspec/prophecy",
-            "version": "1.12.0",
+            "version": "1.12.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpspec/prophecy.git",
-                "reference": "765cd5d5d237525f8bbadaec5dc161c83a369119"
+                "reference": "8ce87516be71aae9b956f81906aaf0338e0d8a2d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/765cd5d5d237525f8bbadaec5dc161c83a369119",
-                "reference": "765cd5d5d237525f8bbadaec5dc161c83a369119",
+                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/8ce87516be71aae9b956f81906aaf0338e0d8a2d",
+                "reference": "8ce87516be71aae9b956f81906aaf0338e0d8a2d",
                 "shasum": ""
             },
             "require": {
@@ -1979,7 +1980,7 @@
                 "spy",
                 "stub"
             ],
-            "time": "2020-09-28T12:23:07+00:00"
+            "time": "2020-09-29T09:10:42+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -2535,16 +2536,16 @@
         },
         {
             "name": "sebastian/comparator",
-            "version": "4.0.4",
+            "version": "4.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/comparator.git",
-                "reference": "e717aabeafe4eac045d3e947dad3207118664c72"
+                "reference": "7a8ff306445707539c1a6397372a982a1ec55120"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/comparator/zipball/e717aabeafe4eac045d3e947dad3207118664c72",
-                "reference": "e717aabeafe4eac045d3e947dad3207118664c72",
+                "url": "https://api.github.com/repos/sebastianbergmann/comparator/zipball/7a8ff306445707539c1a6397372a982a1ec55120",
+                "reference": "7a8ff306445707539c1a6397372a982a1ec55120",
                 "shasum": ""
             },
             "require": {
@@ -2601,7 +2602,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-09-28T05:31:46+00:00"
+            "time": "2020-09-30T06:47:25+00:00"
         },
         {
             "name": "sebastian/complexity",

@@ -2,7 +2,7 @@
 
 namespace Eightfold\Markup;
 
-use Eightfold\HtmlSpecStructured\Read\HtmlIndex;
+use Eightfold\HtmlSpec\Read\HtmlIndex;
 
 use Eightfold\Markup\Element;
 use Eightfold\Markup\Html\HtmlElement;

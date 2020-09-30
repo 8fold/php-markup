@@ -2,10 +2,13 @@
 
 namespace Eightfold\Markup\UIKit\Elements\Compound;
 
+use Eightfold\Markup\Html\HtmlElement;
+
+use Eightfold\Foldable\Foldable;
+
 use Eightfold\Shoop\Shoop;
 use Eightfold\Shoop\Helpers\Type;
 
-use Eightfold\Markup\Html\HtmlElement;
 use Eightfold\Markup\Html;
 use Eightfold\Markup\UIKit;
 
@@ -14,10 +17,16 @@ class WebHead extends HtmlElement
     private $favicons = [];
     private $styles = [];
     private $scripts = [];
-    private $social = "";
+    private $social = [];
 
     public function __construct()
-    {}
+    {
+        $this->favicons = Shoop::this([]);
+        $this->styles   = Shoop::this([]);
+        $this->scripts  = Shoop::this([]);
+        $this->favicons = Shoop::this([]);
+        $this->social   = Shoop::this([]);
+    }
 
     /**
      *
@@ -31,8 +40,8 @@ class WebHead extends HtmlElement
     public function favicons(
         string $baseIcon,
         string $appleTouch = "",
-        string $icon32 = "",
-        string $icon16 = ""
+        string $icon32     = "",
+        string $icon16     = ""
     )
     {
         $this->favicons = Shoop::this([
@@ -40,20 +49,28 @@ class WebHead extends HtmlElement
         ]);
 
         if (Shoop::this($appleTouch)->efToBoolean()) {
-            $this->favicons = $this->favicons->plus(
-                Html::link()->attr("rel apple-touch-icon", "href {$appleTouch}", "sizes 180x180")
+            $this->favicons = $this->favicons->append(
+                [
+                    Html::link()
+                        ->attr("rel apple-touch-icon", "href {$appleTouch}", "sizes 180x180")
+                ]
             );
         }
 
         if (Shoop::this($icon32)->efToBoolean()) {
-            $this->favicons = $this->favicons->plus(
-                Html::link()->attr("rel image/png", "href {$icon32}", "sizes 32x32")
+            $this->favicons = $this->favicons->append(
+                [
+                    Html::link()
+                        ->attr("rel image/png", "href {$icon32}", "sizes 32x32")
+                ]
             );
         }
 
         if (Shoop::this($icon16)->efToBoolean()) {
-            $this->favicons = $this->favicons->plus(
-                Html::link()->attr("rel image/png", "href {$icon16}", "sizes 16x16")
+            $this->favicons = $this->favicons->append(
+                [
+                    Html::link()->attr("rel image/png", "href {$icon16}", "sizes 16x16")
+                ]
             );
         }
         return $this;
@@ -61,23 +78,17 @@ class WebHead extends HtmlElement
 
     public function styles(...$paths)
     {
-        $this->styles = Shoop::this([]);
-        foreach($paths as $path) {
-            $this->styles = $this->styles->plus(
-                Html::link()->attr("rel stylesheet", "href {$path}")
-            );
-        }
+        $this->styles = Shoop::this($paths)->each(function($v) {
+            return Html::link()->attr("rel stylesheet", "href {$v}");
+        });
         return $this;
     }
 
     public function scripts(...$paths)
     {
-        $this->scripts = Shoop::this([]);
-        foreach($paths as $path) {
-            $this->scripts = $this->scripts->plus(
-                Html::script()->attr("src {$path}")
-            );
-        }
+        $this->scripts = Shoop::this($paths)->each(function($v) {
+            return Html::script()->attr("src {$v}");
+        });
         return $this;
     }
 
@@ -115,22 +126,25 @@ class WebHead extends HtmlElement
         $base = Html::meta()->attr(
                 "name viewport",
                 "content width=device-width,initial-scale=1"
-            );
+            )->unfold();
+        $favicons = $this->favicons->unfold();
+        $social   = $this->social->unfold();
+        $styles   = $this->styles->unfold();
+        $scripts  = $this->scripts->unfold();
 
-        $base = Shoop::this([$base])
-            ->plus($this->favicons)
-            ->plus($this->social)
-            ->plus($this->styles)
-            ->plus($this->scripts)
-            ->asArray(0, false);
+        return Shoop::this([$base])
+            ->append($favicons)
+            ->append([$social])
+            ->append($styles)
+            ->append($scripts)
+            ->each(function($v) {
+                if (Shoop::this($v)->efIsString()) {
+                    return $v;
 
-        $build = Shoop::this([]);
-        foreach ($base as $element) {
-            $build = (is_string($element))
-                ? $build->plus($element)
-                : $build->plus($element->unfold());
-        }
+                } elseif (is_a($v, Foldable::class)) {
+                    return $v->unfold();
 
-        return $build->asString()->unfold();
+                }
+            })->efToString();
     }
 }

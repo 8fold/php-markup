@@ -13,6 +13,7 @@ use Eightfold\Markup\Filters\AttrDictionary;
 
 /**
  * @group Element
+ * @group 1.0.0
  */
 class ElementTest extends TestCase
 {

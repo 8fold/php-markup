@@ -4,7 +4,7 @@ namespace Eightfold\Markup\Html;
 
 use Eightfold\Markup\Element;
 
-use Eightfold\HtmlSpecStructured\Read\HtmlIndex;
+use Eightfold\HtmlSpec\Read\HtmlIndex;
 
 use Eightfold\Markup\Filters\AttrStringHtml;
 

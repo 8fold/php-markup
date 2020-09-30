@@ -46,35 +46,30 @@ class SocialMeta implements Foldable
             "og:description" => $description
         ]);
 
-        if (Shoop::this($image)->isEmpty()->reverse()->unfold()) {
-            $this->meta = $this->meta->plus(["og:image" => $image]);
+        if (Shoop::this($image)->isEmpty()->reversed()->unfold()) {
+            $this->meta = $this->meta->append(["og:image" => $image]);
         }
 
-        if (Shoop::this($appId)->isEmpty()->reverse()->unfold()) {
-            $this->meta = $this->meta->plus(["og:app_id" => $appId]);
+        if (Shoop::this($appId)->isEmpty()->reversed()->unfold()) {
+            $this->meta = $this->meta->append(["og:app_id" => $appId]);
         }
     }
 
     public function twitter($site = "", $card = "summary_large_image")
     {
-        $this->meta = $this->meta->plus(["twitter:card" => $card]);
-        if (Shoop::this($site)->isEmpty()->reverse()->unfold()) {
-             $this->meta = $this->meta->plus(["twitter:site" => $site]);
+        $this->meta = $this->meta->append(["twitter:card" => $card]);
+        if (Shoop::this($site)->isEmpty()->reversed()->unfold()) {
+             $this->meta = $this->meta->append(["twitter:site" => $site]);
         }
         return $this;
     }
 
     public function unfold(): string
     {
-        $build = Shoop::this([]);
-        foreach ($this->meta as $attr => $value) {
-            $plus = (Apply::startsWith("og:")->unfoldUsing($attr))
-                 ? Html::meta()->attr("property {$attr}", "content {$value}")
-                 : Html::meta()->attr("name {$attr}", "content {$value}");
-
-            $build = $build->plus($plus);
-        }
-
-        return $build->asString()->unfold();
+        return $this->meta->each(function($v, $m, &$build) {
+            $build[] = (Shoop::this($m)->efStartsWith("og:"))
+                ? Html::meta()->attr("property {$m}", "content {$v}")->unfold()
+                : Html::meta()->attr("name {$m}", "content {$v}")->unfold();
+        })->efToString();
     }
 }
