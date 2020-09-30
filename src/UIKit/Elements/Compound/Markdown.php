@@ -8,8 +8,7 @@ use League\CommonMark\Extension\Table\TableExtension;
 use League\CommonMark\Extension\TaskList\TaskListExtension;
 
 use Eightfold\Shoop\Apply;
-
-use Eightfold\ShoopExtras\Shoop;
+use Eightfold\Shoop\Shoop;
 
 class Markdown extends HtmlElement
 {

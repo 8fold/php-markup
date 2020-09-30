@@ -3,7 +3,7 @@
 namespace Eightfold\Markup\Tests\UIKit;
 
 use Eightfold\Markup\Tests\TestCase;
-use Eightfold\Foldable\Tests\TestEqualsPerformance as AssertEquals;
+use Eightfold\Foldable\Tests\PerformantEqualsTestFilter as AssertEquals;
 
 use Eightfold\Markup\UIKit;
 

@@ -29,7 +29,7 @@ class WebView extends HtmlElement
         $string = UIKit::html(
             UIKit::head(...Shoop::this([
                     UIKit::title($this->title)
-                ])->plus($this->meta)
+                ])->append($this->meta)
             ),
             UIKit::body(...$this->content)->attr(...$this->bodyAttributes)
         )->unfold();
