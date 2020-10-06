@@ -17,7 +17,9 @@ class AttrString extends Filter
 
         return Shoop::this($using)->each(function($v, $m, &$build) {
             list($attr, $content) = Shoop::this($v)->divide(" ", false, 2);
-            $build[] = "{$attr}=\"{$content}\"";
+            $build[] = (Shoop::this($attr)->is($content)->unfold())
+                ? "{$attr}"
+                : "{$attr}=\"{$content}\"";
         })->asString(" ")->prepend(" ")->unfold();
     }
 }
