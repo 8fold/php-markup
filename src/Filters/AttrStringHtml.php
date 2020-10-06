@@ -123,7 +123,13 @@ class AttrStringHtml extends Filter
 
         $build = [];
         foreach ($merged as $attr => $content) {
-            $build[] = "{$attr} {$content}";
+            if ($attr === $content) {
+                $build[] = "{$attr}";
+
+            } else {
+                $build[] = "{$attr} {$content}";
+
+            }
         }
 
         return AttrString::apply()->unfoldUsing($build);
