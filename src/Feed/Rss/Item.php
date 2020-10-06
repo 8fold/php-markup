@@ -5,20 +5,19 @@ namespace Eightfold\Markup\Feed\Rss;
 use Carbon\Carbon;
 
 use Eightfold\Shoop\Shoop;
-use Eightfold\Shoop\ESArray;
-use Eightfold\Shoop\Helpers\Type;
 
 use Eightfold\Markup\Element;
 
 class Item extends Element
 {
     private $title = "";
-    private $link = "";
-    private $description = "";
+    private $link  = "";
+
+    private $description      = "";
     private $otherItemContent = [];
 
-    private $descriptionLimit = null;
-    private $descriptionTail = "...";
+    private $descriptionLimit = 50;
+    private $descriptionTail  = "...";
 
     public function __construct(
         string $title,
@@ -26,8 +25,8 @@ class Item extends Element
         string $description
     )
     {
-        $this->title = $title;
-        $this->link = $link;
+        $this->title       = $title;
+        $this->link        = $link;
         $this->description = $description;
     }
 
@@ -64,31 +63,31 @@ class Item extends Element
 
     private function description()
     {
-        $return = Shoop::this($this->description)
-            ->dropTags()
-            ->divide(" ");
+        // TODO: Once Shoop Shelf is ready - add dropTags to ESString
+        $tagless = strip_tags($this->description);
+        $return = Shoop::this($tagless)->divide(" ");
 
         if ($this->descriptionLimit !== null) {
             $return = $return->first($this->descriptionLimit);
         }
 
-        if (Type::is($return, ESArray::class)) {
-            $return = $return->join(" ");
+        if ($return->efIsArray()) {
+            $return = $return->asString(" ");
 
         }
-        return $return->plus($this->descriptionTail)->unfold();
+        return $return->append($this->descriptionTail)->unfold();
     }
 
     public function unfold(): string
     {
-        $content = Shoop::array([
-            Element::title(htmlspecialchars($this->title)),
-            Element::link($this->link),
-            Element::description($this->description())
+        $content = Shoop::this([
+            Element::fold("title",htmlspecialchars($this->title)),
+            Element::fold("link", $this->link),
+            Element::fold("description", $this->description())
         ]);
 
         return Shoop::this(
-            Element::item(...$content)->unfold()
+            Element::fold("item", ...$content)->unfold()
         )->unfold();
 
         //             ...static::rssItemsStoreItems()->each(function($path) {

@@ -2,7 +2,7 @@
 
 namespace Eightfold\Markup\Tests\UIKit;
 
-use Eightfold\Markup\Tests\TestCase;
+use PHPUnit\Framework\TestCase;
 use Eightfold\Foldable\Tests\PerformantEqualsTestFilter as AssertEquals;
 
 use Eightfold\Markup\UIKit;
@@ -42,80 +42,139 @@ class MarkdownTest extends TestCase
     {
         AssertEquals::applyWith(
             '<h1>Heading</h1><p>Content</p>',
-            "string"
+            "string",
+            13.06, // 12.69, // 11.83, // 11.8,
+            1100
         )->unfoldUsing(
             UIKit::markdown($this->doc())
         );
-        // $expected = ;
-        // $actual = ;
-        // $this->assertEqualsWithPerformance($expected, $actual->unfold(), 15.25);
-        //
-        $expected = "<p>Hello, World!</p>";
-        $actual = UIKit::markdown("Hello, World!");
-        $this->assertSame($expected, $actual->unfold());
+
+        AssertEquals::applyWith(
+            '<p>Hello, World!</p>',
+            "string",
+            0.16,
+            39
+        )->unfoldUsing(
+            UIKit::markdown("Hello, World!")
+        );
     }
 
-    public function testReplacement()
+    /**
+     * @test
+     */
+    public function replacements()
     {
-        $expected = '<p>Heading</p><p>Content</p>';
-        $actual = UIKit::markdown($this->doc())
-            ->markdownReplacements(["# " => ""]);
-        $this->assertEqualsWithPerformance($expected, $actual->unfold());
+        AssertEquals::applyWith(
+            '<p>Heading</p><p>Content</p>',
+            "string",
+            12.97, // 11.24,
+            1092
+        )->unfoldUsing(
+            UIKit::markdown($this->doc())
+                ->markdownReplacements(["# " => ""])
+        );
+
+        AssertEquals::applyWith(
+            'Content',
+            "string",
+            12.55, // 11.83,
+            1091
+        )->unfoldUsing(
+            UIKit::markdown($this->doc())
+                ->markdownReplacements(["# Heading" => ""])
+                ->htmlReplacements(["<p>" => "", "</p>" => ""])
+        );
     }
 
-    public function testRemove()
+    /**
+     * @test
+     */
+    public function remove()
     {
-        $expected = '<p>Content</p>';
-        $actual = UIKit::markdown($this->doc())
-            ->markdownReplacements(["# Heading" => ""]);
-        $this->assertEqualsWithPerformance($expected, $actual->unfold());
+        AssertEquals::applyWith(
+            '<p>Content</p>',
+            "string",
+            13.33,
+            1091
+        )->unfoldUsing(
+            UIKit::markdown($this->doc())
+                ->markdownReplacements(["# Heading" => ""])
+        );
     }
 
-    public function testReplacements()
+    /**
+     * @test
+     */
+    public function no_extensions()
     {
-        $expected = 'Content';
-        $actual = UIKit::markdown($this->doc())
-            ->markdownReplacements(["# Heading" => ""])
-            ->htmlReplacements(["<p>" => "", "</p>" => ""]);
-        $this->assertEqualsWithPerformance($expected, $actual->unfold());
+        AssertEquals::applyWith(
+            '<p>|Header 1 |Header 2 ||:--------|:--------||Cell 1   |Cell 2   |</p><ul><li>[ ] Task 1</li><li>[x] Task 2</li></ul>',
+            "string",
+            15.17,
+            1144
+        )->unfoldUsing(
+            UIKit::markdown($this->docTable())
+        );
     }
 
-    public function testNoExtensions()
-    {
-        // No extensions
-        $expected = '<p>|Header 1 |Header 2 ||:--------|:--------||Cell 1   |Cell 2   |</p><ul><li>[ ] Task 1</li><li>[x] Task 2</li></ul>';
-        $actual = UIKit::markdown($this->docTable());
-        $this->assertEqualsWithPerformance($expected, $actual->unfold());
-    }
-
-    public function testDefaultExtensions()
+    /**
+     * @test
+     * @group current
+     */
+    public function default_extensions()
     {
         $expected = '<table><thead><tr><th align="left">Header 1</th><th align="left">Header 2</th></tr></thead><tbody><tr><td align="left">Cell 1</td><td align="left">Cell 2</td></tr></tbody></table><ul><li><input disabled="" type="checkbox"> Task 1</li><li><input checked="" disabled="" type="checkbox"> Task 2</li></ul>';
-        $actual = UIKit::markdown($this->docTable())->extensions();
-        $this->assertEqualsWithPerformance($expected, $actual->unfold());
+
+        AssertEquals::applyWith(
+            $expected,
+            "string",
+            21.68,
+            1459
+        )->unfoldUsing(
+            UIKit::markdown($this->docTable())->extensions()
+        );
     }
 
-    public function testAbbreviationExtensionAndAllowHtml()
+    /**
+     * @test
+     */
+    public function abbreviation_allow_html()
     {
         $doc = <<<EOD
         [.abbr](abbreviation)
 
         <abbr title="abbreviation">abbr</abbr>
         EOD;
+
         $expected = '<p><abbr title="abbreviation">abbr</abbr></p><p><abbr title="abbreviation">abbr</abbr></p>';
-        $actual = UIKit::markdown($doc, ['html_input' => 'allow'])
-            ->extensions(AbbreviationExtension::class);
-        $this->assertEqualsWithPerformance($expected, $actual->unfold());
+
+        AssertEquals::applyWith(
+            $expected,
+            "string",
+            4.21,
+            68
+        )->unfoldUsing(
+            UIKit::markdown($doc, ['html_input' => 'allow'])
+                ->extensions(AbbreviationExtension::class)
+        );
     }
 
+    /**
+     * @test
+     */
     public function testCanPrepend()
     {
         $doc = <<< EOD
         Base
         EOD;
-        $prepend = "# Heading\n\n";
-        $expected = '<h1>Heading</h1><p>Base</p>';
-        $actual = UIKit::markdown($doc)->prepend($prepend);
-        $this->assertEqualsWithPerformance($expected, $actual->unfold());
+
+        AssertEquals::applyWith(
+            '<h1>Heading</h1><p>Base</p>',
+            "string",
+            0.47,
+            48
+        )->unfoldUsing(
+            UIKit::markdown($doc)->prepend("# Heading\n\n")
+        );
     }
 }

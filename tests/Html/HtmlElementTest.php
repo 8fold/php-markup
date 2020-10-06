@@ -2,7 +2,7 @@
 
 namespace Eightfold\Markup\Tests\Html;
 
-use Eightfold\Markup\Tests\TestCase;
+use PHPUnit\Framework\TestCase;
 use Eightfold\Foldable\Tests\PerformantEqualsTestFilter as AssertEquals;
 
 use Eightfold\Markup\Html;
@@ -59,7 +59,7 @@ class HtmlElementTest extends TestCase
         AssertEquals::applyWith(
             '<html><head><title>Hello, World!</title><style></style></head><body><img src="http://example.com" alt="A picture of the world"><p is="my-component">Hello, World!</p><my-link href="http://example.com/domination">World Domination</my-link><p>Done!</p></body></html>',
             "string",
-            6.11, // 5.53, // 5.34, // 9.56 // 7.14 // 6.94
+            6.69, // 6.64, // 6.59, // 6.11, // 5.53, // 5.34, // 9.56 // 7.14 // 6.94
             1
         )->unfoldUsing(
             Html::html(
@@ -88,7 +88,7 @@ class HtmlElementTest extends TestCase
         AssertEquals::applyWith(
             '<object><param name="hello" value="world"><param name="you" value="are"><param name="awesome" value="today!"></object>',
             "string",
-            3.51, // 3.01, // updated shoop 6.87 // 6.67 // 6.24
+            4.11, // 3.51, // 3.01, // updated shoop 6.87 // 6.67 // 6.24
             1
         )->unfoldUsing(
             Html::object(
@@ -104,7 +104,7 @@ class HtmlElementTest extends TestCase
         AssertEquals::applyWith(
             '<hr>',
             "string",
-            0.5, // 0.46, // 0.44, // 1.44
+            1.3, // 0.5, // 0.46, // 0.44, // 1.44
             1
         )->unfoldUsing(
             Html::hr()->unfold()
@@ -113,7 +113,7 @@ class HtmlElementTest extends TestCase
         AssertEquals::applyWith(
             '<head><title>Hello, World!</title><link rel="stylesheet" href="#"><link rel="stylesheet" href="#"></head>',
             "string",
-            3.14, // 2.84, // 5.24
+            4.01, // 3.14, // 2.84, // 5.24
             1
         )->unfoldUsing(
             Html::head(
@@ -148,7 +148,7 @@ class HtmlElementTest extends TestCase
         AssertEquals::applyWith(
             '<a class="some-class" href="http://example.com">Hello</a>',
             "string",
-            1.13, // 0.97, // 0.87, // 2.37
+            1.56, // 1.21, // 1.13, // 0.97, // 0.87, // 2.37
             1
         )->unfoldUsing(
             Html::a('Hello')->attr('class some-class', 'href http://example.com')
@@ -164,7 +164,7 @@ class HtmlElementTest extends TestCase
         AssertEquals::applyWith(
             '<body role="document"></body>',
             "string",
-            0.95, // 0.85, // 0.78, // updated shoop 4.13 // 6.15 // 6.12 // 5.76
+            1.12, // 0.95, // 0.85, // 0.78, // updated shoop 4.13 // 6.15 // 6.12 // 5.76
             1
         )->unfoldUsing(
             Html::body()->attr("role document")->unfold()
@@ -173,7 +173,7 @@ class HtmlElementTest extends TestCase
          AssertEquals::applyWith(
             '<body role="application"></body>',
             "string",
-            0.85, // 0.83, // 0.75, // 0.72, // 0.67, // 0.8 // 0.74 // 0.72 // 0.58 // 0.56 // 0.32 // 0.64 // 0.53 // 0.41
+            1.52, // 0.9, // 0.85, // 0.83, // 0.75, // 0.72, // 0.67, // 0.8 // 0.74 // 0.72 // 0.58 // 0.56 // 0.32 // 0.64 // 0.53 // 0.41
             1
         )->unfoldUsing(
             Html::body()->attr("role application")->unfold()

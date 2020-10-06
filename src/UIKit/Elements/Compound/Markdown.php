@@ -8,7 +8,8 @@ use League\CommonMark\Extension\Table\TableExtension;
 use League\CommonMark\Extension\TaskList\TaskListExtension;
 
 use Eightfold\Shoop\Apply;
-use Eightfold\Shoop\Shoop;
+
+use Eightfold\ShoopShelf\Shoop;
 
 class Markdown extends HtmlElement
 {
@@ -20,7 +21,6 @@ class Markdown extends HtmlElement
     private $trim = true;
     private $minified = true;
     private $extensions = [];
-
 
     public function __construct(string $markdown, array $config = [])
     {
@@ -70,7 +70,7 @@ class Markdown extends HtmlElement
             $this->extensions = Shoop::this($extensions);
 
         }
-        $this->extensions = $this->extensions->noEmpties()->unfold();
+        $this->extensions = $this->extensions->drop(fn($v) => empty($v))->unfold();
 
         return $this;
     }

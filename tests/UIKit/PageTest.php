@@ -2,7 +2,7 @@
 
 namespace Eightfold\Markup\Tests\UIKit;
 
-use Eightfold\Markup\Tests\TestCase;
+use PHPUnit\Framework\TestCase;
 use Eightfold\Foldable\Tests\PerformantEqualsTestFilter as AssertEquals;
 
 use Eightfold\Markup\UIKit;

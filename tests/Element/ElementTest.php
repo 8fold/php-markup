@@ -2,7 +2,7 @@
 
 namespace Eightfold\Markup\Tests\Element;
 
-use Eightfold\Markup\Tests\TestCase;
+use PHPUnit\Framework\TestCase;
 use Eightfold\Foldable\Tests\PerformantEqualsTestFilter as AssertEquals;
 
 use Eightfold\Shoop\ESArray;
@@ -26,7 +26,7 @@ class ElementTest extends TestCase
             '<container id="hello">',
             "string",
             14.59, // shoopified 7.17, // 5.29, // 4.56, // 4.02,
-            427 // 426 // 401 // 397 // 394 // 393
+            436 // 433 // 427 // 426 // 401 // 397 // 394 // 393
         )->unfoldUsing(
             Element::fold("container")->attr("id hello")->omitEndTag(true)
         );
@@ -145,7 +145,7 @@ class ElementTest extends TestCase
         AssertEquals::applyWith(
             ["id" => "hello"],
             "array",
-            0.17, // increase shoop 0.13, // 0.11, // 0.09,
+            0.21, // 0.18, // 0.17, // increase shoop 0.13, // 0.11, // 0.09,
             1
         )->unfoldUsing(
             Element::fold("hello")->attr("id hello")->attrList(false)
