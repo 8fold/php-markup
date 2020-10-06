@@ -158,7 +158,7 @@ class ElementTest extends TestCase
     public function testPage()
     {
         AssertEquals::applyWith(
-            '<html><head><title>Hello, World!</title><style></style></head><body><img src="http://example.com" alt="A picture of the world"><p is="my-component">Hello, World!</p><my-link href="http://example.com/domination">World Domination</my-link><p>Done!</p></body></html>',
+            '<html><head><title>Hello, World!</title><style></style></head><body><img src="http://example.com" alt="A picture of the world"><p is="my-component" required>Hello, World!</p><my-link href="http://example.com/domination">World Domination</my-link><p>Done!</p></body></html>',
             "string",
             5.71,
             397
@@ -175,7 +175,7 @@ class ElementTest extends TestCase
                             'src http://example.com',
                             'alt A picture of the world'
                         ),
-                    Element::fold('p', 'Hello, World!')->attr("is my-component"),
+                    Element::fold('p', 'Hello, World!')->attr("is my-component", "required required"),
                     Element::fold("my-link", 'World Domination')
                         ->attr('href http://example.com/domination'),
                     '<p>Done!</p>'
