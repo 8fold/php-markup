@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "754012b44de916985ac461af86c7cec7",
+    "content-hash": "52d90cb6be17ab7d0f6db8d8d5ed9ca8",
     "packages": [
         {
             "name": "8fold/commonmark-abbreviations",
@@ -253,7 +253,7 @@
         },
         {
             "name": "8fold/php-shoop-shelf",
-            "version": "dev-master",
+            "version": "0.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/8fold/php-shoop-shelf.git",
@@ -3378,7 +3378,6 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "8fold/php-shoop-shelf": 20,
         "8fold/php-html-spec": 20
     },
     "prefer-stable": true,
