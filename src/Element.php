@@ -141,4 +141,9 @@ class Element implements Foldable
         );
         return $base->append("</")->append($main)->append(">")->unfold();
     }
+
+    public function __toString(): string
+    {
+        return $this->unfold();
+    }
 }
