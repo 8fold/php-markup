@@ -3,100 +3,131 @@
 namespace Eightfold\Markup\Tests\UIKit;
 
 use PHPUnit\Framework\TestCase;
+use Eightfold\Foldable\Tests\PerformantEqualsTestFilter as AssertEquals;
 
 use Eightfold\Markup\UIKit;
-use Eightfold\Markup\FormControls\InputText;
 
+/**
+ * @group Simple
+ */
 class SimpleTest extends TestCase
 {
-    public function testCanGetHtmlElementFromUIKitCall()
+    /**
+     * @test
+     */
+    public function uikit_falls_back_to_html()
     {
-        $expected = "<p>Hello!</p>";
-        $result = UIKit::p("Hello!");
-        $this->assertEquals($expected, $result->unfold());
+        // For 0.2.0 was 11.25ms
+        AssertEquals::applyWith(
+            '<p>Hello!</p>',
+            "string",
+            8.48, // 7.75, // 7.29,
+            573
+        )->unfoldUsing(
+            UIKit::p("Hello!")
+        );
     }
 
-    public function testLinkBase()
+    /**
+     * @test
+     */
+    public function anchor()
     {
-        $expected = '<a href="http://example.com">Hello, World!</a>';
-        $result = UIKit::anchor(
-            'Hello, World!',
-            'http://example.com'
-        )->unfold();
-        $this->assertEquals($expected, $result);
+        // For 0.2.0 was 13.5ms
+        AssertEquals::applyWith(
+            '<a href="http://example.com">Hello, World!</a>',
+            "string",
+            4.49,
+            18
+        )->unfoldUsing(
+            UIKit::anchor(
+                'Hello, World!',
+                'http://example.com'
+            )->unfold()
+        );
 
-        $expected = '<a id="hello" href="http://example.com">Hello, World!</a>';
-        $result = UIKit::anchor(
-            'Hello, World!',
-            'http://example.com'
-        )->attr("id hello")->unfold();
-        $this->assertEquals($expected, $result);
+        AssertEquals::applyWith(
+            '<a id="hello" href="http://example.com">Hello, World!</a>',
+            "string",
+            1.55, // 1.33,
+            1.09
+        )->unfoldUsing(
+            UIKit::anchor(
+                "Hello, World!",
+                "http://example.com"
+            )->attr("id hello")->unfold()
+        );
     }
 
-    // public function testSimpleTable()
-    // {
-    //     $expected = '<table><caption>Hello table</caption><thead><tr><th>Hello</th></tr></thead><tbody><tr><td>world</td></tr><tr><td>world2</td></tr></tbody></table>';
-    //     $result = UIKit::tableWith(
-    //         ['world'],
-    //         ['world2']
-    //     )->headers('Hello')->caption('Hello table')->unfold();
-    //     $this->assertEquals($expected, $result);
-    // }
-
-    public function testSimpleList()
+    /**
+     * @test
+     */
+    public function simple_lists()
     {
-        $expected = '<ul><li>hello</li><li>good-bye</li></ul>';
-        $result = UIKit::listWith(
-            'hello',
-            'good-bye'
-        )->unfold();
-        $this->assertEquals($expected, $result);
+        AssertEquals::applyWith(
+            '<ul><li>hello</li><li>good-bye</li></ul>',
+            "string",
+            3.8,
+            8
+        )->unfoldUsing(
+            UIKit::listWith(
+                "hello",
+                "good-bye"
+            )->unfold()
+        );
 
-        $expected = '<ul class="test"><li>hello</li><li>good-bye</li></ul>';
-        $result = UIKit::listWith(
-            'hello',
-            'good-bye'
-        )->attr("class test");
-        $this->assertEquals($expected, $result->unfold());
+        AssertEquals::applyWith(
+            '<ol><li>hello</li><li>good-bye</li></ol>',
+            "string",
+            2.1,
+            2.66
+        )->unfoldUsing(
+            UIKit::listWith(
+                "hello",
+                "good-bye"
+            )->ordered()->unfold()
+        );
+
+        AssertEquals::applyWith(
+            '<dl><dt>hello</dt><dd>good-bye</dd></dl>',
+            "string",
+            3.2,
+            1
+        )->unfoldUsing(
+            UIKit::listWith(
+                "hello",
+                "good-bye"
+            )->description()->unfold()
+        );
+
+        AssertEquals::applyWith(
+            '<dl><dt>hello</dt><dd>good-bye</dd><dt>hello</dt><dd>good-bye</dd><dd>good-bye</dd></dl>',
+            "string",
+            4.49,
+            1
+        )->unfoldUsing(
+            UIKit::listWith(
+                "hello",
+                "good-bye",
+                "hello",
+                "good-bye",
+                "good-bye"
+            )->description(1, 3)->unfold()
+        );
     }
 
-    public function testSimpleOrderedList()
+    /**
+     * @test
+     */
+    public function images()
     {
-        $expected = '<ol><li>hello</li><li>good-bye</li></ol>';
-        $result = UIKit::listWith(
-            'hello',
-            'good-bye'
-        )->ordered()->unfold();
-        $this->assertEquals($expected, $result);
-    }
-
-    public function testSimpleDefinitionList()
-    {
-        $expected = '<dl><dt>hello</dt><dd>good-bye</dd></dl>';
-        $result = UIKit::listWith(
-            'hello',
-            'good-bye'
-        )->definition()->unfold();
-        $this->assertEquals($expected, $result);
-    }
-
-    public function testSimpleDLWithDefinedTerms()
-    {
-        $expected = '<dl><dt>hello</dt><dd>good-bye</dd><dt>hello</dt><dd>good-bye</dd><dd>good-bye</dd></dl>';
-        $result = UIKit::listWith(
-            'hello',
-            'good-bye',
-            'hello',
-            'good-bye',
-            'good-bye'
-        )->description(1, 3)->unfold();
-        $this->assertEquals($expected, $result);
-    }
-
-    public function testSimpleImage()
-    {
-        $expected = '<img src="https://path.to/image.jpg" alt="Alt text">';
-        $actual = UIKit::image("Alt text", "https://path.to/image.jpg");
-        $this->assertEquals($expected, $actual->unfold());
+        AssertEquals::applyWith(
+            '<img src="https://path.to/image.jpg" alt="Alt text">',
+            "string",
+            2.03,
+            3
+        )->unfoldUsing(
+            UIKit::image("Alt text", "https://path.to/image.jpg")
+        );
     }
 }

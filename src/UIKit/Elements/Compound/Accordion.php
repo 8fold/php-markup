@@ -2,7 +2,7 @@
 
 namespace Eightfold\Markup\UIKit\Elements\Compound;
 
-use Eightfold\Markup\Html\Elements\HtmlElement;
+use Eightfold\Markup\Html\HtmlElement;
 
 use Eightfold\Shoop\Helpers\Type;
 use Eightfold\Shoop\Shoop;
@@ -16,20 +16,20 @@ use Eightfold\Markup\UIKit;
 class Accordion extends HtmlElement
 {
     private $summaryId = "";
-    private $summary = "";
+    private $panelId   = "";
+    private $summary   = "";
 
     public function __construct(
         string $summaryId,
-        $summary,
+        string $summary, // TODO: PHP 8 - string|array
         ...$content
     )
     {
-        $this->summary = (Type::is($summary, ESString::class, "string")) ? $summary : Type::sanitizeType($summary, ESArray::class);
-        $this->summaryId = $summaryId;
-
         $this->content = $content;
-        $this->panelId = $this->summaryId ."-panel";
 
+        $this->summary   = $summary;
+        $this->summaryId = $summaryId;
+        $this->panelId   = $this->summaryId ."-panel";
     }
 
     public function unfold(): string
@@ -43,6 +43,7 @@ class Accordion extends HtmlElement
                 "aria-controls {$this->panelId}"
             )
         )->attr("is accordion")->unfold();
+
         $panel = UIKit::div(
             ...$this->content
         )->attr(
@@ -53,6 +54,7 @@ class Accordion extends HtmlElement
             "id {$this->panelId}",
             "aria-labelledby {$this->summaryId}"
         )->unfold();
-        return Shoop::string($header)->plus($panel);
+
+        return $header . $panel;
     }
 }

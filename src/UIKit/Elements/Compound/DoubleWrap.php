@@ -2,7 +2,7 @@
 
 namespace Eightfold\Markup\UIKit\Elements\Compound;
 
-use Eightfold\Markup\Html\Elements\HtmlElement;
+use Eightfold\Markup\Html\HtmlElement;
 
 use Eightfold\Markup\Html;
 use Eightfold\Markup\UIKit;

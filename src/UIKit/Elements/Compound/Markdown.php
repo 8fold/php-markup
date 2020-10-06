@@ -2,14 +2,14 @@
 
 namespace Eightfold\Markup\UIKit\Elements\Compound;
 
-use Eightfold\Markup\Html\Elements\HtmlElement;
+use Eightfold\Markup\Html\HtmlElement;
 
-use League\CommonMark\Extension\{
-    Table\TableExtension,
-    TaskList\TaskListExtension
-};
+use League\CommonMark\Extension\Table\TableExtension;
+use League\CommonMark\Extension\TaskList\TaskListExtension;
 
-use Eightfold\ShoopExtras\Shoop;
+use Eightfold\Shoop\Apply;
+
+use Eightfold\ShoopShelf\Shoop;
 
 class Markdown extends HtmlElement
 {
@@ -21,7 +21,6 @@ class Markdown extends HtmlElement
     private $trim = true;
     private $minified = true;
     private $extensions = [];
-
 
     public function __construct(string $markdown, array $config = [])
     {
@@ -61,14 +60,18 @@ class Markdown extends HtmlElement
 
     public function extensions(...$extensions)
     {
-        $this->extensions = Shoop::array($extensions)->isNotEmpty(function($result, $array) {
-            return ($result->unfold())
-                ? Shoop::array($array)
-                : Shoop::array([
-                    TableExtension::class,
-                    TaskListExtension::class
-                ]);
-        })->noEmpties()->unfold();
+        if (Apply::isEmpty()->unfoldUsing($extensions)) {
+            $this->extensions = Shoop::this([
+                TableExtension::class,
+                TaskListExtension::class
+            ]);
+
+        } else {
+            $this->extensions = Shoop::this($extensions);
+
+        }
+        $this->extensions = $this->extensions->drop(fn($v) => empty($v))->unfold();
+
         return $this;
     }
 

@@ -11,7 +11,8 @@
   ],
   "require": {
     "php": "~7.0",
-    "8fold/php-shoop-extras": "~0.1",
+    "8fold/php-shoop-shelf": "dev-master@dev",
+    "8fold/php-html-spec": "dev-master@dev",
     "8fold/commonmark-abbreviations": "~1.0",
     "8fold/commonmark-accordions": "~1.0",
     "nesbot/carbon": "~2.36"
@@ -26,7 +27,8 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Eightfold\\Markup\\Tests\\": "./tests/"
+      "Eightfold\\Markup\\Tests\\": "./tests/",
+      "Eightfold\\Foldable\\Tests\\": "./vendor/8fold/php-foldable/tests/"
     }
   },
   "config": {

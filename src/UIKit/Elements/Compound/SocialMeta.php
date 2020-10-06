@@ -3,20 +3,31 @@
 namespace Eightfold\Markup\UIKit\Elements\Compound;
 
 use Eightfold\Shoop\Shoop;
+use Eightfold\Shoop\Apply;
 
-use Eightfold\Markup\Html\Elements\HtmlElement;
+use Eightfold\Foldable\Foldable;
+use Eightfold\Foldable\FoldableImp;
+
+use Eightfold\Markup\Html\HtmlElement;
 use Eightfold\Markup\Html;
 
-class SocialMeta extends HtmlElement
+class SocialMeta implements Foldable
 {
+    use FoldableImp;
+
     private $type = "";
-    private $title = "";
+
     private $url = "";
     private $description = "";
     private $image = "";
     private $appId = "";
 
     private $meta;
+
+    static public function processedMain($main): string
+    {
+        return $main;
+    }
 
     public function __construct(
         string $title,
@@ -27,43 +38,38 @@ class SocialMeta extends HtmlElement
         string $appId = ""
     )
     {
-        $this->meta = Shoop::array([
-            "og:type ". $type,
-            "og:title ". $title,
-            "og:url ". $url,
-            "og:description ". $description
+        $this->args = [$title, $url, $description, $image, $type, $appId];
+        $this->meta = Shoop::this([
+            "og:type"        => $type,
+            "og:title"       => $title,
+            "og:url"         => $url,
+            "og:description" => $description
         ]);
 
-        if (Shoop::string($image)->isNotEmpty) {
-            $this->meta = $this->meta->plus("og:image ". $image);
+        if (Shoop::this($image)->isEmpty()->reversed()->unfold()) {
+            $this->meta = $this->meta->append(["og:image" => $image]);
         }
 
-        if (Shoop::string($appId)->isNotEmpty) {
-            $this->meta = $this->meta->plus("og:app_id ". $appId);
+        if (Shoop::this($appId)->isEmpty()->reversed()->unfold()) {
+            $this->meta = $this->meta->append(["og:app_id" => $appId]);
         }
     }
 
     public function twitter($site = "", $card = "summary_large_image")
     {
-        $this->meta = $this->meta->plus("twitter:card {$card}");
-        Shoop::string($site)->isNotEmpty(function($result, $site) {
-            if ($result->unfold()) {
-                $this->meta = $this->meta->plus("twitter: site {$site}");
-            }
-        });
+        $this->meta = $this->meta->append(["twitter:card" => $card]);
+        if (Shoop::this($site)->isEmpty()->reversed()->unfold()) {
+             $this->meta = $this->meta->append(["twitter:site" => $site]);
+        }
         return $this;
     }
 
     public function unfold(): string
     {
-        return $this->meta->each(function($meta) {
-            list($name, $value) = Shoop::string($meta)->divide(" ", false, 2);
-            return Shoop::string($name)
-                ->startsWith("og:", function($result, $name) use ($value) {
-                    return ($result->unfold())
-                        ? Html::meta()->attr("property {$name}", "content {$value}")
-                        : Html::meta()->attr("name {$name}", "content {$value}");
-                });
-        })->join("");
+        return $this->meta->each(function($v, $m, &$build) {
+            $build[] = (Shoop::this($m)->efStartsWith("og:"))
+                ? Html::meta()->attr("property {$m}", "content {$v}")->unfold()
+                : Html::meta()->attr("name {$m}", "content {$v}")->unfold();
+        })->efToString();
     }
 }

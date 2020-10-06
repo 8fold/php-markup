@@ -62,29 +62,32 @@ class Channel extends Element
 
     public function unfold(): string
     {
-        $content = Shoop::array([
-            Element::title($this->title),
-            Element::link($this->link),
-            Element::description($this->description)
+        $content = Shoop::this([
+            Element::fold("title", $this->title),
+            Element::fold("link", $this->link),
+            Element::fold("description", $this->description)
         ]);
 
-        Shoop::dictionary($this->otherChannelMeta)->each(
-            function($value, $element) use (&$content) {
-                $content = $content->plus(Element::fold($element, $value));
-            });
+        foreach ($this->otherChannelMeta as $element => $value) {
+            $content = $content->append([Element::fold($element, $value)]);
+        }
 
-        $content = $content->plus(...$this->content);
+        // Shoop::this($this->otherChannelMeta)->each(
+        //     function($value, $element) use (&$content) {
+        //         $content = $content->plus(Element::fold($element, $value));
+        //     });
 
-        return Shoop::string(
-            Element::rss(
-                Element::channel(
-                    ...Shoop::array($content)
-                        ->each(function($item) {
+        $content = $content->append($this->content);
+
+        return Shoop::this(
+            Element::fold("rss",
+                Element::fold("channel",
+                    ...$content->each(function($item) {
                             return $item->unfold();
                         })
                 )
             )->attr("version ". $this->rssVersion)->unfold()
-        )->start('<?xml version="'. $this->xmlVersion .'"?>'."\n")->unfold();
+        )->prepend('<?xml version="'. $this->xmlVersion .'"?>'."\n")->unfold();
     }
 
     /**

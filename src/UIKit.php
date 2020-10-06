@@ -5,21 +5,24 @@ namespace Eightfold\Markup;
 use Eightfold\Markup\Element;
 use Eightfold\Markup\Html;
 
-use Eightfold\Shoop\{Shoop, ESString};
-
+use Eightfold\Shoop\Shoop;
+use Eightfold\Shoop\ESString;
 
 class UIKit extends Html
 {
     static public function webView($title, ...$content)
     {
-        $class = self::class("webView", self::CLASSES)->unfold();
-        return new $class($title, ...$content);
+        return new UIKit\Elements\Pages\WebView($title, ...$content);
+    }
+
+    static public function webHead()
+    {
+        return new UIKit\Elements\Compound\WebHead();
     }
 
     static public function doubleWrap(...$content)
     {
-        $class = self::class("doubleWrap", self::CLASSES)->unfold();
-        return new $class(...$content);
+        return new UIKit\Elements\Compound\DoubleWrap(...$content);
     }
 
     static public function pagination(
@@ -48,8 +51,7 @@ class UIKit extends Html
 
     static public function listWith(...$content)
     {
-        $class = self::class("listWith", self::CLASSES)->unfold();
-        return new $class(...$content);
+        return new UIKit\Elements\Simple\SimpleList(...$content);
     }
 
     static public function fileInput($label, $name)
@@ -67,20 +69,17 @@ class UIKit extends Html
     // TODO: Should be able to accept unfoldable
     static public function anchor(string $text, string $href)
     {
-        $class = self::class("anchor", self::CLASSES)->unfold();
-        return new $class($text, $href);
+        return new UIKit\Elements\Simple\Anchor($text, $href);
     }
 
     static public function image(string $altText, string $path)
     {
-        $class = self::class("image", self::CLASSES)->unfold();
-        return new $class($altText, $path);
+        return new UIKit\Elements\Simple\Image($altText, $path);
     }
 
     static public function markdown(string $markdown, array $config = [])
     {
-        $class = self::class("markdown", self::CLASSES)->unfold();
-        return new $class($markdown, $config);
+        return new UIKit\Elements\Compound\Markdown($markdown, $config);
     }
 
     static public function stripeElements($formId, $apiKey, $inputLabel, $buttonLabel)
@@ -98,93 +97,94 @@ class UIKit extends Html
         string $appId = ""
     )
     {
-        $class = self::class("socialMeta", self::CLASSES)->unfold();
-        return new $class($title, $url, $description, $image, $type, $appId);
-    }
-
-    static public function webHead()
-    {
-        $class = self::class("webHead", self::CLASSES)->unfold();
-        return new $class();
+        return new UIKit\Elements\Compound\SocialMeta(
+            $title,
+            $url,
+            $description,
+            $image,
+            $type,
+            $appId
+        );
     }
 
     static public function accordion(
         string $summaryId,
-        $summary,
+        string $summary,
         ...$content
     )
     {
-        $class = self::class("accordion", self::CLASSES)->unfold();
-        return new $class($summaryId, $summary, ...$content);
+        return new UIKit\Elements\Compound\Accordion(
+            $summaryId,
+            $summary,
+            ...$content
+        );
     }
 
     static public function __callStatic(string $element, array $elements)
     {
-        $class = Html::class($element, self::CLASSES);
-        if ($class->count()->is(0)->unfold()) {
-            return Html::$element(...$elements);
-        }
+        if (array_key_exists($element, static::CLASSES)) {
+            switch ($element) {
+                case ('primary_nav'
+                    || 'secondary_nav'
+                    || 'side_nav'
+                    || 'user_card'):
+                    return new $class(...$elements);
+                    break;
 
-        switch ($element) {
-            case ('primary_nav'
-                || 'secondary_nav'
-                || 'side_nav'
-                || 'user_card'):
-                return new $class(...$elements);
-                break;
+                case ('glyph' || 'head' || 'avatar'):
+                    return new $class($args[0]);
+                    break;
 
-            case ('glyph' || 'head' || 'avatar'):
-                return new $class($args[0]);
-                break;
+                case ('footer' || 'image'):
+                    if (isset($args[1])) {
+                        return new $class($args[0], $args[1]);
 
-            case ('footer' || 'image'):
-                if (isset($args[1])) {
+                    }
+                    return new $class($args[0]);
+                    break;
+
+                case ('alert'):
                     return new $class($args[0], $args[1]);
+                    break;
 
-                }
-                return new $class($args[0]);
-                break;
+                case 'header':
+                    $main = $args[0];
+                    unset($args[0]);
+                    return new $class($main, ...$args);
+                    break;
 
-            case ('alert'):
-                return new $class($args[0], $args[1]);
-                break;
+                case ('select'
+                    || 'textarea'
+                    || 'markdown_textarea'
+                    || 'textInput'
+                    || 'date_input'):
+                    if (isset($args[3])) {
+                        return new $class($args[0], $args[1], $args[2], $args[3]);
 
-            case 'header':
-                $main = $args[0];
-                unset($args[0]);
-                return new $class($main, ...$args);
-                break;
+                    } elseif ($isset(args[2])) {
+                        return new $class($args[0], $args[1], $args[3]);
 
-            case ('select'
-                || 'textarea'
-                || 'markdown_textarea'
-                || 'textInput'
-                || 'date_input'):
-                if (isset($args[3])) {
-                    return new $class($args[0], $args[1], $args[2], $args[3]);
-
-                } elseif ($isset(args[2])) {
-                    return new $class($args[0], $args[1], $args[3]);
-
-                }
-                return new $class($args[0], $args[1]);
-                break;
-
-            case 'progress':
-                if (isset($args[2])) {
-                    return new $class($args[0], $args[1], $args[2]);
-
-                } elseif (isset($args[1])) {
+                    }
                     return new $class($args[0], $args[1]);
+                    break;
 
-                }
-                return new $class($args[0]);
-                break;
+                case 'progress':
+                    if (isset($args[2])) {
+                        return new $class($args[0], $args[1], $args[2]);
 
-            default:
-                return parent::$element(...$args);
-                break;
+                    } elseif (isset($args[1])) {
+                        return new $class($args[0], $args[1]);
+
+                    }
+                    return new $class($args[0]);
+                    break;
+
+                default:
+                    return parent::$element(...$args);
+                    break;
+            }
         }
+        return Html::$element(...$elements);
     }
 
     private const CLASSES = [

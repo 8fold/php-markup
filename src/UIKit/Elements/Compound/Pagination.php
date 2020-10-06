@@ -2,7 +2,7 @@
 
 namespace Eightfold\Markup\UIKit\Elements\Compound;
 
-use Eightfold\Markup\Html\Elements\HtmlElement;
+use Eightfold\Markup\Html\HtmlElement;
 
 use Eightfold\Shoop\Helpers\Type;
 use Eightfold\Shoop\Shoop;
@@ -140,7 +140,7 @@ class Pagination extends HtmlElement
 
     public function middleRange()
     {
-        return $this->secondPageNumber()->range($this->penultimatePageNumber())
+        return $this->secondPageNumber()->asArray($this->penultimatePageNumber())
             ->noEmpties()->reindex();
     }
 
@@ -178,7 +178,7 @@ class Pagination extends HtmlElement
 
         }
 
-        $links = $this->secondPageNumber()->range($this->penultimatePageNumber())
+        $links = $this->secondPageNumber()->asArray($this->penultimatePageNumber())
             ->each(function($pageNumber) {
                 return $this->anchorFor($pageNumber);
             })->start($this->anchorFor(1))->end($this->anchorFor($this->totalPages()));
