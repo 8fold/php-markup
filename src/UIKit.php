@@ -187,7 +187,7 @@ class UIKit extends Html
         return Html::$element(...$elements);
     }
 
-    private const CLASSES = [
+    const CLASSES = [
         'webView'   => \Eightfold\Markup\UIKit\Elements\Pages\WebView::class,
         // 'form'      => UIKit\Elements\Forms\Form::class,
         'listWith'  => \Eightfold\Markup\UIKit\Elements\Simple\SimpleList::class,
