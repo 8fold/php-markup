@@ -21,7 +21,7 @@ class SimpleList extends HtmlElement
 
     public function unfold(): string
     {
-        if (count($this->main) == 0) {
+        if (count($this->main) === 0) {
             return "";
         }
 
@@ -53,8 +53,6 @@ class SimpleList extends HtmlElement
 
     private function listItems(array $content)
     {
-        // tho this would be me typing a comment I gues the cammera isn't shaking too much
-        // maybe there a little bit of image stabilization going on or something.
         $count = 0;
         $listItems = [];
         foreach ($content as $index => $item) {
