@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6d9781c8e52408d94adfbd30cee33a2e",
+    "content-hash": "34ca99dd0db2e1814533d4c3d454135a",
     "packages": [
         {
             "name": "8fold/commonmark-abbreviations",
@@ -253,21 +253,22 @@
         },
         {
             "name": "8fold/php-shoop-shelf",
-            "version": "0.5.1",
+            "version": "0.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/8fold/php-shoop-shelf.git",
-                "reference": "0ed4ca43ac8f268ec055bee115c34429ae4e610b"
+                "reference": "ff4ea332654c9f81e04c3ab66faedeb7528cba31"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/8fold/php-shoop-shelf/zipball/0ed4ca43ac8f268ec055bee115c34429ae4e610b",
-                "reference": "0ed4ca43ac8f268ec055bee115c34429ae4e610b",
+                "url": "https://api.github.com/repos/8fold/php-shoop-shelf/zipball/ff4ea332654c9f81e04c3ab66faedeb7528cba31",
+                "reference": "ff4ea332654c9f81e04c3ab66faedeb7528cba31",
                 "shasum": ""
             },
             "require": {
                 "8fold/php-shoop": "~0.10",
                 "league/commonmark": "~1.5",
+                "league/flysystem": "2.0.0-beta.3",
                 "php": "~7",
                 "spatie/yaml-front-matter": "~2.0"
             },
@@ -301,7 +302,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-10-07T17:01:18+00:00"
+            "time": "2020-10-08T16:49:14+00:00"
         },
         {
             "name": "doctrine/inflector",
@@ -687,6 +688,133 @@
                 }
             ],
             "time": "2020-09-13T14:44:46+00:00"
+        },
+        {
+            "name": "league/flysystem",
+            "version": "2.0.0-beta.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/flysystem.git",
+                "reference": "f91127d6b65e4e795f49fcd507e712654f852105"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/f91127d6b65e4e795f49fcd507e712654f852105",
+                "reference": "f91127d6b65e4e795f49fcd507e712654f852105",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "league/mime-type-detection": "^1.0.0",
+                "php": "^7.2"
+            },
+            "conflict": {
+                "guzzlehttp/ringphp": "<1.1.1"
+            },
+            "require-dev": {
+                "aws/aws-sdk-php": "^3.132.4",
+                "composer/semver": "^3.0",
+                "ext-fileinfo": "*",
+                "phpseclib/phpseclib": "^2.0",
+                "phpstan/phpstan": "^0.12.26",
+                "phpunit/phpunit": "^8.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "League\\Flysystem\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Frank de Jonge",
+                    "email": "info@frankdejonge.nl"
+                }
+            ],
+            "description": "File storage abstraction for PHP",
+            "keywords": [
+                "WebDAV",
+                "aws",
+                "cloud",
+                "file",
+                "files",
+                "filesystem",
+                "filesystems",
+                "ftp",
+                "s3",
+                "sftp",
+                "storage"
+            ],
+            "funding": [
+                {
+                    "url": "https://offset.earth/frankdejonge",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/frankdejonge",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/league/flysystem",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2020-08-23T07:49:36+00:00"
+        },
+        {
+            "name": "league/mime-type-detection",
+            "version": "1.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/mime-type-detection.git",
+                "reference": "ea2fbfc988bade315acd5967e6d02274086d0f28"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thephpleague/mime-type-detection/zipball/ea2fbfc988bade315acd5967e6d02274086d0f28",
+                "reference": "ea2fbfc988bade315acd5967e6d02274086d0f28",
+                "shasum": ""
+            },
+            "require": {
+                "ext-fileinfo": "*",
+                "php": "^7.2 || ^8.0"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^0.12.36",
+                "phpunit/phpunit": "^8.5.8"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "League\\MimeTypeDetection\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Frank de Jonge",
+                    "email": "info@frankdejonge.nl"
+                }
+            ],
+            "description": "Mime-type detection for Flysystem",
+            "funding": [
+                {
+                    "url": "https://github.com/frankdejonge",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/league/flysystem",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2020-09-21T18:10:53+00:00"
         },
         {
             "name": "nesbot/carbon",
@@ -3469,7 +3597,7 @@
         }
     ],
     "aliases": [],
-    "minimum-stability": "stable",
+    "minimum-stability": "beta",
     "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
