@@ -81,6 +81,11 @@ class Markdown extends HtmlElement
         return $this;
     }
 
+    public function meta()
+    {
+        return Shoop::markdown($this->markdown)->meta();
+    }
+
     public function unfold(): string
     {
         return Shoop::markdown($this->markdown, ...$this->extensions)
