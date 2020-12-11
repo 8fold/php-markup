@@ -43,7 +43,7 @@ class SocialMeta implements Foldable
             "og:type"        => $type,
             "og:title"       => $title,
             "og:url"         => $url,
-            "og:description" => $description
+            "og:description" => (Shoop::this($description)->efIsEmpty()) ? "Description unavailable" : $description
         ]);
 
         if (Shoop::this($image)->isEmpty()->reversed()->unfold()) {
@@ -70,6 +70,6 @@ class SocialMeta implements Foldable
             $build[] = (Shoop::this($m)->efStartsWith("og:"))
                 ? Html::meta()->attr("property {$m}", "content {$v}")->unfold()
                 : Html::meta()->attr("name {$m}", "content {$v}")->unfold();
-        })->efToString();
+        });
     }
 }
