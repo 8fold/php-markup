@@ -10,10 +10,10 @@
     }
   ],
   "require": {
-    "php": "~7.0",
+    "php": "~7.0|^8.0",
     "8fold/php-shoop-shelf": "~0.7",
-    "8fold/php-html-spec": "~0.0.2",
-    "8fold/commonmark-abbreviations": "~1.0",
+    "8fold/php-html-spec": "~0.0.3",
+    "8fold/commonmark-abbreviations": "~1.0.3",
     "8fold/commonmark-accordions": "~1.0",
     "nesbot/carbon": "~2.36"
   },
