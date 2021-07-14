@@ -1,0 +1,83 @@
+h1 {
+	margin-top: 20px;
+	clear: both;
+}
+
+/* USA label extended */
+.usa-label-big.iae-label-info, .usa-label.iae-label-info {
+	color: #000000;
+	background-color: #9bdaf1;
+}
+
+.usa-label-big.iae-label-success, .usa-label.iae-label-success {
+	color: #000000;
+	background-color: #94bfa2;
+
+}
+
+.usa-label-big.iae-label-warning, .usa-label.iae-label-warning {
+	color: #000000;
+	background-color: #f9c642;	
+}
+
+.usa-label-big.iae-label-error, .usa-label.iae-label-error {
+	color: #000000;
+	background-color: #e59393;
+}
+
+/* USA Alert extended */
+.usa-alert > form {
+	float: right;
+}
+
+.usa-button-dismiss {
+	background: none;
+	color: #000;
+  font-family: "FontAwesome";
+	content: "\f057;";
+}
+
+.usa-button-dismiss:hover {
+	background: none;
+	color: #205493;
+}
+
+/* Actions */
+.usa-action-horizontal {
+  color: #ffffff;
+  float: right;
+  clear: both;
+  margin-top: 20px; }
+  .usa-action-horizontal a:visited {
+    color: #ffffff; }
+  .usa-action-horizontal a:hover {
+    text-decoration: none;
+    color: #f1f1f1; }
+
+.usa-action-container {
+  float: left;
+  text-align: center; }
+  .usa-action-container a:visited {
+  	color: #0071bc;
+  }
+  .usa-action-container a:hover {
+  	color: #205493;
+  }
+  .usa-action-container a:hover {
+    text-decoration: none; }
+  .usa-action-container.delete a {
+    color: #981b1e; }
+    .usa-action-container.delete a:hover {
+      color: #cd2026; }
+  .usa-action-container span {
+    display: inline-block;
+    padding: 10px;
+    margin: 10px; }
+    .usa-action-container span i {
+      display: block;
+      font-size: 2.5rem; }
+
+/* Search */
+.usa-grid.usa-search-result {
+  border-bottom: 1px solid #000000;
+}

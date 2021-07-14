@@ -43,7 +43,7 @@ class MarkdownTest extends TestCase
         AssertEquals::applyWith(
             '<h1>Heading</h1><p>Content</p>',
             "string",
-            13.06, // 12.69, // 11.83, // 11.8,
+            30.48, // 13.06, // 12.69, // 11.83, // 11.8,
             1100
         )->unfoldUsing(
             UIKit::markdown($this->doc())
@@ -52,7 +52,7 @@ class MarkdownTest extends TestCase
         AssertEquals::applyWith(
             '<p>Hello, World!</p>',
             "string",
-            0.16,
+            0.84, // 0.22, // 0.18, // 0.16,
             39
         )->unfoldUsing(
             UIKit::markdown("Hello, World!")
@@ -152,7 +152,7 @@ class MarkdownTest extends TestCase
             $expected,
             "string",
             4.21,
-            68
+            139 // 68
         )->unfoldUsing(
             UIKit::markdown($doc, ['html_input' => 'allow'])
                 ->extensions(AbbreviationExtension::class)
@@ -171,7 +171,7 @@ class MarkdownTest extends TestCase
         AssertEquals::applyWith(
             '<h1>Heading</h1><p>Base</p>',
             "string",
-            0.47,
+            0.59, // 0.47,
             48
         )->unfoldUsing(
             UIKit::markdown($doc)->prepend("# Heading\n\n")

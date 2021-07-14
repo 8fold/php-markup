@@ -25,7 +25,7 @@ class ElementTest extends TestCase
         AssertEquals::applyWith(
             '<container id="hello">',
             "string",
-            14.59, // shoopified 7.17, // 5.29, // 4.56, // 4.02,
+            14.76, // 14.59, // shoopified 7.17, // 5.29, // 4.56, // 4.02,
             437 // 436 // 433 // 427 // 426 // 401 // 397 // 394 // 393
         )->unfoldUsing(
             Element::fold("container")->attr("id hello")->omitEndTag(true)
@@ -34,7 +34,7 @@ class ElementTest extends TestCase
         AssertEquals::applyWith(
             '<container id="goodbye">',
             "string",
-            0.5, // 0.42, // 0.27, // 0.26, // 0.25,
+            0.85, // 0.5, // 0.42, // 0.27, // 0.26, // 0.25,
             1
         )->unfoldUsing(
             Element::fold("container")->attr("id hello")->omitEndTag(true)
@@ -88,7 +88,7 @@ class ElementTest extends TestCase
         AssertEquals::applyWith(
             '<a href="/path"></a>',
             "string",
-            0.3, // 0.27, // 0.21, // 0.2,
+            0.32, // 0.3, // 0.27, // 0.21, // 0.2,
             1
         )->unfoldUsing(
             new Element("a", ["href /path"], false)
@@ -145,7 +145,7 @@ class ElementTest extends TestCase
         AssertEquals::applyWith(
             ["id" => "hello"],
             "array",
-            0.21, // 0.18, // 0.17, // increase shoop 0.13, // 0.11, // 0.09,
+            0.42, // 0.25, // 0.21, // 0.18, // 0.17, // increase shoop 0.13, // 0.11, // 0.09,
             1
         )->unfoldUsing(
             Element::fold("hello")->attr("id hello")->attrList(false)
