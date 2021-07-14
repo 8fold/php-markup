@@ -63,7 +63,7 @@ class CompoundTest extends TestCase
         AssertEquals::applyWith(
             '<meta name="viewport" content="width=device-width,initial-scale=1"><link type="image/x-icon" rel="icon" href="favicon.ico"><link rel="stylesheet" href="main.css"><script src="main.js"></script>',
             "string",
-            4.95, // 4.47, // 3.73,
+            6.17, // 5.86, // 5.14, // 4.95, // 4.47, // 3.73,
             4 // 3
         )->unfoldUsing(
             UIKit::webHead()
