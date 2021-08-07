@@ -4,6 +4,8 @@ namespace Eightfold\Markup\UIKit\Elements\Compound;
 
 use Eightfold\Markup\Html\HtmlElement;
 
+use Eightfold\ShoopShelf\Shoop;
+
 class Markdown extends HtmlElement
 {
     private $markdown = "";
