@@ -4,13 +4,6 @@ namespace Eightfold\Markup\UIKit\Elements\Compound;
 
 use Eightfold\Markup\Html\HtmlElement;
 
-use League\CommonMark\Extension\Table\TableExtension;
-use League\CommonMark\Extension\TaskList\TaskListExtension;
-
-use Eightfold\Shoop\Apply;
-
-use Eightfold\ShoopShelf\Shoop;
-
 class Markdown extends HtmlElement
 {
     private $markdown = "";
@@ -31,46 +24,42 @@ class Markdown extends HtmlElement
     public function caseSensitive($caseSensitive = true)
     {
         $this->caseSensitive = $caseSensitive;
+
         return $this;
     }
 
     public function markdownReplacements($replacements = [])
     {
         $this->markdownReplacements = $replacements;
+
         return $this;
     }
 
     public function htmlReplacements($replacements = [])
     {
         $this->htmlReplacements = $replacements;
+
         return $this;
     }
 
     public function trim($trim = true)
     {
         $this->trim = $trim;
+
         return $this;
     }
 
     public function minified($minified = true)
     {
         $this->minified = $minified;
+
         return $this;
     }
 
     public function extensions(...$extensions)
     {
-        if (Apply::isEmpty()->unfoldUsing($extensions)) {
-            $this->extensions = Shoop::this([
-                TableExtension::class,
-                TaskListExtension::class
-            ]);
-
-        } else {
-            $this->extensions = Shoop::this($extensions);
-
-        }
-        $this->extensions = $this->extensions->drop(fn($v) => empty($v))->unfold();
+        $this->extensions = Shoop::this($extensions)
+            ->drop(fn($v) => empty($v))->unfold();
 
         return $this;
     }
@@ -78,6 +67,7 @@ class Markdown extends HtmlElement
     public function prepend(string $markdown)
     {
         $this->markdown = $markdown . $this->markdown;
+
         return $this;
     }
 
