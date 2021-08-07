@@ -50,7 +50,7 @@ class HtmlElementTest extends TestCase
         AssertEquals::applyWith(
             '<div><div></div></div>',
             "string",
-            2.48, // 1.99, // 1.48, // 1.29, // updated shoop 5.24 // 4.98
+            3.19, // 2.48, // 1.99, // 1.48, // 1.29, // updated shoop 5.24 // 4.98
             1
         )->unfoldUsing(
             Html::div(Html::div())->unfold()
@@ -88,7 +88,7 @@ class HtmlElementTest extends TestCase
         AssertEquals::applyWith(
             '<object><param name="hello" value="world"><param name="you" value="are"><param name="awesome" value="today!"></object>',
             "string",
-            5.34, // 4.11, // 3.51, // 3.01, // updated shoop 6.87 // 6.67 // 6.24
+            9.17, // 5.34, // 4.11, // 3.51, // 3.01, // updated shoop 6.87 // 6.67 // 6.24
             1
         )->unfoldUsing(
             Html::object(
@@ -132,7 +132,7 @@ class HtmlElementTest extends TestCase
         AssertEquals::applyWith(
             '<ul><li>Hello<ol><li>My name is:</li></ol></li></ul>',
             "string",
-            4.95, // 4.16, // 3.04, // 3, // 2.88, // 2.78, // 2.53, // updated shoop 7.24
+            6.19, // 4.95, // 4.16, // 3.04, // 3, // 2.88, // 2.78, // 2.53, // updated shoop 7.24
             1
         )->unfoldUsing(
             Html::ul(
@@ -164,7 +164,7 @@ class HtmlElementTest extends TestCase
         AssertEquals::applyWith(
             '<body role="document"></body>',
             "string",
-            2.09, // 1.12, // 0.95, // 0.85, // 0.78, // updated shoop 4.13 // 6.15 // 6.12 // 5.76
+            2.24, // 2.09, // 1.12, // 0.95, // 0.85, // 0.78, // updated shoop 4.13 // 6.15 // 6.12 // 5.76
             1
         )->unfoldUsing(
             Html::body()->attr("role document")->unfold()

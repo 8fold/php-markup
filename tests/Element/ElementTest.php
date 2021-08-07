@@ -34,7 +34,7 @@ class ElementTest extends TestCase
         AssertEquals::applyWith(
             '<container id="goodbye">',
             "string",
-            0.85, // 0.5, // 0.42, // 0.27, // 0.26, // 0.25,
+            1.9, // 0.85, // 0.5, // 0.42, // 0.27, // 0.26, // 0.25,
             1
         )->unfoldUsing(
             Element::fold("container")->attr("id hello")->omitEndTag(true)
@@ -88,7 +88,7 @@ class ElementTest extends TestCase
         AssertEquals::applyWith(
             '<a href="/path"></a>',
             "string",
-            0.32, // 0.3, // 0.27, // 0.21, // 0.2,
+            1.03, // 0.32, // 0.3, // 0.27, // 0.21, // 0.2,
             1
         )->unfoldUsing(
             new Element("a", ["href /path"], false)
@@ -136,7 +136,7 @@ class ElementTest extends TestCase
         AssertEquals::applyWith(
             ["id" => "hello"],
             "array",
-            0.07,
+            0.21, // 0.07,
             1
         )->unfoldUsing(
             (new Element("hello", ["id hello"]))->attrList(false)
@@ -160,7 +160,7 @@ class ElementTest extends TestCase
         AssertEquals::applyWith(
             '<html><head><title>Hello, World!</title><style></style></head><body><img src="http://example.com" alt="A picture of the world"><p is="my-component" required>Hello, World!</p><my-link href="http://example.com/domination">World Domination</my-link><p>Done!</p></body></html>',
             "string",
-            5.71,
+            13.11, // 5.71,
             397
         )->unfoldUsing(
             Element::fold('html',

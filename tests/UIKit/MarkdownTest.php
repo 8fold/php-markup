@@ -102,22 +102,6 @@ class MarkdownTest extends TestCase
     /**
      * @test
      */
-    // public function no_extensions()
-    // {
-    //     AssertEquals::applyWith(
-    //         '|Header 1 |Header 2 ||:--------|:--------||Cell 1   |Cell 2   |',
-    //         "string",
-    //         15.17,
-    //         1144
-    //     )->unfoldUsing(
-    //         UIKit::markdown($this->docTable())
-    //     );
-    // }
-
-    /**
-     * @test
-     * @group current
-     */
     public function default_extensions()
     {
         $expected = '<table><thead><tr><th align="left">Header 1</th><th align="left">Header 2</th></tr></thead><tbody><tr><td align="left">Cell 1</td><td align="left">Cell 2</td></tr></tbody></table>';
@@ -133,30 +117,6 @@ class MarkdownTest extends TestCase
             )
         );
     }
-
-    /**
-     * @test
-     */
-    // public function abbreviation_allow_html()
-    // {
-    //     $doc = <<<EOD
-    //     [.abbr](abbreviation)
-
-    //     <abbr title="abbreviation">abbr</abbr>
-    //     EOD;
-
-    //     $expected = '<p><abbr title="abbreviation">abbr</abbr></p><p><abbr title="abbreviation">abbr</abbr></p>';
-
-    //     AssertEquals::applyWith(
-    //         $expected,
-    //         "string",
-    //         4.21,
-    //         139 // 68
-    //     )->unfoldUsing(
-    //         UIKit::markdown($doc, ['html_input' => 'allow'])
-    //             ->extensions(AbbreviationExtension::class)
-    //     );
-    // }
 
     /**
      * @test
