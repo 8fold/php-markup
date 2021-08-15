@@ -79,7 +79,7 @@ class SimpleTest extends TestCase
         AssertEquals::applyWith(
             '<ol><li>hello</li><li>good-bye</li></ol>',
             "string",
-            5.11, // 3.65, // 3.59, // 3.56, // 2.23, // 2.19, // 2.1,
+            5.6, // 5.11, // 3.65, // 3.59, // 3.56, // 2.23, // 2.19, // 2.1,
             2.66
         )->unfoldUsing(
             UIKit::listWith(

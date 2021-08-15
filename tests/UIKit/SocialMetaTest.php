@@ -34,7 +34,7 @@ class SocialMetaTest extends TestCase
         AssertEquals::applyWith(
             '<meta content="website" property="og:type"><meta content="Hello, World!" property="og:title"><meta content="https://8fold.pro" property="og:url"><meta content="A short description. LinkedIn would like to have 100+ characters." property="og:description"><meta content="https://8fold.pro/assets/ui/logo.svg" property="og:image"><meta content="ABCDEFGHIJKLMNOP" property="og:app_id">',
             "string",
-            18.23, // 16.28, // 9.33, // 8.67, // 8.61, // 6.3, // 5.93, // 5.54,
+            18.94, // 18.23, // 16.28, // 9.33, // 8.67, // 8.61, // 6.3, // 5.93, // 5.54,
             1
         )->unfoldUsing(
             UIKit::socialMeta(
