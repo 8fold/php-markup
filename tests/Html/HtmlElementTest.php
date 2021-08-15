@@ -182,7 +182,7 @@ class HtmlElementTest extends TestCase
          AssertEquals::applyWith(
             '<body id="acceptable"></body>',
             "string",
-            2.28, // 1.17, // 0.9, // 0.72, // 0.76 // 0.7 // 0.68 // 0.57 // 0.25 // 0.19 // 5.85
+            3.02, // 2.61, // 2.28, // 1.17, // 0.9, // 0.72, // 0.76 // 0.7 // 0.68 // 0.57 // 0.25 // 0.19 // 5.85
             1
         )->unfoldUsing(
             Html::body()->attr("id acceptable")->unfold()

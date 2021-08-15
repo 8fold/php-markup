@@ -145,7 +145,7 @@ class ElementTest extends TestCase
         AssertEquals::applyWith(
             ["id" => "hello"],
             "array",
-            1.01, // 1, // 0.94, // 0.86, // 0.81, // 0.42, // 0.25, // 0.21, // 0.18, // 0.17, // increase shoop 0.13, // 0.11, // 0.09,
+            1.09, // 1.01, // 1, // 0.94, // 0.86, // 0.81, // 0.42, // 0.25, // 0.21, // 0.18, // 0.17, // increase shoop 0.13, // 0.11, // 0.09,
             1
         )->unfoldUsing(
             Element::fold("hello")->attr("id hello")->attrList(false)
