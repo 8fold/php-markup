@@ -130,7 +130,7 @@ class MarkdownTest extends TestCase
         AssertEquals::applyWith(
             '<h1>Heading</h1><p>Base</p>',
             "string",
-            0.88, // 0.86, // 0.59, // 0.47,
+            0.98, // 0.88, // 0.86, // 0.59, // 0.47,
             48
         )->unfoldUsing(
             UIKit::markdown($doc)->prepend("# Heading\n\n")

@@ -63,7 +63,7 @@ class CompoundTest extends TestCase
         AssertEquals::applyWith(
             '<meta name="viewport" content="width=device-width,initial-scale=1"><link type="image/x-icon" rel="icon" href="favicon.ico"><link rel="stylesheet" href="main.css"><script src="main.js"></script>',
             "string",
-            13.31, // 10.88, // 6.17, // 5.86, // 5.14, // 4.95, // 4.47, // 3.73,
+            13.84, // 13.31, // 10.88, // 6.17, // 5.86, // 5.14, // 4.95, // 4.47, // 3.73,
             4 // 3
         )->unfoldUsing(
             UIKit::webHead()
@@ -100,7 +100,7 @@ class CompoundTest extends TestCase
         AssertEquals::applyWith(
             '<h2 is="accordion"><button id="'. $summaryId .'" aria-controls="'. $summaryId .'-panel" aria-expanded="true">'. $summary .'</button></h2><div is="accordion-panel" role="region" id="'. $summaryId .'-panel" tabindex="-1" aria-hidden="false" aria-labelledby="'. $summaryId .'">'. $content->unfold() .'</div>',
             "string",
-            17.01, // 13.7, // 7.36, // 5.78
+            17.66, // 17.01, // 13.7, // 7.36, // 5.78
             13
         )->unfoldUsing(
             UIKit::accordion($summaryId, $summary, $content)

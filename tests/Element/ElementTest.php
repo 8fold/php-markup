@@ -88,7 +88,7 @@ class ElementTest extends TestCase
         AssertEquals::applyWith(
             '<a href="/path"></a>',
             "string",
-            1.23, // 1.21, // 1.03, // 0.32, // 0.3, // 0.27, // 0.21, // 0.2,
+            1.25, // 1.23, // 1.21, // 1.03, // 0.32, // 0.3, // 0.27, // 0.21, // 0.2,
             1
         )->unfoldUsing(
             new Element("a", ["href /path"], false)
@@ -145,7 +145,7 @@ class ElementTest extends TestCase
         AssertEquals::applyWith(
             ["id" => "hello"],
             "array",
-            0.94, // 0.86, // 0.81, // 0.42, // 0.25, // 0.21, // 0.18, // 0.17, // increase shoop 0.13, // 0.11, // 0.09,
+            1, // 0.94, // 0.86, // 0.81, // 0.42, // 0.25, // 0.21, // 0.18, // 0.17, // increase shoop 0.13, // 0.11, // 0.09,
             1
         )->unfoldUsing(
             Element::fold("hello")->attr("id hello")->attrList(false)
