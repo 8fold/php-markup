@@ -113,7 +113,7 @@ class HtmlElementTest extends TestCase
         AssertEquals::applyWith(
             '<head><title>Hello, World!</title><link rel="stylesheet" href="#"><link rel="stylesheet" href="#"></head>',
             "string",
-            10.72, // 8.63, // 8.37, // 4.93, // 4.86, // 4.73, // 4.01, // 3.14, // 2.84, // 5.24
+            11.66, // 10.72, // 8.63, // 8.37, // 4.93, // 4.86, // 4.73, // 4.01, // 3.14, // 2.84, // 5.24
             1
         )->unfoldUsing(
             Html::head(
@@ -148,7 +148,7 @@ class HtmlElementTest extends TestCase
         AssertEquals::applyWith(
             '<a class="some-class" href="http://example.com">Hello</a>',
             "string",
-            3.9, // 3.75, // 3.32, // 1.76, // 1.6, // 1.56, // 1.21, // 1.13, // 0.97, // 0.87, // 2.37
+            3.93, // 3.9, // 3.75, // 3.32, // 1.76, // 1.6, // 1.56, // 1.21, // 1.13, // 0.97, // 0.87, // 2.37
             1
         )->unfoldUsing(
             Html::a('Hello')->attr('class some-class', 'href http://example.com')
@@ -173,7 +173,7 @@ class HtmlElementTest extends TestCase
          AssertEquals::applyWith(
             '<body role="application"></body>',
             "string",
-            2.81, // 2.59, // 2.56, // 2.29, // 1.95, // 1.52, // 0.9, // 0.85, // 0.83, // 0.75, // 0.72, // 0.67, // 0.8 // 0.74 // 0.72 // 0.58 // 0.56 // 0.32 // 0.64 // 0.53 // 0.41
+            3.25, // 2.81, // 2.59, // 2.56, // 2.29, // 1.95, // 1.52, // 0.9, // 0.85, // 0.83, // 0.75, // 0.72, // 0.67, // 0.8 // 0.74 // 0.72 // 0.58 // 0.56 // 0.32 // 0.64 // 0.53 // 0.41
             1
         )->unfoldUsing(
             Html::body()->attr("role application")->unfold()
