@@ -59,7 +59,7 @@ class HtmlElementTest extends TestCase
         AssertEquals::applyWith(
             '<html><head><title>Hello, World!</title><style></style></head><body><img src="http://example.com" alt="A picture of the world"><p is="my-component">Hello, World!</p><my-link href="http://example.com/domination">World Domination</my-link><p>Done!</p></body></html>',
             "string",
-            15.45, // 8.56, // 7.07, // 6.69, // 6.64, // 6.59, // 6.11, // 5.53, // 5.34, // 9.56 // 7.14 // 6.94
+            17.62, // 15.45, // 8.56, // 7.07, // 6.69, // 6.64, // 6.59, // 6.11, // 5.53, // 5.34, // 9.56 // 7.14 // 6.94
             1
         )->unfoldUsing(
             Html::html(
@@ -113,7 +113,7 @@ class HtmlElementTest extends TestCase
         AssertEquals::applyWith(
             '<head><title>Hello, World!</title><link rel="stylesheet" href="#"><link rel="stylesheet" href="#"></head>',
             "string",
-            8.37, // 4.93, // 4.86, // 4.73, // 4.01, // 3.14, // 2.84, // 5.24
+            8.63, // 8.37, // 4.93, // 4.86, // 4.73, // 4.01, // 3.14, // 2.84, // 5.24
             1
         )->unfoldUsing(
             Html::head(
@@ -132,7 +132,7 @@ class HtmlElementTest extends TestCase
         AssertEquals::applyWith(
             '<ul><li>Hello<ol><li>My name is:</li></ol></li></ul>',
             "string",
-            8.22, // 6.19, // 4.95, // 4.16, // 3.04, // 3, // 2.88, // 2.78, // 2.53, // updated shoop 7.24
+            8.76, // 8.22, // 6.19, // 4.95, // 4.16, // 3.04, // 3, // 2.88, // 2.78, // 2.53, // updated shoop 7.24
             1
         )->unfoldUsing(
             Html::ul(
@@ -173,7 +173,7 @@ class HtmlElementTest extends TestCase
          AssertEquals::applyWith(
             '<body role="application"></body>',
             "string",
-            2.29, // 1.95, // 1.52, // 0.9, // 0.85, // 0.83, // 0.75, // 0.72, // 0.67, // 0.8 // 0.74 // 0.72 // 0.58 // 0.56 // 0.32 // 0.64 // 0.53 // 0.41
+            2.56, // 2.29, // 1.95, // 1.52, // 0.9, // 0.85, // 0.83, // 0.75, // 0.72, // 0.67, // 0.8 // 0.74 // 0.72 // 0.58 // 0.56 // 0.32 // 0.64 // 0.53 // 0.41
             1
         )->unfoldUsing(
             Html::body()->attr("role application")->unfold()

@@ -76,7 +76,7 @@ class CompoundTest extends TestCase
         AssertEquals::applyWith(
             '<meta name="viewport" content="width=device-width,initial-scale=1"><meta content="website" property="og:type"><meta content="8fold PHP Markup" property="og:title"><meta content="https://8fold.dev/open-source/markup/php" property="og:url"><meta content="Get the HTML out of your PHP with this HTML generator." property="og:description"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="8foldPros">',
             "string",
-            19.46, // 14.88, // 12.25, // 7.47,
+            21.04, // 19.46, // 14.88, // 12.25, // 7.47,
             570
         )->unfoldUsing(
             UIKit::webHead()->social(
