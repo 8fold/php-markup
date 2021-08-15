@@ -41,7 +41,7 @@ class MarkdownTest extends TestCase
             '<h1>Heading</h1><p>Content</p>',
             "string",
             30.48, // 13.06, // 12.69, // 11.83, // 11.8,
-            1758 // 1658 // 1100
+            1868 // 1758 // 1658 // 1100
         )->unfoldUsing(
             UIKit::markdown($this->doc())
         );

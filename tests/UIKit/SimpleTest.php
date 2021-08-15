@@ -37,7 +37,7 @@ class SimpleTest extends TestCase
         AssertEquals::applyWith(
             '<a href="http://example.com">Hello, World!</a>',
             "string",
-            4.49,
+            9.69, // 4.49,
             18
         )->unfoldUsing(
             UIKit::anchor(
@@ -67,7 +67,7 @@ class SimpleTest extends TestCase
         AssertEquals::applyWith(
             '<ul><li>hello</li><li>good-bye</li></ul>',
             "string",
-            6.34, // 4.93, // 4.69, // 3.8,
+            11.32, // 6.34, // 4.93, // 4.69, // 3.8,
             72 // 8
         )->unfoldUsing(
             UIKit::listWith(
