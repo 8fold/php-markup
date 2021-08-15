@@ -48,7 +48,7 @@ class CompoundTest extends TestCase
         AssertEquals::applyWith(
             '<meta name="viewport" content="width=device-width,initial-scale=1"><link type="image/x-icon" rel="icon" href="favicon.ico"><link rel="apple-touch-icon" href="apple-touch-icon.png" sizes="180x180"><link rel="image/png" href="favicon-32x32.png" sizes="32x32"><link rel="image/png" href="favicon-16x16.png" sizes="16x16">',
             "string",
-            22.09, // 13.62,
+            41.86, // 22.09, // 13.62,
             596 // 594 // 588
         )->unfoldUsing(
             UIKit::webHead()->favicons(
