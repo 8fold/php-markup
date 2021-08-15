@@ -136,7 +136,7 @@ class ElementTest extends TestCase
         AssertEquals::applyWith(
             ["id" => "hello"],
             "array",
-            0.28, // 0.21, // 0.07,
+            0.35, // 0.28, // 0.21, // 0.07,
             1
         )->unfoldUsing(
             (new Element("hello", ["id hello"]))->attrList(false)

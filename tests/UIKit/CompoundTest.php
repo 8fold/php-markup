@@ -76,7 +76,7 @@ class CompoundTest extends TestCase
         AssertEquals::applyWith(
             '<meta name="viewport" content="width=device-width,initial-scale=1"><meta content="website" property="og:type"><meta content="8fold PHP Markup" property="og:title"><meta content="https://8fold.dev/open-source/markup/php" property="og:url"><meta content="Get the HTML out of your PHP with this HTML generator." property="og:description"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="8foldPros">',
             "string",
-            22.08, // 21.04, // 19.46, // 14.88, // 12.25, // 7.47,
+            24.18, // 22.08, // 21.04, // 19.46, // 14.88, // 12.25, // 7.47,
             570
         )->unfoldUsing(
             UIKit::webHead()->social(
@@ -100,7 +100,7 @@ class CompoundTest extends TestCase
         AssertEquals::applyWith(
             '<h2 is="accordion"><button id="'. $summaryId .'" aria-controls="'. $summaryId .'-panel" aria-expanded="true">'. $summary .'</button></h2><div is="accordion-panel" role="region" id="'. $summaryId .'-panel" tabindex="-1" aria-hidden="false" aria-labelledby="'. $summaryId .'">'. $content->unfold() .'</div>',
             "string",
-            17.66, // 17.01, // 13.7, // 7.36, // 5.78
+            17.82, // 17.66, // 17.01, // 13.7, // 7.36, // 5.78
             13
         )->unfoldUsing(
             UIKit::accordion($summaryId, $summary, $content)
