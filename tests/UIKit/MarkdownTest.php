@@ -49,7 +49,7 @@ class MarkdownTest extends TestCase
         AssertEquals::applyWith(
             '<p>Hello, World!</p>',
             "string",
-            0.84, // 0.22, // 0.18, // 0.16,
+            0.99, // 0.84, // 0.22, // 0.18, // 0.16,
             42 // 39
         )->unfoldUsing(
             UIKit::markdown("Hello, World!")

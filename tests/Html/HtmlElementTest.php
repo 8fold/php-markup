@@ -113,7 +113,7 @@ class HtmlElementTest extends TestCase
         AssertEquals::applyWith(
             '<head><title>Hello, World!</title><link rel="stylesheet" href="#"><link rel="stylesheet" href="#"></head>',
             "string",
-            11.66, // 10.72, // 8.63, // 8.37, // 4.93, // 4.86, // 4.73, // 4.01, // 3.14, // 2.84, // 5.24
+            12.1, // 11.66, // 10.72, // 8.63, // 8.37, // 4.93, // 4.86, // 4.73, // 4.01, // 3.14, // 2.84, // 5.24
             1
         )->unfoldUsing(
             Html::head(
@@ -148,7 +148,7 @@ class HtmlElementTest extends TestCase
         AssertEquals::applyWith(
             '<a class="some-class" href="http://example.com">Hello</a>',
             "string",
-            3.93, // 3.9, // 3.75, // 3.32, // 1.76, // 1.6, // 1.56, // 1.21, // 1.13, // 0.97, // 0.87, // 2.37
+            3.99, // 3.93, // 3.9, // 3.75, // 3.32, // 1.76, // 1.6, // 1.56, // 1.21, // 1.13, // 0.97, // 0.87, // 2.37
             1
         )->unfoldUsing(
             Html::a('Hello')->attr('class some-class', 'href http://example.com')
