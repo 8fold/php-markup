@@ -7,7 +7,7 @@ use Eightfold\Foldable\Tests\PerformantEqualsTestFilter as AssertEquals;
 
 use Eightfold\Markup\UIKit;
 
-use Eightfold\CommonMarkAbbreviations\AbbreviationExtension;
+use League\CommonMark\Extension\Table\TableExtension;
 
 /**
  * @group Markdown
@@ -29,9 +29,6 @@ class MarkdownTest extends TestCase
         |Header 1 |Header 2 |
         |:--------|:--------|
         |Cell 1   |Cell 2   |
-
-        - [ ] Task 1
-        - [x] Task 2
         EOD;
     }
 
@@ -44,7 +41,7 @@ class MarkdownTest extends TestCase
             '<h1>Heading</h1><p>Content</p>',
             "string",
             30.48, // 13.06, // 12.69, // 11.83, // 11.8,
-            1100
+            1868 // 1758 // 1658 // 1100
         )->unfoldUsing(
             UIKit::markdown($this->doc())
         );
@@ -52,8 +49,8 @@ class MarkdownTest extends TestCase
         AssertEquals::applyWith(
             '<p>Hello, World!</p>',
             "string",
-            0.84, // 0.22, // 0.18, // 0.16,
-            39
+            0.99, // 0.84, // 0.22, // 0.18, // 0.16,
+            42 // 39
         )->unfoldUsing(
             UIKit::markdown("Hello, World!")
         );
@@ -105,25 +102,9 @@ class MarkdownTest extends TestCase
     /**
      * @test
      */
-    public function no_extensions()
-    {
-        AssertEquals::applyWith(
-            '<p>|Header 1 |Header 2 ||:--------|:--------||Cell 1   |Cell 2   |</p><ul><li>[ ] Task 1</li><li>[x] Task 2</li></ul>',
-            "string",
-            15.17,
-            1144
-        )->unfoldUsing(
-            UIKit::markdown($this->docTable())
-        );
-    }
-
-    /**
-     * @test
-     * @group current
-     */
     public function default_extensions()
     {
-        $expected = '<table><thead><tr><th align="left">Header 1</th><th align="left">Header 2</th></tr></thead><tbody><tr><td align="left">Cell 1</td><td align="left">Cell 2</td></tr></tbody></table><ul><li><input disabled="" type="checkbox"> Task 1</li><li><input checked="" disabled="" type="checkbox"> Task 2</li></ul>';
+        $expected = '<table><thead><tr><th align="left">Header 1</th><th align="left">Header 2</th></tr></thead><tbody><tr><td align="left">Cell 1</td><td align="left">Cell 2</td></tr></tbody></table>';
 
         AssertEquals::applyWith(
             $expected,
@@ -131,31 +112,9 @@ class MarkdownTest extends TestCase
             21.68,
             1459
         )->unfoldUsing(
-            UIKit::markdown($this->docTable())->extensions()
-        );
-    }
-
-    /**
-     * @test
-     */
-    public function abbreviation_allow_html()
-    {
-        $doc = <<<EOD
-        [.abbr](abbreviation)
-
-        <abbr title="abbreviation">abbr</abbr>
-        EOD;
-
-        $expected = '<p><abbr title="abbreviation">abbr</abbr></p><p><abbr title="abbreviation">abbr</abbr></p>';
-
-        AssertEquals::applyWith(
-            $expected,
-            "string",
-            4.21,
-            139 // 68
-        )->unfoldUsing(
-            UIKit::markdown($doc, ['html_input' => 'allow'])
-                ->extensions(AbbreviationExtension::class)
+            UIKit::markdown($this->docTable())->extensions(
+                new TableExtension()
+            )
         );
     }
 
@@ -171,7 +130,7 @@ class MarkdownTest extends TestCase
         AssertEquals::applyWith(
             '<h1>Heading</h1><p>Base</p>',
             "string",
-            0.59, // 0.47,
+            1.21, // 0.98, // 0.88, // 0.86, // 0.59, // 0.47,
             48
         )->unfoldUsing(
             UIKit::markdown($doc)->prepend("# Heading\n\n")

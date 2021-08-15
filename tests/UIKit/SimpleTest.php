@@ -37,7 +37,7 @@ class SimpleTest extends TestCase
         AssertEquals::applyWith(
             '<a href="http://example.com">Hello, World!</a>',
             "string",
-            4.49,
+            9.69, // 4.49,
             18
         )->unfoldUsing(
             UIKit::anchor(
@@ -49,7 +49,7 @@ class SimpleTest extends TestCase
         AssertEquals::applyWith(
             '<a id="hello" href="http://example.com">Hello, World!</a>',
             "string",
-            1.97, // 1.76, // 1.55, // 1.33,
+            5.93, // 5.06, // 4.04, // 1.97, // 1.76, // 1.55, // 1.33,
             1.09
         )->unfoldUsing(
             UIKit::anchor(
@@ -67,7 +67,7 @@ class SimpleTest extends TestCase
         AssertEquals::applyWith(
             '<ul><li>hello</li><li>good-bye</li></ul>',
             "string",
-            4.69, // 3.8,
+            11.32, // 6.34, // 4.93, // 4.69, // 3.8,
             72 // 8
         )->unfoldUsing(
             UIKit::listWith(
@@ -79,7 +79,7 @@ class SimpleTest extends TestCase
         AssertEquals::applyWith(
             '<ol><li>hello</li><li>good-bye</li></ol>',
             "string",
-            3.65, // 3.59, // 3.56, // 2.23, // 2.19, // 2.1,
+            6.43, // 5.99, // 5.6, // 5.11, // 3.65, // 3.59, // 3.56, // 2.23, // 2.19, // 2.1,
             2.66
         )->unfoldUsing(
             UIKit::listWith(
@@ -91,7 +91,7 @@ class SimpleTest extends TestCase
         AssertEquals::applyWith(
             '<dl><dt>hello</dt><dd>good-bye</dd></dl>',
             "string",
-            3.52, // 3.2,
+            6.44, // 3.52, // 3.2,
             1
         )->unfoldUsing(
             UIKit::listWith(
@@ -103,7 +103,7 @@ class SimpleTest extends TestCase
         AssertEquals::applyWith(
             '<dl><dt>hello</dt><dd>good-bye</dd><dt>hello</dt><dd>good-bye</dd><dd>good-bye</dd></dl>',
             "string",
-            5.25, // 4.59, // 4.49,
+            12.37, // 12.16, // 11.53, // 10.71, // 5.25, // 4.59, // 4.49,
             1
         )->unfoldUsing(
             UIKit::listWith(
@@ -124,7 +124,7 @@ class SimpleTest extends TestCase
         AssertEquals::applyWith(
             '<img src="https://path.to/image.jpg" alt="Alt text">',
             "string",
-            2.37, // 2.3, // 2.03,
+            4.4, // 3.94, // 3.31, // 2.37, // 2.3, // 2.03,
             3
         )->unfoldUsing(
             UIKit::image("Alt text", "https://path.to/image.jpg")
