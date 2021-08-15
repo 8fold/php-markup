@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f544068f6c65f40736e331e446aa954d",
+    "content-hash": "9150a382cc98e7b708ff2a9c2db1665f",
     "packages": [
         {
             "name": "8fold/php-foldable",
@@ -4085,7 +4085,7 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": "~7.2|^8.0"
+        "php": "^7.2|^8.0"
     },
     "platform-dev": [],
     "plugin-api-version": "2.0.0"
