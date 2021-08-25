@@ -26,7 +26,7 @@ class ElementTest extends TestCase
             '<container id="hello">',
             "string",
             14.76, // 14.59, // shoopified 7.17, // 5.29, // 4.56, // 4.02,
-            437 // 436 // 433 // 427 // 426 // 401 // 397 // 394 // 393
+            475 // 437 // 436 // 433 // 427 // 426 // 401 // 397 // 394 // 393
         )->unfoldUsing(
             Element::fold("container")->attr("id hello")->omitEndTag(true)
         );
@@ -34,7 +34,7 @@ class ElementTest extends TestCase
         AssertEquals::applyWith(
             '<container id="goodbye">',
             "string",
-            0.85, // 0.5, // 0.42, // 0.27, // 0.26, // 0.25,
+            3.36, // 1.9, // 0.85, // 0.5, // 0.42, // 0.27, // 0.26, // 0.25,
             1
         )->unfoldUsing(
             Element::fold("container")->attr("id hello")->omitEndTag(true)
@@ -53,7 +53,7 @@ class ElementTest extends TestCase
         AssertEquals::applyWith(
             '<p><span>Hello, World!</span></p>',
             "string",
-            7.08, // 3.95,
+            11.26, // 7.08, // 3.95,
             470 // 311
         )->unfoldUsing(
             Element::fold("p",
@@ -88,7 +88,7 @@ class ElementTest extends TestCase
         AssertEquals::applyWith(
             '<a href="/path"></a>',
             "string",
-            0.32, // 0.3, // 0.27, // 0.21, // 0.2,
+            1.25, // 1.23, // 1.21, // 1.03, // 0.32, // 0.3, // 0.27, // 0.21, // 0.2,
             1
         )->unfoldUsing(
             new Element("a", ["href /path"], false)
@@ -136,7 +136,7 @@ class ElementTest extends TestCase
         AssertEquals::applyWith(
             ["id" => "hello"],
             "array",
-            0.07,
+            0.35, // 0.28, // 0.21, // 0.07,
             1
         )->unfoldUsing(
             (new Element("hello", ["id hello"]))->attrList(false)
@@ -145,7 +145,7 @@ class ElementTest extends TestCase
         AssertEquals::applyWith(
             ["id" => "hello"],
             "array",
-            0.42, // 0.25, // 0.21, // 0.18, // 0.17, // increase shoop 0.13, // 0.11, // 0.09,
+            1.09, // 1.01, // 1, // 0.94, // 0.86, // 0.81, // 0.42, // 0.25, // 0.21, // 0.18, // 0.17, // increase shoop 0.13, // 0.11, // 0.09,
             1
         )->unfoldUsing(
             Element::fold("hello")->attr("id hello")->attrList(false)
@@ -160,7 +160,7 @@ class ElementTest extends TestCase
         AssertEquals::applyWith(
             '<html><head><title>Hello, World!</title><style></style></head><body><img src="http://example.com" alt="A picture of the world"><p is="my-component" required>Hello, World!</p><my-link href="http://example.com/domination">World Domination</my-link><p>Done!</p></body></html>',
             "string",
-            5.71,
+            16.26, // 13.11, // 5.71,
             397
         )->unfoldUsing(
             Element::fold('html',
