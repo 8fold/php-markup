@@ -23,6 +23,7 @@ class Element implements Foldable
 
     protected $omitEndTag = false;
 
+
     static public function fold(...$args): Foldable
     {
         // TODO: Switch to using Shoop, see how it impacts performance
