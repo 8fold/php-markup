@@ -43,7 +43,6 @@ class Pagination extends HtmlElement
     public function totalItems(): ESInt
     {
         return $this->totalItems;
-
     }
 
     public function totalItemsPerPage(): ESInt
