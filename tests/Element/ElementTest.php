@@ -88,7 +88,7 @@ class ElementTest extends TestCase
         AssertEquals::applyWith(
             '<a href="/path"></a>',
             "string",
-            1.25, // 1.23, // 1.21, // 1.03, // 0.32, // 0.3, // 0.27, // 0.21, // 0.2,
+            1.33, // 1.25, // 1.23, // 1.21, // 1.03, // 0.32, // 0.3, // 0.27, // 0.21, // 0.2,
             1
         )->unfoldUsing(
             new Element("a", ["href /path"], false)

@@ -26,7 +26,7 @@ class HtmlElementTest extends TestCase
         AssertEquals::applyWith(
             '<p role="alert" id="something" class="somethingElse somethingElse2" style="background: red;" type="some_type" tabindex="1" accesskey="S">Hello</p>',
             "string",
-            9.69, // 8.42, // 8.34, // 7.8, // 7.38, // updated shoop 8.11 // 7.82 // 7.6 // 6.85
+            10.03, // 9.89, // 9.69, // 8.42, // 8.34, // 7.8, // 7.38, // updated shoop 8.11 // 7.82 // 7.6 // 6.85
             559
         )->unfoldUsing(
             Html::p('Hello')
@@ -59,7 +59,7 @@ class HtmlElementTest extends TestCase
         AssertEquals::applyWith(
             '<html><head><title>Hello, World!</title><style></style></head><body><img src="http://example.com" alt="A picture of the world"><p is="my-component">Hello, World!</p><my-link href="http://example.com/domination">World Domination</my-link><p>Done!</p></body></html>',
             "string",
-            18.93, // 18.84, // 18.13, // 17.62, // 15.45, // 8.56, // 7.07, // 6.69, // 6.64, // 6.59, // 6.11, // 5.53, // 5.34, // 9.56 // 7.14 // 6.94
+            20.44, // 18.93, // 18.84, // 18.13, // 17.62, // 15.45, // 8.56, // 7.07, // 6.69, // 6.64, // 6.59, // 6.11, // 5.53, // 5.34, // 9.56 // 7.14 // 6.94
             1
         )->unfoldUsing(
             Html::html(
@@ -132,7 +132,7 @@ class HtmlElementTest extends TestCase
         AssertEquals::applyWith(
             '<ul><li>Hello<ol><li>My name is:</li></ol></li></ul>',
             "string",
-            10.23, // 8.76, // 8.22, // 6.19, // 4.95, // 4.16, // 3.04, // 3, // 2.88, // 2.78, // 2.53, // updated shoop 7.24
+            16.17, // 10.23, // 8.76, // 8.22, // 6.19, // 4.95, // 4.16, // 3.04, // 3, // 2.88, // 2.78, // 2.53, // updated shoop 7.24
             1
         )->unfoldUsing(
             Html::ul(
@@ -148,7 +148,7 @@ class HtmlElementTest extends TestCase
         AssertEquals::applyWith(
             '<a class="some-class" href="http://example.com">Hello</a>',
             "string",
-            3.99, // 3.93, // 3.9, // 3.75, // 3.32, // 1.76, // 1.6, // 1.56, // 1.21, // 1.13, // 0.97, // 0.87, // 2.37
+            4.04, // 3.99, // 3.93, // 3.9, // 3.75, // 3.32, // 1.76, // 1.6, // 1.56, // 1.21, // 1.13, // 0.97, // 0.87, // 2.37
             1
         )->unfoldUsing(
             Html::a('Hello')->attr('class some-class', 'href http://example.com')
@@ -164,7 +164,7 @@ class HtmlElementTest extends TestCase
         AssertEquals::applyWith(
             '<body role="document"></body>',
             "string",
-            3, // 2.83, // 2.24, // 2.09, // 1.12, // 0.95, // 0.85, // 0.78, // updated shoop 4.13 // 6.15 // 6.12 // 5.76
+            10.55, // 3, // 2.83, // 2.24, // 2.09, // 1.12, // 0.95, // 0.85, // 0.78, // updated shoop 4.13 // 6.15 // 6.12 // 5.76
             1
         )->unfoldUsing(
             Html::body()->attr("role document")->unfold()

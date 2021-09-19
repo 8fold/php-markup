@@ -34,7 +34,7 @@ class SocialMetaTest extends TestCase
         AssertEquals::applyWith(
             '<meta content="website" property="og:type"><meta content="Hello, World!" property="og:title"><meta content="https://8fold.pro" property="og:url"><meta content="A short description. LinkedIn would like to have 100+ characters." property="og:description"><meta content="https://8fold.pro/assets/ui/logo.svg" property="og:image"><meta content="ABCDEFGHIJKLMNOP" property="og:app_id">',
             "string",
-            22.92, // 21.38, // 20.31, // 18.94, // 18.23, // 16.28, // 9.33, // 8.67, // 8.61, // 6.3, // 5.93, // 5.54,
+            41.13, // 22.92, // 21.38, // 20.31, // 18.94, // 18.23, // 16.28, // 9.33, // 8.67, // 8.61, // 6.3, // 5.93, // 5.54,
             1
         )->unfoldUsing(
             UIKit::socialMeta(
@@ -56,7 +56,7 @@ class SocialMetaTest extends TestCase
         AssertEquals::applyWith(
             '<meta content="website" property="og:type"><meta content="Hello, World!" property="og:title"><meta content="https://8fold.pro" property="og:url"><meta content="A short description. LinkedIn would like to have 100+ characters." property="og:description"><meta content="https://8fold.pro/assets/ui/logo.svg" property="og:image"><meta content="ABCDEFGHIJKLMNOP" property="og:app_id"><meta name="twitter:card" content="summary_large_image">',
             "string",
-            25.4, // 23.79, // 18.99, // 10.74, // 8.14, // 7.77, // 6.73, // 6.54,
+            55.02, // 25.4, // 23.79, // 18.99, // 10.74, // 8.14, // 7.77, // 6.73, // 6.54,
             1
         )->unfoldUsing(
             UIKit::socialMeta(
