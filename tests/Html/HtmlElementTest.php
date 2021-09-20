@@ -26,7 +26,7 @@ class HtmlElementTest extends TestCase
         AssertEquals::applyWith(
             '<p role="alert" id="something" class="somethingElse somethingElse2" style="background: red;" type="some_type" tabindex="1" accesskey="S">Hello</p>',
             "string",
-            10.03, // 9.89, // 9.69, // 8.42, // 8.34, // 7.8, // 7.38, // updated shoop 8.11 // 7.82 // 7.6 // 6.85
+            10.52, // 10.03, // 9.89, // 9.69, // 8.42, // 8.34, // 7.8, // 7.38, // updated shoop 8.11 // 7.82 // 7.6 // 6.85
             559
         )->unfoldUsing(
             Html::p('Hello')
@@ -148,7 +148,7 @@ class HtmlElementTest extends TestCase
         AssertEquals::applyWith(
             '<a class="some-class" href="http://example.com">Hello</a>',
             "string",
-            4.04, // 3.99, // 3.93, // 3.9, // 3.75, // 3.32, // 1.76, // 1.6, // 1.56, // 1.21, // 1.13, // 0.97, // 0.87, // 2.37
+            4.5, // 4.04, // 3.99, // 3.93, // 3.9, // 3.75, // 3.32, // 1.76, // 1.6, // 1.56, // 1.21, // 1.13, // 0.97, // 0.87, // 2.37
             1
         )->unfoldUsing(
             Html::a('Hello')->attr('class some-class', 'href http://example.com')

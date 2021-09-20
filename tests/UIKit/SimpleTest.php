@@ -36,7 +36,7 @@ class SimpleTest extends TestCase
         AssertEquals::applyWith(
             '<title>Hello, World!</title>',
             "string",
-            0.91, // 0.71, // 0.6,
+            2.31, // 0.91, // 0.71, // 0.6,
             4
         )->unfoldUsing(
             UIKit::pageTitle(["Hello, World!"])
@@ -136,7 +136,7 @@ class SimpleTest extends TestCase
         AssertEquals::applyWith(
             '<dl><dt>hello</dt><dd>good-bye</dd><dt>hello</dt><dd>good-bye</dd><dd>good-bye</dd></dl>',
             "string",
-            12.37, // 12.16, // 11.53, // 10.71, // 5.25, // 4.59, // 4.49,
+            12.48, // 12.37, // 12.16, // 11.53, // 10.71, // 5.25, // 4.59, // 4.49,
             1
         )->unfoldUsing(
             UIKit::listWith(
