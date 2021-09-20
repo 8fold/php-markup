@@ -37,7 +37,7 @@ class SimpleTest extends TestCase
             '<title>Hello, World!</title>',
             "string",
             3.31, // 2.31, // 0.91, // 0.71, // 0.6,
-            4
+            5 // 4
         )->unfoldUsing(
             UIKit::pageTitle(["Hello, World!"])
         );
