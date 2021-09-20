@@ -15,6 +15,11 @@ class UIKit extends Html
         return new UIKit\Elements\Pages\WebView($title, ...$content);
     }
 
+    static public function pageTitle($titleParts, $separater = " | ")
+    {
+        return new UIKit\Elements\Simple\PageTitle($titleParts, $separater);
+    }
+
     static public function webHead()
     {
         return new UIKit\Elements\Compound\WebHead();

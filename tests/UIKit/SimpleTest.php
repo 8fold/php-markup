@@ -31,6 +31,39 @@ class SimpleTest extends TestCase
     /**
      * @test
      */
+    public function page_title()
+    {
+        AssertEquals::applyWith(
+            '<title>Hello, World!</title>',
+            "string",
+            0.91, // 0.71, // 0.6,
+            4
+        )->unfoldUsing(
+            UIKit::pageTitle(["Hello, World!"])
+        );
+
+        AssertEquals::applyWith(
+            '<title>How are you? | Hello, World!</title>',
+            "string",
+            0.91, // 0.71, // 0.6,
+            3
+        )->unfoldUsing(
+            UIKit::pageTitle(["How are you?", "Hello, World!"])
+        );
+
+        AssertEquals::applyWith(
+            '<title>How are you? : Hello, World!</title>',
+            "string",
+            0.91, // 0.71, // 0.6,
+            3
+        )->unfoldUsing(
+            UIKit::pageTitle(["Hello, World!", "How are you?"], " : ")->reversed()
+        );
+    }
+
+    /**
+     * @test
+     */
     public function anchor()
     {
         // For 0.2.0 was 13.5ms
