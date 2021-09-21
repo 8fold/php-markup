@@ -14,6 +14,8 @@ class PageTitle extends HtmlElement
 
     private $reversed = false;
 
+    private $stringOnly = false;
+
     public function __construct(array $titleParts, string $separater = " | ")
     {
         $this->main = $titleParts;
@@ -33,12 +35,22 @@ class PageTitle extends HtmlElement
 
         $string = implode($this->separater, $this->main);
 
+        if ($this->stringOnly) {
+            return $string;
+        }
+
         return Html::title($string)->attr(...$this->attributes)->unfold();
     }
 
     public function reversed(): PageTitle
     {
         $this->reversed = true;
+        return $this;
+    }
+
+    public function stringOnly(): PageTitle
+    {
+        $this->stringOnly = true;
         return $this;
     }
 }

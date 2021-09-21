@@ -59,6 +59,15 @@ class SimpleTest extends TestCase
         )->unfoldUsing(
             UIKit::pageTitle(["Hello, World!", "How are you?"], " : ")->reversed()
         );
+
+        AssertEquals::applyWith(
+            'How are you? : Hello, World!',
+            "string",
+            1.95, // 1.82, // 0.91, // 0.71, // 0.6,
+            3
+        )->unfoldUsing(
+            UIKit::pageTitle(["Hello, World!", "How are you?"], " : ")->reversed()->stringOnly()
+        );
     }
 
     /**
