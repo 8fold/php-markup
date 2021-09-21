@@ -45,7 +45,7 @@ class SimpleTest extends TestCase
         AssertEquals::applyWith(
             '<title>How are you? | Hello, World!</title>',
             "string",
-            1.94, // 1.66, // 0.91, // 0.71, // 0.6,
+            2.13, // 1.94, // 1.66, // 0.91, // 0.71, // 0.6,
             3
         )->unfoldUsing(
             UIKit::pageTitle(["How are you?", "Hello, World!"])
