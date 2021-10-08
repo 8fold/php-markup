@@ -2,19 +2,27 @@
 
 namespace Eightfold\Markup\UIKit\Elements\Simple;
 
-use Eightfold\Markup\Html\HtmlElement;
+use Eightfold\HTMLBuilder\Element as HtmlElement;
 
-use Eightfold\Markup\Html;
+// use Eightfold\Markup\Html\HtmlElement;
 
-class Image extends HtmlElement
+// use Eightfold\Markup\Html;
+
+class Image //extends HtmlElement
 {
+    private string $alt = '';
+
+    private string $src = '';
+
     public function __construct(string $alt, string $src)
     {
-        $this->attr("alt {$alt}", "src {$src}");
+        $this->$alt = $alt;
+        $this->$src = $src;
     }
 
-    public function unfold(): string
+    public function build(): string
     {
-        return Html::img()->attr(...$this->attributes)->unfold();
+        return '';
+        // return Html::img()->attr(...$this->attributes)->unfold();
     }
 }

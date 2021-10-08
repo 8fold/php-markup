@@ -2,21 +2,31 @@
 
 namespace Eightfold\Markup\UIKit\Elements\Simple;
 
-use Eightfold\Shoop\Shoop;
+use Eightfold\HTMLBuilder\Element as HtmlElement;
 
-use Eightfold\Markup\Html\HtmlElement;
-use Eightfold\Markup\Html;
+// use Eightfold\Shoop\Shoop;
 
-class Anchor extends HtmlElement
+// use Eightfold\Markup\Html\HtmlElement;
+// use Eightfold\Markup\Html;
+
+class Anchor //extends HtmlElement
 {
+    private string $text = '';
+
+    private string $href = '';
+
     public function __construct(string $text, string $href)
     {
-        parent::__construct($text, ["href {$href}"]);
+        $this->text = $text;
+
+        $this->href = $href;
+        // parent::__construct($text, ["href {$href}"]);
     }
 
-    public function unfold(): string
+    public function build(): string
     {
-        return Html::a($this->main)->attr(...$this->attributes)->unfold();
+        return '';
+        // return Html::a($this->main)->attr(...$this->attributes)->unfold();
     }
 }
 

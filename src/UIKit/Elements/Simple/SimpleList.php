@@ -2,40 +2,39 @@
 
 namespace Eightfold\Markup\UIKit\Elements\Simple;
 
-use Eightfold\Markup\Html\HtmlElement;
+use Eightfold\HTMLBuilder\Element as HtmlElement;
 
-use Eightfold\Markup\Html;
+// use Eightfold\Markup\Html\HtmlElement;
 
-use Eightfold\Markup\UIKit;
+// use Eightfold\Markup\Html;
 
-class SimpleList extends HtmlElement
+// use Eightfold\Markup\UIKit;
+
+class SimpleList //extends HtmlElement
 {
-    private $type = 'unordered';
+    /**
+     * @var array<HtmlElement|string>
+     */
+    private array $items = [];
 
-    private $descriptionTerms = [];
+    private string $type = 'unordered';
 
+    /**
+     * @var array<HtmlElement|string>
+     */
+    private array $descriptionTerms = [];
+
+    /**
+     * @param HtmlElement|string $items [description]
+     */
     public function __construct(...$items)
     {
-        $this->main = $items;
+        $this->items = $items;
     }
 
-    public function unfold(): string
+    public function build(): string
     {
-        if (count($this->main) === 0) {
-            return "";
-        }
-
-        $container = 'ul';
-        if ($this->type == 'ordered') {
-            $container = 'ol';
-
-        } elseif ($this->type == 'description') {
-            $container = 'dl';
-
-        }
-
-        $listItems = $this->listItems($this->main);
-        return Html::$container(...$listItems)->attr(...$this->attributes)->unfold();
+        return '';
     }
 
     public function ordered(): SimpleList
@@ -44,44 +43,52 @@ class SimpleList extends HtmlElement
         return $this;
     }
 
-    public function description(int ...$terms): SimpleList
+    /**
+     * @param HtmlElement|string $terms [description]
+     */
+    public function description(...$terms): SimpleList
     {
         $this->type = 'description';
         $this->descriptionTerms = $terms;
         return $this;
     }
 
-    private function listItems(array $content)
+    /**
+     * @param  array<HtmlElement|string>  $content [description]
+     * @return array<HtmlElement|string>  [description]
+     */
+    private function listItems(array $content): array
     {
-        $count = 0;
-        $listItems = [];
-        foreach ($content as $index => $item) {
-            if ($this->type == 'unordered' || $this->type == 'ordered') {
-                $listItems[] = Html::li($item);
+        return [];
+        // $count = 0;
+        // $listItems = [];
+        // foreach ($content as $index => $item) {
+        //     if ($this->type == 'unordered' || $this->type == 'ordered') {
+        //         $listItems[] = Html::li($item);
 
-            } else {
-                $count++;
+        //     } else {
+        //         $count++;
 
-                if (count($this->descriptionTerms) == 0) {
-                    if ($count % 2 == 0) {
-                        $items = Html::dd($item);
+        //         if (count($this->descriptionTerms) == 0) {
+        //             if ($count % 2 == 0) {
+        //                 $items = Html::dd($item);
 
-                    } else {
-                        $items = Html::dt($item);
+        //             } else {
+        //                 $items = Html::dt($item);
 
-                    }
+        //             }
 
-                } elseif (in_array($index + 1, $this->descriptionTerms)) {
-                    $items = Html::dt($item);
+        //         } elseif (in_array($index + 1, $this->descriptionTerms)) {
+        //             $items = Html::dt($item);
 
 
-                } else {
-                    $items = Html::dd($item);
+        //         } else {
+        //             $items = Html::dd($item);
 
-                }
-                $listItems[] = $items;
-            }
-        }
-        return $listItems;
+        //         }
+        //         $listItems[] = $items;
+        //     }
+        // }
+        // return $listItems;
     }
 }
