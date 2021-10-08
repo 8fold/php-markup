@@ -11,6 +11,7 @@
   ],
   "require": {
     "php": "^7.2|^8.0",
+    "league/commonmark": "^2.0.2",
     "8fold/php-html-builder": "^0.5"
   },
   "require-dev": {
