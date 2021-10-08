@@ -1,13 +1,14 @@
 # Contributing
 
-Contributions are **welcome** and will be **credited**. We accept contributions via Pull Requests on [GitHub](https://github.com/8fold/php-markup).
+Contributions are **welcome** and will be **credited**. We accept contributions via Pull Requests on [GitHub](https://github.com/8fold/php-shoop).
 
-## Goals
+## Priorities
 
-- Readability over speed over cleverness.
-- Fail gracefully not by blowing things up.
+We leverage GitHub's labeling system to inform prioritization of issues. The higher the number, the higher priority.
 
-### Overall
+Security is always the highest priority within the applicable scope of the product. Therefore, some packages are low-level and intended for developers and give the flexibility to them to surround the package with a security layer.
+
+## Overall goals (philosophy and values)
 
 There are a lot of philosphical things tied in to the way we strive to do software development. Some you are most likely familiar with, others maybe not so much.
 
@@ -27,6 +28,8 @@ There are a lot of philosphical things tied in to the way we strive to do softwa
 
 **Solutions over scapegoats:** There are times when these principles will not be followed or someone will make a mistake. Berating the offender doesn't get any of us any closer to improving the execution of these principles.
 
+**The Community Principle:** If you create or acquire it you help maintain it; time, food, money, and so on.
+
 ## Code promotion
 
 Capabilities should be implemented at a low, concrete level before being promoted to higher-levels and made more abstract.
@@ -38,3 +41,7 @@ If the language being used allows access levels on variable, constants, methods,
 This reduces the size of the public API, which makes the class easier to consume by developers.
 
 Further, it is preferred that class properties remain private, always. This means pre- and post-processing for setting and getting properties can be added without being a breaking change to developers.
+
+## Releasing
+
+Major - fix bugs -> Patch - optimize -> Minor - fix bugs -> Patch - new feature -> Minor - interface changes -> Major

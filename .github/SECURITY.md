@@ -1,6 +1,6 @@
 # Security Policy
 
-The only completely secure system is the one that doesn't exist in the first place. Having said that, we take the security of Marked very seriously.
+The only completely secure system is the one that doesn't exist in the first place. Having said that, we take security seriously.
 
 ## Reporting a Vulnerability
 
