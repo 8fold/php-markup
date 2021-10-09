@@ -2,9 +2,10 @@
 
 namespace Eightfold\Markup;
 
+use Eightfold\XMLBuilder\Contracts\Buildable;
 use Eightfold\HTMLBuilder\Element;
 
-class Anchor
+class Anchor implements Buildable
 {
     private string $content = '';
 
@@ -39,5 +40,10 @@ class Anchor
         return Element::a($this->content)
             ->props('href ' . $this->href, ...$this->properties)
             ->build();
+    }
+
+    public function __toString(): string
+    {
+        return $this->build();
     }
 }

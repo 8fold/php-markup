@@ -2,9 +2,10 @@
 
 namespace Eightfold\Markup;
 
+use Eightfold\XMLBuilder\Contracts\Buildable;
 use Eightfold\HTMLBuilder\Element as HtmlElement;
 
-class Image
+class Image implements Buildable
 {
     private string $alt = '';
 
@@ -41,5 +42,10 @@ class Image
                 'src ' . $this->src,
                 ...$this->properties
             )->build();
+    }
+
+    public function __toString(): string
+    {
+        return $this->build();
     }
 }

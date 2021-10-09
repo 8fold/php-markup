@@ -3,6 +3,7 @@
 namespace Eightfold\Markup\UIKit\Elements\Simple;
 
 use Eightfold\HTMLBuilder\Element as HtmlElement;
+use Eightfold\XMLBuilder\Contracts\Buildable;
 
 // use Eightfold\Markup\Html\HtmlElement;
 
@@ -10,7 +11,7 @@ use Eightfold\HTMLBuilder\Element as HtmlElement;
 
 // use Eightfold\Markup\UIKit;
 
-class SimpleList //extends HtmlElement
+class SimpleList implements Buildable //extends HtmlElement
 {
     /**
      * @var array<HtmlElement|string>
@@ -35,6 +36,11 @@ class SimpleList //extends HtmlElement
     public function build(): string
     {
         return '';
+    }
+
+    public function __toString(): string
+    {
+        return $this->build();
     }
 
     public function ordered(): SimpleList

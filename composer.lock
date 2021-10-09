@@ -8,20 +8,20 @@
     "packages": [
         {
             "name": "8fold/php-html-builder",
-            "version": "0.5.0",
+            "version": "0.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/8fold/php-html-builder.git",
-                "reference": "47964c800523605a47a7c03048604b85f7a76c26"
+                "reference": "6ed999954be9a304edd49ba77a570b400eb77567"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/8fold/php-html-builder/zipball/47964c800523605a47a7c03048604b85f7a76c26",
-                "reference": "47964c800523605a47a7c03048604b85f7a76c26",
+                "url": "https://api.github.com/repos/8fold/php-html-builder/zipball/6ed999954be9a304edd49ba77a570b400eb77567",
+                "reference": "6ed999954be9a304edd49ba77a570b400eb77567",
                 "shasum": ""
             },
             "require": {
-                "8fold/php-xml-builder": "^0.5",
+                "8fold/php-xml-builder": "^0.6",
                 "php": "^7.4||^8.0"
             },
             "require-dev": {
@@ -49,7 +49,7 @@
             "description": "A library for building HTML document and element strings.",
             "support": {
                 "issues": "https://github.com/8fold/php-html-builder/issues",
-                "source": "https://github.com/8fold/php-html-builder/tree/0.5.0"
+                "source": "https://github.com/8fold/php-html-builder/tree/0.5.1"
             },
             "funding": [
                 {
@@ -61,20 +61,20 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-10-08T18:47:24+00:00"
+            "time": "2021-10-09T02:02:30+00:00"
         },
         {
             "name": "8fold/php-xml-builder",
-            "version": "0.5.3",
+            "version": "0.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/8fold/php-xml-builder.git",
-                "reference": "a06b7d10934148dcc3589e936bb2148befa88410"
+                "reference": "26b50c2b628e45b00a27e4286791f9953e5760c1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/8fold/php-xml-builder/zipball/a06b7d10934148dcc3589e936bb2148befa88410",
-                "reference": "a06b7d10934148dcc3589e936bb2148befa88410",
+                "url": "https://api.github.com/repos/8fold/php-xml-builder/zipball/26b50c2b628e45b00a27e4286791f9953e5760c1",
+                "reference": "26b50c2b628e45b00a27e4286791f9953e5760c1",
                 "shasum": ""
             },
             "require": {
@@ -102,10 +102,10 @@
                     "email": "josh@8fold.pro"
                 }
             ],
-            "description": "A library for building XML strings.",
+            "description": "A library for building XML document and element strings.",
             "support": {
                 "issues": "https://github.com/8fold/php-xml-builder/issues",
-                "source": "https://github.com/8fold/php-xml-builder/tree/0.5.3"
+                "source": "https://github.com/8fold/php-xml-builder/tree/0.6.0"
             },
             "funding": [
                 {
@@ -117,7 +117,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-10-08T00:40:01+00:00"
+            "time": "2021-10-09T01:55:37+00:00"
         },
         {
             "name": "dflydev/dot-access-data",

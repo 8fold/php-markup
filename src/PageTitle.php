@@ -3,6 +3,7 @@
 namespace Eightfold\Markup;
 
 use Eightfold\HTMLBuilder\Element as HtmlElement;
+use Eightfold\XMLBuilder\Contracts\Buildable;
 
 // use Eightfold\Markup\Html\HtmlElement;
 
@@ -10,7 +11,7 @@ use Eightfold\HTMLBuilder\Element as HtmlElement;
 
 // use Eightfold\Markup\UIKit;
 
-class PageTitle //extends HtmlElement
+class PageTitle implements Buildable //extends HtmlElement
 {
     /**
      * @var array<string>
@@ -58,6 +59,11 @@ class PageTitle //extends HtmlElement
         }
 
         return HtmlElement::title($string)->build();
+    }
+
+    public function __toString(): string
+    {
+        return $this->build();
     }
 
     public function reversed(): PageTitle

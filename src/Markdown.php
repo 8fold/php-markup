@@ -3,12 +3,13 @@
 namespace Eightfold\Markup\UIKit\Elements\Compound;
 
 use League\CommonMark\Extension\ExtensionInterface;
+use Eightfold\XMLBuilder\Contracts\Buildable;
 
 // use Eightfold\Markup\Html\HtmlElement;
 
 // use Eightfold\ShoopShelf\Shoop;
 
-class Markdown //extends HtmlElement
+class Markdown implements Buildable //extends HtmlElement
 {
     private string $markdown = '';
 
@@ -123,5 +124,10 @@ class Markdown //extends HtmlElement
         //         $this->minified,
         //         $this->config
         //     )->unfold();
+    }
+
+    public function __toString(): string
+    {
+        return $this->build();
     }
 }

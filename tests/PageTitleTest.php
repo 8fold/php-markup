@@ -2,6 +2,14 @@
 
 use Eightfold\Markup\PageTitle;
 
+test('Page title is castable to string', function() {
+    expect(
+        (string) PageTitle::create(['Hello!', 'How are you?'], ' : ')->reversed()
+    )->toBe(
+        '<title>How are you? : Hello!</title>'
+    );
+});
+
 test('Page title can return without tag', function() {
     expect(
         PageTitle::create(['Hello!', 'How are you?'], ' : ')->reversed()

@@ -2,6 +2,15 @@
 
 use Eightfold\Markup\Anchor;
 
+test('Anchor is castable to string', function() {
+    expect(
+        (string) Anchor::create('link content', 'https://8fold.pro')
+            ->props('class some-class', 'id some-id')
+    )->toBe(
+        '<a id="some-id" class="some-class" href="https://8fold.pro">link content</a>'
+    );
+});
+
 test('Anchor can have custom properties', function() {
     expect(
         Anchor::create('link content', 'https://8fold.pro')
