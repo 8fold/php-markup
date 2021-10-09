@@ -1,6 +1,6 @@
 <?php
 
-namespace Eightfold\Markup\UIKit\Elements\Simple;
+namespace Eightfold\Markup;
 
 use Eightfold\HTMLBuilder\Element as HtmlElement;
 
@@ -17,7 +17,7 @@ class PageTitle //extends HtmlElement
      */
     private array $parts = [];
 
-    private string $separater = " | ";
+    private string $separator = ' | ';
 
     private bool $reversed = false;
 
@@ -26,42 +26,49 @@ class PageTitle //extends HtmlElement
     /**
      * @param array<string> $parts [description]
      */
-    public function __construct(array $parts, string $separater = " | ")
+    public static function create(array $parts, $separator = ' | ')
+    {
+        return new PageTitle($parts, $separator);
+    }
+
+    /**
+     * @param array<string> $parts [description]
+     */
+    public function __construct(array $parts, string $separator = ' | ')
     {
         $this->parts = $parts;
 
-        $this->separater = $separater;
+        $this->separator = $separator;
     }
 
     public function build(): string
     {
-        return '';
-        // if (count($this->main) === 0) {
-        //     return "";
-        // }
+        if ($this->reversed) {
+            $this->parts = array_reverse($this->parts);
 
-        // if ($this->reversed) {
-        //     $this->main = array_reverse($this->main);
-        // }
+        }
 
-        // $string = implode($this->separater, $this->main);
+        $string = implode($this->separator, $this->parts);
 
-        // if ($this->stringOnly) {
-        //     return $string;
-        // }
+        if ($this->stringOnly) {
+            return $string;
 
-        // return Html::title($string)->attr(...$this->attributes)->unfold();
+        }
+
+        return HtmlElement::title($string);
     }
 
     public function reversed(): PageTitle
     {
         $this->reversed = true;
+
         return $this;
     }
 
     public function stringOnly(): PageTitle
     {
         $this->stringOnly = true;
+
         return $this;
     }
 }

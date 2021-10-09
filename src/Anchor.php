@@ -2,14 +2,7 @@
 
 namespace Eightfold\Markup\UIKit\Elements\Simple;
 
-use Eightfold\HTMLBuilder\Element as HtmlElement;
-
-// use Eightfold\Shoop\Shoop;
-
-// use Eightfold\Markup\Html\HtmlElement;
-// use Eightfold\Markup\Html;
-
-class Anchor //extends HtmlElement
+class Anchor
 {
     private string $text = '';
 
@@ -29,4 +22,3 @@ class Anchor //extends HtmlElement
         // return Html::a($this->main)->attr(...$this->attributes)->unfold();
     }
 }
-
