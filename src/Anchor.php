@@ -1,24 +1,42 @@
 <?php
 
-namespace Eightfold\Markup\UIKit\Elements\Simple;
+namespace Eightfold\Markup;
+
+use Eightfold\HTMLBuilder\Element;
 
 class Anchor
 {
-    private string $text = '';
+    private string $content = '';
 
     private string $href = '';
 
-    public function __construct(string $text, string $href)
+    /**
+     * @var array<string>
+     */
+    private array $properties = [];
+
+    public static function create(string $content, string $href): Anchor
     {
-        $this->text = $text;
+        return new Anchor($content, $href);
+    }
+
+    public function __construct(string $content, string $href)
+    {
+        $this->content = $content;
 
         $this->href = $href;
-        // parent::__construct($text, ["href {$href}"]);
+    }
+
+    public function props(string ...$properties): Anchor
+    {
+        $this->properties = $properties;
+
+        return $this;
     }
 
     public function build(): string
     {
-        return '';
-        // return Html::a($this->main)->attr(...$this->attributes)->unfold();
+        return Element::a($this->content)
+            ->props('href ' . $this->href, ...$this->properties);
     }
 }

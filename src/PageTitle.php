@@ -26,8 +26,10 @@ class PageTitle //extends HtmlElement
     /**
      * @param array<string> $parts [description]
      */
-    public static function create(array $parts, $separator = ' | ')
-    {
+    public static function create(
+        array $parts,
+        string $separator = ' | '
+    ): PageTitle {
         return new PageTitle($parts, $separator);
     }
 
