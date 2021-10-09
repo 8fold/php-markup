@@ -57,7 +57,7 @@ class PageTitle //extends HtmlElement
 
         }
 
-        return HtmlElement::title($string);
+        return HtmlElement::title($string)->build();
     }
 
     public function reversed(): PageTitle

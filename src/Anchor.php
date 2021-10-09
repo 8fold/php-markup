@@ -37,6 +37,7 @@ class Anchor
     public function build(): string
     {
         return Element::a($this->content)
-            ->props('href ' . $this->href, ...$this->properties);
+            ->props('href ' . $this->href, ...$this->properties)
+            ->build();
     }
 }
