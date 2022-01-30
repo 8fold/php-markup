@@ -1,7 +1,6 @@
 <?xml version="1.0"?>
 <ruleset name="8fold PSR12">
 	<description>PHP-FIG PSR-12 standards with modifications to: control structure (empty space before closing brace).</description>
-
 	<file>src</file>
 
 	<arg name="colors" />

@@ -1,6 +1,6 @@
 {
   "name": "8fold/php-markup",
-  "description": "8fold Markup seeks to make writing semi-structured data easier while allowing for more dynamism.",
+  "description": "8fold Markup makes writing semi-structured data easier while allowing for more dynamism.",
   "type": "library",
   "license": "MIT",
   "authors": [
@@ -25,8 +25,7 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Eightfold\\Markup\\Tests\\": "./tests/",
-      "Eightfold\\Foldable\\Tests\\": "./vendor/8fold/php-foldable/tests/"
+      "Eightfold\\Markup\\Tests\\": "./tests/"
     }
   },
   "config": {
@@ -41,13 +40,8 @@
       "@stan",
       "@test"
     ],
-    "deploy": [
-      "@production",
-      "@optimize-autoload"
-    ],
     "style": "./vendor/bin/phpcs --standard=phpcs.xml",
     "stan": "./vendor/bin/phpstan analyze",
-    "test": "./vendor/bin/phpunit",
-    "optimize-autoload": "composer dumpautoload --no-dev --classmap-authoritative"
+    "test": "./vendor/bin/phpunit"
   }
 }
