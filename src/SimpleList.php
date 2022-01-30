@@ -20,19 +20,15 @@ class SimpleList implements Buildable
      */
     private array $properties = [];
 
-    /**
-     * @var array<HtmlElement|string>
-     */
-    private array $descriptionTerms = [];
-
-    public static function create(...$items): SimpleList {
+    public static function create(string|Buildable ...$items): SimpleList
+    {
         return new SimpleList(...$items);
     }
 
     /**
      * @param HtmlElement|string $items [description]
      */
-    public function __construct(...$items)
+    public function __construct(string|Buildable ...$items)
     {
         $this->items = $items;
     }
@@ -51,13 +47,9 @@ class SimpleList implements Buildable
             $items[] = HtmlElement::li($item);
         }
 
-        $elem;
+        $elem = HtmlElement::ul(...$items);
         if ($this->type === 'ordered') {
             $elem = HtmlElement::ol(...$items);
-
-        } else {
-            $elem = HtmlElement::ul(...$items);
-
         }
 
         if (count($this->properties) > 0) {
