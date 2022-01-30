@@ -3,6 +3,7 @@
 namespace Eightfold\Markup;
 
 use Eightfold\XMLBuilder\Contracts\Buildable;
+
 use Eightfold\HTMLBuilder\Element as HtmlElement;
 
 class Image implements Buildable

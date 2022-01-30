@@ -1,17 +1,12 @@
 <?php
 
-namespace Eightfold\Markup\UIKit\Elements\Simple;
+namespace Eightfold\Markup;
 
-use Eightfold\HTMLBuilder\Element as HtmlElement;
 use Eightfold\XMLBuilder\Contracts\Buildable;
 
-// use Eightfold\Markup\Html\HtmlElement;
+use Eightfold\HTMLBuilder\Element as HtmlElement;
 
-// use Eightfold\Markup\Html;
-
-// use Eightfold\Markup\UIKit;
-
-class SimpleList implements Buildable //extends HtmlElement
+class SimpleList implements Buildable
 {
     /**
      * @var array<HtmlElement|string>
@@ -21,9 +16,18 @@ class SimpleList implements Buildable //extends HtmlElement
     private string $type = 'unordered';
 
     /**
+     * @var array<string>
+     */
+    private array $properties = [];
+
+    /**
      * @var array<HtmlElement|string>
      */
     private array $descriptionTerms = [];
+
+    public static function create(...$items): SimpleList {
+        return new SimpleList(...$items);
+    }
 
     /**
      * @param HtmlElement|string $items [description]
@@ -33,9 +37,34 @@ class SimpleList implements Buildable //extends HtmlElement
         $this->items = $items;
     }
 
+    public function props(string ...$properties): SimpleList
+    {
+        $this->properties = $properties;
+
+        return $this;
+    }
+
     public function build(): string
     {
-        return '';
+        $items = [];
+        foreach ($this->items as $item) {
+            $items[] = HtmlElement::li($item);
+        }
+
+        $elem;
+        if ($this->type === 'ordered') {
+            $elem = HtmlElement::ol(...$items);
+
+        } else {
+            $elem = HtmlElement::ul(...$items);
+
+        }
+
+        if (count($this->properties) > 0) {
+            $elem = $elem->props(...$this->properties);
+        }
+
+        return $elem->build();
     }
 
     public function __toString(): string
@@ -47,54 +76,5 @@ class SimpleList implements Buildable //extends HtmlElement
     {
         $this->type = 'ordered';
         return $this;
-    }
-
-    /**
-     * @param HtmlElement|string $terms [description]
-     */
-    public function description(...$terms): SimpleList
-    {
-        $this->type = 'description';
-        $this->descriptionTerms = $terms;
-        return $this;
-    }
-
-    /**
-     * @param  array<HtmlElement|string>  $content [description]
-     * @return array<HtmlElement|string>  [description]
-     */
-    private function listItems(array $content): array
-    {
-        return [];
-        // $count = 0;
-        // $listItems = [];
-        // foreach ($content as $index => $item) {
-        //     if ($this->type == 'unordered' || $this->type == 'ordered') {
-        //         $listItems[] = Html::li($item);
-
-        //     } else {
-        //         $count++;
-
-        //         if (count($this->descriptionTerms) == 0) {
-        //             if ($count % 2 == 0) {
-        //                 $items = Html::dd($item);
-
-        //             } else {
-        //                 $items = Html::dt($item);
-
-        //             }
-
-        //         } elseif (in_array($index + 1, $this->descriptionTerms)) {
-        //             $items = Html::dt($item);
-
-
-        //         } else {
-        //             $items = Html::dd($item);
-
-        //         }
-        //         $listItems[] = $items;
-        //     }
-        // }
-        // return $listItems;
     }
 }

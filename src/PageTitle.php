@@ -2,16 +2,11 @@
 
 namespace Eightfold\Markup;
 
-use Eightfold\HTMLBuilder\Element as HtmlElement;
 use Eightfold\XMLBuilder\Contracts\Buildable;
 
-// use Eightfold\Markup\Html\HtmlElement;
+use Eightfold\HTMLBuilder\Element as HtmlElement;
 
-// use Eightfold\Markup\Html;
-
-// use Eightfold\Markup\UIKit;
-
-class PageTitle implements Buildable //extends HtmlElement
+class PageTitle implements Buildable
 {
     /**
      * @var array<string>
