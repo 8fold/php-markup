@@ -10,15 +10,13 @@
     }
   ],
   "require": {
-    "php": "^7.2|^8.0",
-    "league/commonmark": "^2.0.2",
-    "8fold/php-html-builder": "^0.5"
+    "php": "^8.1",
+    "8fold/php-html-builder": "^0.6.0"
   },
   "require-dev": {
-    "squizlabs/php_codesniffer": "^3.6",
-    "phpstan/phpstan": "^0.12",
-    "pestphp/pest": "^1.20",
-    "psr/log": "^1.0.1"
+    "phpstan/phpstan": "^1.4.3",
+    "phpunit/phpunit": "^9.5.13",
+    "squizlabs/php_codesniffer": "^3.6.2"
   },
   "autoload": {
     "psr-4": {
@@ -36,9 +34,14 @@
 	"prefer-stable": true,
   "scripts": {
     "prod": "@production",
-    "production": ["@style", "@stan", "@test"],
-    "style": "./vendor/bin/phpcs --standard=phpcs.xml -p ./src",
+    "production": [
+      "composer dumpautoload -o",
+      "@style",
+      "@stan",
+      "@test"
+    ],
+    "style": "./vendor/bin/phpcs --standard=phpcs.xml",
     "stan": "./vendor/bin/phpstan analyze",
-    "test": "./vendor/bin/pest"
+    "test": "./vendor/bin/phpunit"
   }
 }
